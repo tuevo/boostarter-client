@@ -96,10 +96,7 @@
   .popular-campaigns {
     padding: 120px 0;
 
-    .carousel-wrapper {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
+    .carousel {
       margin-top: 40px;
     }
   }
