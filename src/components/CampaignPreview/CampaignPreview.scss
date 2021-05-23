@@ -1,0 +1,99 @@
+@import "../../styles/mixin.scss";
+
+.campaign-preview {
+  .ant-card-meta-description {
+    @include text-overflow(3);
+  }
+
+  .header {
+    margin-bottom: 30px;
+  }
+
+  .subtitle {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .rating .icon {
+    margin-left: 5px;
+    color: #fadb14;
+  }
+
+  .owner-avatar {
+    position: relative;
+
+    .famous-icon,
+    .famous-icon-bg {
+      position: absolute;
+      right: -5px;
+      bottom: -5px;
+      color: var(--primary-color);
+      background-color: #fff;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+  }
+
+  .footer {
+    margin-top: 30px;
+
+    .category,
+    .current-raise-percent {
+      margin: 0;
+      font-weight: 700;
+      color: rgba($color: #000000, $alpha: 0.5);
+    }
+
+    .raise-info {
+      margin-top: 10px;
+      .section-1 {
+        display: flex;
+        justify-content: space-between;
+      }
+      .section-2 .icon {
+        margin-right: 10px;
+        color: rgba($color: #000000, $alpha: 0.4);
+      }
+    }
+  }
+}
+
+.featured-campaign-preview {
+  position: relative;
+  z-index: 1;
+  margin-top: 45px;
+  width: 700px;
+  height: 450px;
+  color: var(--text-color-contrast);
+  background-size: 100% 100%;
+  background-position: center center;
+  border-radius: 24px;
+  overflow: hidden;
+
+  .dark-cover {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0px -60px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .title,
+  .raise {
+    color: inherit;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+  }
+
+  .ant-typography + h1.ant-typography,
+  .ant-typography + h2.ant-typography,
+  .ant-typography + h3.ant-typography,
+  .ant-typography + h4.ant-typography,
+  .ant-typography + h5.ant-typography {
+    margin-top: 0;
+  }
+}

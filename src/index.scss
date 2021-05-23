@@ -1,0 +1,31 @@
+:root {
+  --primary-color: #1890ff;
+  --success-color: #52c41a;
+  --cta-color: #e36924;
+  --text-color-contrast: #fff;
+}
+
+body {
+  margin: 0;
+  font-family: "Quicksand", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba($color: #000000, $alpha: 0.15);
+    border-radius: 48px;
+  }
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+button {
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+}

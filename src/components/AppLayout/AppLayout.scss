@@ -1,0 +1,45 @@
+.layout {
+  .ant-layout-header,
+  .ant-layout-content {
+    background: #fff !important;
+  }
+
+  .ant-layout-content {
+    padding: 0 !important;
+  }
+
+  .ant-layout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px !important;
+    height: 70px !important;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .search-input {
+    width: 300px;
+    height: 40px;
+    border-radius: 48px;
+
+    .ant-input {
+      margin-left: 10px;
+    }
+  }
+
+  .ant-menu-horizontal {
+    border: 0;
+  }
+
+  .ant-menu-item {
+    font-weight: 700;
+
+    &.logo-wrapper {
+      border-bottom: 0 !important;
+
+      .logo {
+        margin-right: 45px;
+      }
+    }
+  }
+}

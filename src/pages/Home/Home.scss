@@ -1,0 +1,131 @@
+@import "../../styles/mixin.scss";
+
+.home {
+  .banner {
+    position: relative;
+    z-index: 1;
+    height: 400px;
+    background-size: cover;
+    background-position: center center;
+
+    .dark-cover {
+      position: absolute;
+      z-index: 2;
+      inset: 0;
+      padding: 75px 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: var(--text-color-contrast);
+    }
+
+    .left {
+      float: left;
+      padding: 30px 0 0 280px;
+    }
+
+    .campaign {
+      .title {
+        color: inherit;
+      }
+
+      .desc {
+        width: 394px;
+      }
+    }
+
+    .btn-view-campaign-detail {
+      padding: 0;
+      margin-top: 10px;
+      color: inherit;
+    }
+
+    .slide-controls {
+      $control-mr: 16px;
+
+      display: flex;
+      align-items: center;
+      margin-top: 22px;
+
+      .btn {
+        margin-right: $control-mr;
+        width: 40px;
+        height: 40px;
+        color: inherit;
+        transition: 0.35s ease;
+
+        &:hover {
+          background-color: #fff;
+          color: #000;
+          border-color: #fff;
+        }
+      }
+
+      .status {
+        font-size: 14px;
+      }
+    }
+
+    .right {
+      float: right;
+      width: 546px;
+      height: 253px;
+      background-color: rgba(255, 255, 255, 0.8);
+
+      .featured-content {
+        padding: 40px;
+
+        .title {
+          font-weight: 400;
+        }
+
+        .desc {
+          font-size: 14px;
+          line-height: 22px;
+          color: rgba(0, 0, 0, 0.65);
+        }
+
+        .buttons {
+          .btn-more {
+            margin-left: 15px;
+            @include button-color(outline, var(--primary-color));
+          }
+        }
+      }
+    }
+  }
+
+  .popular-campaigns {
+    padding: 120px 0;
+
+    .carousel-wrapper {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-top: 40px;
+    }
+  }
+
+  .success-campaigns {
+    position: relative;
+    z-index: 1;
+    padding: 90px 0;
+    height: 750px;
+    background-size: 100% 100%;
+    background-position: center center;
+
+    .dark-cover {
+      position: absolute;
+      z-index: 2;
+      inset: 0;
+      padding: 75px 0;
+      background: rgba($color: #000000, $alpha: 0.6);
+      backdrop-filter: blur(20px);
+    }
+
+    .carousel {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+    }
+  }
+}

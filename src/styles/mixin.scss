@@ -1,0 +1,32 @@
+@mixin button-color($type, $color) {
+  border-color: $color;
+
+  @if $type == default {
+    background-color: $color;
+  }
+
+  @if $type == outline {
+    color: $color;
+    background-color: transparent;
+  }
+
+  &:hover,
+  &:focus {
+    border-color: $color;
+
+    @if $type == default {
+      background-color: $color;
+    }
+
+    @if type == outline {
+      color: $color;
+    }
+  }
+}
+
+@mixin text-overflow($row) {
+  -webkit-line-clamp: $row;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  display: -webkit-box;
+}

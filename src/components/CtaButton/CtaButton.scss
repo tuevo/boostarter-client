@@ -1,0 +1,6 @@
+@import "../../styles/mixin.scss";
+
+.cta-button {
+  $color: var(--cta-color);
+  @include button-color(default, $color);
+}
