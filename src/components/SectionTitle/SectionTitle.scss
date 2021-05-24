@@ -3,21 +3,26 @@
 
   .inner {
     width: fit-content;
+    display: flex;
+    flex-direction: column;
+
+    &.center {
+      align-items: center;
+    }
 
     &.success {
       color: var(--text-color-contrast);
 
-      &::after {
+      .line {
         background: var(--success-color);
       }
     }
 
-    &::after {
+    .line {
       display: block;
       margin-top: 20px;
       content: "";
       height: 4px;
-      width: 100%;
       background: var(--cta-color);
     }
   }

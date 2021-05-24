@@ -4,8 +4,15 @@
     background: #fff !important;
   }
 
+  .ant-layout-header {
+    position: fixed;
+    z-index: 99;
+    width: 100vw;
+  }
+
   .ant-layout-content {
     padding: 0 !important;
+    margin-top: 64px;
   }
 
   .ant-layout-header {
@@ -14,7 +21,7 @@
     align-items: center;
     padding: 10px 20px !important;
     height: 70px !important;
-    border-bottom: 1px solid #f0f0f0;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   }
 
   .search-input {
@@ -38,8 +45,36 @@
       border-bottom: 0 !important;
 
       .logo {
-        margin-right: 45px;
+        margin-right: 50px;
       }
+    }
+  }
+
+  .app-footer {
+    padding: 60px 0 35px 0;
+    background-color: #eeeeee !important;
+
+    .left p {
+      margin-top: 30px;
+    }
+
+    .right ul {
+      list-style: none;
+      padding-left: 0;
+      margin-left: -12px;
+
+      li {
+        margin-top: 20px;
+
+        span {
+          margin-left: 15px;
+        }
+      }
+    }
+
+    .copyright {
+      margin-top: 65px;
+      text-align: center;
     }
   }
 }

@@ -1,9 +1,11 @@
-import { Layout, Menu, Dropdown, Input } from 'antd';
+import { DownOutlined, SearchOutlined, PhoneFilled, MailFilled, EnvironmentFilled } from '@ant-design/icons';
+import { Col, Dropdown, Input, Layout, Menu, Row } from 'antd';
+import Title from 'antd/lib/typography/Title';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import AppLogo from '../AppLogo';
+import Container from '../Container';
 import './AppLayout.scss';
-import { DownOutlined, SearchOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer } = Layout;
 
@@ -62,7 +64,51 @@ export default function AppLayout({ children }) {
       <Content style={{ padding: '0 50px' }}>
         {children}
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+      <Footer className="app-footer">
+        <Container>
+          <Row style={{ width: '100%' }}>
+            <Col span={11}>
+              <div className="left">
+                <AppLogo />
+                <p>
+                  Giấy phép số 02/2018/DA-HDTS-MXH do Bộ Thông tin và Truyền thông cấp ngày 01 tháng 06 năm 2018
+                    <br /><br />
+                  <b>Người chịu trách nhiệm nội dung:</b>
+                  <br />
+                    Thượng toạ Thích Đức Thiện - Phó Chủ tịch Hội đồng trị sự Giáo hội Phật giáo Việt Nam (GHPGVN), Tổng Thư ký Hội đồng Trị sự GHPGVN.
+                    <br /><br />
+                    CÔNG TY CỔ PHẦN BOOSTARTER TECHNOLOGY MST: 0109011923
+                  </p>
+              </div>
+            </Col>
+            <Col span={2} />
+            <Col span={11}>
+              <div className="right">
+                <Title level={4}>Liên hệ</Title>
+                <ul>
+                  <li>
+                    <PhoneFilled />
+                    <span>+84 934 666 360</span>
+                  </li>
+                  <li>
+                    <MailFilled />
+                    <span>contact@boostarter.vn</span>
+                  </li>
+                  <li>
+                    <EnvironmentFilled />
+                    <span>
+                      73 Quán Sứ, Trần Hưng Đạo, Hoàn Kiếm, Hà Nội, Việt Nam
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </Col>
+          </Row>
+          <div className="copyright">
+            © Bản quyền Boostarter.vn 2021 - Boostarter Technology.
+          </div>
+        </Container>
+      </Footer>
     </Layout>
   )
 }

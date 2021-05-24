@@ -8,7 +8,10 @@ export default function SectionTitle({ children, center, success }) {
       className="section-title"
       style={center ? { display: 'flex', justifyContent: 'center' } : {}}
     >
-      <Title className={`inner ${success ? 'success' : ''}`}>{children}</Title>
+      <Title className={`inner ${success ? 'success' : ''} ${center ? 'center' : ''}`}>
+        {children}
+        <div className="line" style={{ width: center ? 200 : '100% !important' }}></div>
+      </Title>
     </div>
   )
 }

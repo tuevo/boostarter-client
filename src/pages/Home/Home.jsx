@@ -1,16 +1,30 @@
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { Avatar, Button } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import React from 'react';
+import NumberFormat from 'react-number-format';
+import quoteIcon from '../../assets/images/quote-white.png';
 import CampaignPreviewCarousel from '../../components/CampaignPreviewCarousel/CampaignPreviewCarousel';
 import Container from '../../components/Container';
 import CtaButton from '../../components/CtaButton';
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import SingleCampaignPreviewCarousel from '../../components/SingleCampaignPreviewCarousel/SingleCampaignPreviewCarousel';
-import { mockCampaign, mockCampaignList } from '../../mock-data/campaign';
+import { mockCategoryList, mockFeedbackList } from '../../mock-data';
+import { mockCampaignList } from '../../mock-data/campaign';
 import './Home.scss';
 
 export default function Home() {
+  const popularCampaignList = [...mockCampaignList];
+  const successCampaignList = [...mockCampaignList.slice(0, 3)];
+  let activeSuccessCampaign = successCampaignList[0];
+
+  const onSuccessCampaignCarouselChange = (index) => {
+    if (index === -1)
+      return;
+
+    activeSuccessCampaign = successCampaignList[index];
+  }
+
   return (
     <div className="home">
       <section className="banner" style={{ backgroundImage: 'url(https://pbs.twimg.com/media/E0xmq8MXIAM4aTa?format=jpg&name=4096x4096)' }}>
@@ -49,15 +63,13 @@ export default function Home() {
         <Container>
           <SectionTitle center>Chiến dịch nổi bật</SectionTitle>
           <div className="carousel">
-            <CampaignPreviewCarousel
-              campaigns={mockCampaignList}
-            />
+            <CampaignPreviewCarousel campaigns={popularCampaignList} />
           </div>
         </Container>
       </section>
       <section
         className="success-campaigns"
-        style={{ backgroundImage: `url(${mockCampaign.thumbnail})` }}
+        style={{ backgroundImage: `url(${activeSuccessCampaign.thumbnail})` }}
       >
         <div className="dark-cover">
           <Container>
@@ -66,11 +78,80 @@ export default function Home() {
             </SectionTitle>
             <div className="carousel">
               <SingleCampaignPreviewCarousel
-                campaigns={mockCampaignList}
+                campaigns={successCampaignList}
+                onChange={index => onSuccessCampaignCarouselChange(index)}
               />
             </div>
           </Container>
         </div>
+      </section>
+      <section className="featured-categories">
+        <Container>
+          <SectionTitle center>
+            Có thể bạn quan tâm
+          </SectionTitle>
+          <div className="categories">
+            {mockCategoryList.map(c => (
+              <div key={c.id} className="category" style={{ backgroundImage: `url(${c.thumbnail})` }}>
+                <div className="category__dark-cover">
+                  <div className="category__detail">
+                    <Title className="category__name" level={3}>{c.name}</Title>
+                    <Title className="category__statistics" level={4}>
+                      <NumberFormat
+                        displayType="text"
+                        value={c.numberOfCampaigns}
+                        thousandSeparator={'.'}
+                        decimalSeparator={','}
+                        suffix={'+ chiến dịch'}
+                      />
+                    </Title>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+      <section className="featured-feedbacks">
+        <Container>
+          <SectionTitle center>
+            Đánh giá hàng đầu
+          </SectionTitle>
+          <div className="feedbacks">
+            {mockFeedbackList.map(f => (
+              <div key={f.id} className="feedback">
+                <div className="feedback__icon">
+                  <img src={quoteIcon} alt="feedback icon" />
+                </div>
+                <Avatar src={f.avatar} size={80} />
+                <p className="feedback__comment">
+                  {f.comment}
+                </p>
+                <div className="feedback__footer">
+                  <Title className="feedback__name" level={5}>{f.name}</Title>
+                  <p className="feedback__bio">
+                    {`${f.bio.role} tại `} <span className="feedback__bio__organization">{f.bio.organization}</span>
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+      <section className="partners">
+        <Container>
+          <SectionTitle center>
+            Đối tác của chúng tôi
+          </SectionTitle>
+          <div className="partners__list">
+            <img src="https://i.ibb.co/ydFT0Dr/1-1.jpg" alt="1" />
+            <img src="https://i.ibb.co/2jRvbsj/8.png" alt="8" />
+            <img src="https://i.ibb.co/ZLzS7fk/4.jpg" alt="4" />
+            <img src="https://i.ibb.co/kMPzxXR/5-1.jpg" alt="5-1" />
+            <img src="https://i.ibb.co/0fj0QRM/3-1.jpg" alt="3-1" />
+            <img src="https://i.ibb.co/RhWz3F5/2.png" alt="2" />
+          </div>
+        </Container>
       </section>
     </div>
   )

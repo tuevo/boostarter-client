@@ -1,8 +1,22 @@
 @import "../../styles/mixin.scss";
 
 .campaign-preview {
+  .ant-card {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .ant-card-cover img {
+    height: 200px;
+  }
+
   .ant-card-meta-description {
     @include text-overflow(3);
+  }
+
+  .ant-card {
+    border: 0 !important;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   }
 
   .header {
@@ -61,7 +75,6 @@
 .featured-campaign-preview {
   position: relative;
   z-index: 1;
-  margin-top: 45px;
   width: 700px;
   height: 450px;
   color: var(--text-color-contrast);
@@ -74,8 +87,9 @@
     position: absolute;
     z-index: 2;
     inset: 0;
-    background: rgba(0, 0, 0, 0.1);
-    box-shadow: inset 0px -60px 40px rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.1) !important;
+    box-shadow: inset 0px -150px 80px rgba(0, 0, 0, 0.6);
+    backdrop-filter: unset !important;
   }
 
   .title,

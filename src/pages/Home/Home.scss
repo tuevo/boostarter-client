@@ -84,6 +84,7 @@
         }
 
         .buttons {
+          margin-top: 20px;
           .btn-more {
             margin-left: 15px;
             @include button-color(outline, var(--primary-color));
@@ -122,7 +123,122 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
+      margin-top: 45px;
       width: 700px;
+    }
+  }
+
+  .featured-categories {
+    padding: 90px 45px 45px 45px;
+
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 30px 0;
+
+      .category {
+        position: relative;
+        z-index: 1;
+        margin-top: 20px;
+        width: 660px;
+        height: 330px;
+        border-radius: 20px;
+        overflow: hidden;
+        background-size: 100% 100%;
+        background-position: center center;
+        color: var(--text-color-contrast);
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+
+        &__dark-cover {
+          position: absolute;
+          z-index: 2;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.4);
+          box-shadow: inset 0px -80px 200px rgba(0, 0, 0, 0.5);
+        }
+
+        &__detail {
+          position: absolute;
+          left: 45px;
+          bottom: 35px;
+        }
+
+        &__name {
+          color: inherit;
+        }
+
+        &__statistics {
+          margin: 0;
+          color: inherit;
+          font-weight: 400;
+        }
+
+        &:nth-of-type(odd) {
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+
+  .featured-feedbacks {
+    padding: 100px 0;
+    background-color: #f8f8f8;
+
+    .feedbacks {
+      display: flex;
+      justify-content: center;
+      margin-top: 60px;
+    }
+
+    .feedback {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      padding: 25px;
+      width: 350px;
+      background: #fff;
+      box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.05);
+
+      &:nth-of-type(even) {
+        margin: 0 20px;
+      }
+
+      &__icon {
+        position: absolute;
+        left: 25px;
+        top: -25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        background: var(--cta-color);
+      }
+
+      &__comment {
+        margin: 25px 0 30px 0;
+        text-align: center;
+      }
+
+      &__footer {
+        text-align: center;
+      }
+
+      &__bio__organization {
+        font-weight: 700;
+        color: var(--cta-color);
+      }
+    }
+  }
+
+  .partners {
+    padding: 100px 0;
+
+    &__list {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 80px;
     }
   }
 }

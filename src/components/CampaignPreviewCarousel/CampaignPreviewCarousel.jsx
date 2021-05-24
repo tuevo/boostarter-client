@@ -3,6 +3,7 @@ import React from 'react';
 import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
 import CampaignPreview from '../CampaignPreview';
+import './CampaignPreviewCarousel.scss';
 
 const responsive = {
   desktop: {
@@ -26,7 +27,7 @@ const CampaignPreviewCarousel = (props) => {
   const { campaigns } = props;
 
   return (
-    <div>
+    <div className="campaign-preview-carousel">
       <Carousel
         swipeable={false}
         draggable={true}

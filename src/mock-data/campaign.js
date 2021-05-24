@@ -1,6 +1,7 @@
 import campaignStatus from "../constants/campaign-status";
 
-export const mockCampaign = {
+export const mockCampaign1 = {
+  id: 1,
   thumbnail: 'https://pbs.twimg.com/media/E0xmq8MXIAM4aTa?format=jpg&name=4096x4096',
   title: 'VÌ MIỀN TRUNG THÂN YÊU',
   desc: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores',
@@ -35,6 +36,7 @@ export const mockCampaign = {
   },
   feedbacks: [
     {
+      id: 1,
       avatar: 'https://i.ibb.co/wMrWZjf/thunguyen.jpg',
       name: 'Thu Nguyen',
       createdAt: '2021-06-23T18:30:00.000Z',
@@ -43,6 +45,7 @@ export const mockCampaign = {
       comment: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias. vero eos et accusamus et iusto odio dignissimos.'
     },
     {
+      id: 2,
       avatar: 'https://i.ibb.co/cbrx5yX/viettran.jpg',
       name: 'Viet Tran',
       isCampaignOwner: false,
@@ -51,6 +54,7 @@ export const mockCampaign = {
       comment: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias. vero eos et accusamus et iusto odio dignissimos.'
     },
     {
+      id: 3,
       avatar: 'https://i.ibb.co/F3nwvK8/tuevo.jpg',
       name: 'Tue Vo',
       isCampaignOwner: true,
@@ -58,6 +62,7 @@ export const mockCampaign = {
       comment: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias. vero eos et accusamus et iusto odio dignissimos.'
     },
     {
+      id: 4,
       avatar: 'https://i.ibb.co/4S5VkHy/vienhuynh.jpg',
       name: 'Vien Huynh',
       isCampaignOwner: false,
@@ -82,6 +87,32 @@ export const mockCampaign = {
   ]
 }
 
-export const mockCampaignList = [1, 2, 3, 4, 5, 6, 7, 8].map(id => ({
-  id, ...mockCampaign
-}));
+export const mockCampaign2 = {
+  ...mockCampaign1,
+  id: 2,
+  thumbnail: 'https://i.ibb.co/t4HR0Z8/tran-hung-daovuong.jpg',
+  title: 'VIỆT SỬ KIÊU HÙNG',
+  category: 'SÁNG TẠO NỘI DUNG'
+}
+
+export const mockCampaign3 = {
+  ...mockCampaign1,
+  id: 3,
+  thumbnail: 'https://i.ibb.co/j8YrN02/1-58.jpg',
+  title: 'BỮA CƠM TÌNH THƯƠNG',
+}
+
+export const mockCampaign4 = {
+  ...mockCampaign1,
+  id: 4,
+  thumbnail: 'https://i.ibb.co/kcB08q0/ong-hut-than-thien-moi-truong-4.jpg',
+  title: 'ỐNG HÚT SẠCH',
+  category: 'CÔNG NGHỆ & ĐỔI MỚI'
+}
+
+export const mockCampaignList = [
+  mockCampaign1,
+  mockCampaign2,
+  mockCampaign3,
+  mockCampaign4,
+];

@@ -1,0 +1,50 @@
+.single-campaign-preview-carousel {
+  .owl-stage-outer {
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .owl-prev,
+  .owl-next {
+    position: absolute;
+    z-index: 10;
+    top: 30%;
+    transform: translateY(-30%);
+    color: var(--text-color-contrast) !important;
+    font-size: 150px !important;
+    opacity: 0.5;
+    transition: 0.35s ease;
+  }
+
+  .owl-prev {
+    left: -25%;
+
+    &:hover,
+    &:focus {
+      background-color: transparent !important;
+      outline: none !important;
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .owl-next {
+    right: -25%;
+
+    &:hover,
+    &:focus {
+      background-color: transparent !important;
+      outline: none !important;
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .owl-dots {
+    margin-top: 40px;
+  }
+}
