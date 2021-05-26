@@ -1,3 +1,5 @@
+@import "../../styles/mixin.scss";
+
 .layout {
   .ant-layout-header,
   .ant-layout-content {
@@ -13,6 +15,7 @@
   .ant-layout-content {
     padding: 0 !important;
     margin-top: 64px;
+    min-height: 100vh;
   }
 
   .ant-layout-header {
@@ -24,7 +27,41 @@
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   }
 
+  .header-right {
+    padding-right: 20px;
+
+    .ant-btn {
+      margin: 0 5px;
+      min-width: 125px;
+    }
+
+    .btn-register {
+      @include button-color(outline, var(--primary-color));
+    }
+
+    .user-menu {
+      display: inline-block;
+      margin-left: 30px;
+      min-width: 200px;
+      cursor: pointer;
+
+      .ant-list-item-meta {
+        align-items: center;
+      }
+
+      &__full-name {
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .ant-list-item-meta-description {
+        margin-top: -3px;
+      }
+    }
+  }
+
   .search-input {
+    margin-right: 20px;
     width: 300px;
     height: 40px;
     border-radius: 48px;
@@ -75,6 +112,31 @@
     .copyright {
       margin-top: 65px;
       text-align: center;
+    }
+  }
+}
+
+.app-sidebar {
+  &__avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 0 30px 0;
+
+    h4 {
+      margin: 15px 0 0 0;
+    }
+  }
+
+  &__menu {
+    .ant-menu-item,
+    .anticon {
+      font-size: 16px;
+    }
+
+    .anticon {
+      color: var(--cta-color);
+      margin-right: 20px;
     }
   }
 }

@@ -1,0 +1,35 @@
+.image-upload-preview {
+  display: flex;
+
+  .image {
+    position: relative;
+    z-index: 1;
+    margin-right: 2px;
+  }
+
+  .more {
+    position: relative;
+
+    &__cover {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      z-index: 2;
+      inset: 0;
+      background-color: rgba($color: #000000, $alpha: 0.5);
+      font-size: 36px;
+      color: var(--text-color-contrast);
+      cursor: pointer;
+
+      &__inner {
+        display: flex;
+        align-items: center;
+
+        .anticon {
+          font-size: 24px !important;
+        }
+      }
+    }
+  }
+}

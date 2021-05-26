@@ -1,8 +1,8 @@
-const campaignStatus = {
+export const campaignStatus = {
   REVIEW: {
     name: 'Đang chờ duyệt',
     value: 1,
-    color: 'grey'
+    color: 'processing'
   },
   OPENED: {
     name: 'Đang gây quỹ',
@@ -20,5 +20,3 @@ const campaignStatus = {
     color: 'red'
   }
 }
-
-export default campaignStatus;

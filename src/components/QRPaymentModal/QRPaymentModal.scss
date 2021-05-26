@@ -1,0 +1,21 @@
+.qr-payment-modal {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 150px 0;
+  }
+
+  &__logo {
+    margin-left: -25px;
+  }
+
+  &__qr-code-wrapper {
+    padding-top: 25px;
+  }
+
+  &__qr-code {
+    width: 250px;
+    height: 250px;
+  }
+}

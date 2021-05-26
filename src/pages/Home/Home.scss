@@ -4,15 +4,16 @@
   .banner {
     position: relative;
     z-index: 1;
-    height: 400px;
-    background-size: cover;
-    background-position: center center;
+    height: 450px;
+    background-size: 100% 100%;
+    background-position: center -150px;
+    background-attachment: fixed;
 
     .dark-cover {
       position: absolute;
       z-index: 2;
       inset: 0;
-      padding: 75px 0;
+      padding: 100px 0;
       background-color: rgba(0, 0, 0, 0.5);
       color: var(--text-color-contrast);
     }
@@ -66,8 +67,8 @@
 
     .right {
       float: right;
-      width: 546px;
-      height: 253px;
+      width: 600px;
+      height: 250px;
       background-color: rgba(255, 255, 255, 0.8);
 
       .featured-content {
@@ -106,17 +107,18 @@
     position: relative;
     z-index: 1;
     padding: 90px 0;
-    height: 750px;
+    height: 800px;
     background-size: 100% 100%;
     background-position: center center;
+    background-attachment: fixed;
 
     .dark-cover {
       position: absolute;
       z-index: 2;
       inset: 0;
-      padding: 75px 0;
+      padding: 100px 0 75px 0;
       background: rgba($color: #000000, $alpha: 0.6);
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(24px);
     }
 
     .carousel {
@@ -155,6 +157,12 @@
           inset: 0;
           background: rgba(0, 0, 0, 0.4);
           box-shadow: inset 0px -80px 200px rgba(0, 0, 0, 0.5);
+          cursor: pointer;
+          transition: 0.35s ease;
+
+          &:hover {
+            background-color: rgba($color: #000000, $alpha: 0.2);
+          }
         }
 
         &__detail {

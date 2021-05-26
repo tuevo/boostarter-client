@@ -7,7 +7,7 @@ import OwlCarousel from 'react-owl-carousel';
 import CampaignPreview from '../CampaignPreview';
 import './SingleCampaignPreviewCarousel.scss';
 
-const SingleCampaignPreviewCarousel = ({ campaigns, onChange }) => {
+const SingleCampaignPreviewCarousel = ({ campaigns, onChange, from }) => {
   return (
     <div className="single-campaign-preview-carousel">
       <OwlCarousel
@@ -16,8 +16,8 @@ const SingleCampaignPreviewCarousel = ({ campaigns, onChange }) => {
         nav
         items={1}
         center
-        autoPlay
-        autoplayTimeout={1000}
+        autoplay
+        autoplayTimeout={3000}
         onChange={e => {
           if (onChange) {
             onChange(e.item.index - 1);
@@ -25,7 +25,7 @@ const SingleCampaignPreviewCarousel = ({ campaigns, onChange }) => {
         }}
       >
         {campaigns.map(c => (
-          <CampaignPreview key={c.id} data={c} featured />
+          <CampaignPreview key={c.id} data={c} from={from} featured />
         ))}
       </OwlCarousel>
     </div>

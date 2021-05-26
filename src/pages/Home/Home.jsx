@@ -1,8 +1,10 @@
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { Avatar, Button } from 'antd';
 import Title from 'antd/lib/typography/Title';
-import React from 'react';
+import React, { useRef } from 'react';
 import NumberFormat from 'react-number-format';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import quoteIcon from '../../assets/images/quote-white.png';
 import CampaignPreviewCarousel from '../../components/CampaignPreviewCarousel/CampaignPreviewCarousel';
 import Container from '../../components/Container';
@@ -10,12 +12,13 @@ import CtaButton from '../../components/CtaButton';
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import SingleCampaignPreviewCarousel from '../../components/SingleCampaignPreviewCarousel/SingleCampaignPreviewCarousel';
 import { mockCategoryList, mockFeedbackList } from '../../mock-data';
-import { mockCampaignList } from '../../mock-data/campaign';
 import './Home.scss';
 
 export default function Home() {
-  const popularCampaignList = [...mockCampaignList];
-  const successCampaignList = [...mockCampaignList.slice(0, 3)];
+  const history = useHistory();
+  const successCampaignSectionRef = useRef();
+  const popularCampaignList = useSelector(state => state.campaigns);
+  const successCampaignList = useSelector(state => state.campaigns.slice(1, 4));
   let activeSuccessCampaign = successCampaignList[0];
 
   const onSuccessCampaignCarouselChange = (index) => {
@@ -23,11 +26,17 @@ export default function Home() {
       return;
 
     activeSuccessCampaign = successCampaignList[index];
+    if (activeSuccessCampaign && successCampaignSectionRef.current) {
+      successCampaignSectionRef.current.style.backgroundImage = `url(${activeSuccessCampaign.thumbnail})`;
+    }
   }
 
   return (
-    <div className="home">
-      <section className="banner" style={{ backgroundImage: 'url(https://pbs.twimg.com/media/E0xmq8MXIAM4aTa?format=jpg&name=4096x4096)' }}>
+    <div className="home animate__animated animate__fadeIn">
+      <section
+        className="banner"
+        style={{ backgroundImage: 'url(https://pbs.twimg.com/media/E0xmq8MXIAM4aTa?format=jpg&name=4096x4096)' }}
+      >
         <div className="dark-cover">
           <Container fluid>
             <div className="left">
@@ -37,7 +46,13 @@ export default function Home() {
                   At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrup.
               </p>
               </div>
-              <Button className="btn-view-campaign-detail" type="link">Xem chiến dịch</Button>
+              <Button
+                className="btn-view-campaign-detail"
+                type="link"
+                onClick={() => history.push('/campaign/1?tab=1&from=home')}
+              >
+                Xem chiến dịch
+              </Button>
               <div className="slide-controls">
                 <Button className="btn" icon={<LeftOutlined />} type="ghost" shape="circle" />
                 <Button className="btn" icon={<RightOutlined />} type="ghost" shape="circle" />
@@ -48,7 +63,7 @@ export default function Home() {
               <div className="featured-content">
                 <Title className="title" level={2}>{'Tầm nhìn & sứ mệnh'}</Title>
                 <p className="desc">
-                  Boostarter là một website dành cho những người muốn gây quỹ từ cộng đồng bằng cách lan tỏa câu chuyện của họ đến với nhiều người hơn và thay mặt họ tiếp nhận sự đóng góp từ cộng đồng.
+                  <b>Boostarter</b> là một website dành cho những người muốn gây quỹ từ cộng đồng bằng cách lan tỏa câu chuyện của họ đến với nhiều người hơn và thay mặt họ tiếp nhận sự đóng góp từ cộng đồng.
                 </p>
                 <div className="buttons">
                   <CtaButton size="large">Đăng ký ngay</CtaButton>
@@ -63,11 +78,12 @@ export default function Home() {
         <Container>
           <SectionTitle center>Chiến dịch nổi bật</SectionTitle>
           <div className="carousel">
-            <CampaignPreviewCarousel campaigns={popularCampaignList} />
+            <CampaignPreviewCarousel campaigns={popularCampaignList} from="home" />
           </div>
         </Container>
       </section>
       <section
+        ref={successCampaignSectionRef}
         className="success-campaigns"
         style={{ backgroundImage: `url(${activeSuccessCampaign.thumbnail})` }}
       >
@@ -79,6 +95,7 @@ export default function Home() {
             <div className="carousel">
               <SingleCampaignPreviewCarousel
                 campaigns={successCampaignList}
+                from="home"
                 onChange={index => onSuccessCampaignCarouselChange(index)}
               />
             </div>
@@ -118,7 +135,7 @@ export default function Home() {
             Đánh giá hàng đầu
           </SectionTitle>
           <div className="feedbacks">
-            {mockFeedbackList.map(f => (
+            {mockFeedbackList.filter(f => !f.isCampaignOwner).map(f => (
               <div key={f.id} className="feedback">
                 <div className="feedback__icon">
                   <img src={quoteIcon} alt="feedback icon" />

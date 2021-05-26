@@ -23,9 +23,7 @@ const responsive = {
   }
 };
 
-const CampaignPreviewCarousel = (props) => {
-  const { campaigns } = props;
-
+const CampaignPreviewCarousel = ({ campaigns, from }) => {
   return (
     <div className="campaign-preview-carousel">
       <Carousel
@@ -42,7 +40,7 @@ const CampaignPreviewCarousel = (props) => {
         infinite
       >
         {campaigns.map(c => (
-          <CampaignPreview key={c.id} data={c} />
+          <CampaignPreview key={c.id} data={c} from={from} />
         ))}
       </Carousel>
     </div>

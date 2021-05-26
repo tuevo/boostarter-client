@@ -1,0 +1,17 @@
+.donation-log-item {
+  &__time {
+    color: rgba($color: #000000, $alpha: 0.5);
+  }
+
+  &__owner {
+    padding: 10px 0;
+
+    .ant-list-item-meta-title {
+      font-weight: 700;
+    }
+
+    .ant-list-item-meta-description {
+      color: rgba($color: #000000, $alpha: 0.65);
+    }
+  }
+}

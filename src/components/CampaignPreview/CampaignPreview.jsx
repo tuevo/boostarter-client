@@ -2,13 +2,16 @@ import { CheckCircleFilled, ClockCircleFilled, StarFilled } from '@ant-design/ic
 import { Avatar, Card, Progress, Tag } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import React from 'react';
-import './CampaignPreview.scss';
 import NumberFormat from 'react-number-format';
+import { NavLink } from 'react-router-dom';
+import { daysFromNow } from '../../utils/date-time';
+import './CampaignPreview.scss';
 
 const { Meta } = Card;
 
-export default function CampaignPreview({ data, featured }) {
+export default function CampaignPreview({ data, featured, from }) {
   const currentRaisePercent = Math.round(data.currentRaise / data.targetRaise * 100);
+  const currentRaisePeriod = daysFromNow(data.endDate);
 
   if (featured) {
     return (
@@ -18,7 +21,9 @@ export default function CampaignPreview({ data, featured }) {
       >
         <div className="dark-cover">
           <div className="footer">
-            <Title className="title" level={2}>{data.title}</Title>
+            <Title className="title" level={2}>
+              <NavLink to={`/campaign/${data.id}?tab=1${from ? `&from=${from}` : ''}`}>{data.title}</NavLink>
+            </Title>
             <Title className="raise" level={3}>
               <NumberFormat
                 displayType="text"
@@ -55,7 +60,9 @@ export default function CampaignPreview({ data, featured }) {
           }
           title={(
             <>
-              <Title level={5}>{data.title}</Title>
+              <Title className="title" level={5}>
+                <NavLink to={`/campaign/${data.id}?tab=1${from ? `&from=${from}` : ''}`}>{data.title}</NavLink>
+              </Title>
               <div className="subtitle">
                 <Tag color={data.status.color}>{data.status.name}</Tag>
                 <div className="rating">
@@ -65,9 +72,9 @@ export default function CampaignPreview({ data, featured }) {
               </div>
             </>
           )}
-          description={data.desc}
         />
         <div className="footer">
+          <p className="desc">{data.desc}</p>
           <p className="category">{data.category}</p>
           <div className="raise-info">
             <div className="section-1">
@@ -87,7 +94,14 @@ export default function CampaignPreview({ data, featured }) {
             <Progress percent={currentRaisePercent} showInfo={false} status="active" />
             <div className="section-2">
               <ClockCircleFilled className="icon" />
-              <span>{data.currentPeriod}</span>
+              <NumberFormat
+                displayType="text"
+                value={currentRaisePeriod}
+                thousandSeparator={'.'}
+                decimalSeparator={','}
+                prefix={'Còn '}
+                suffix={' ngày'}
+              />
             </div>
           </div>
         </div>

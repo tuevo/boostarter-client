@@ -1,19 +1,21 @@
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import 'antd/dist/antd.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.scss';
 import AppLayout from './components/AppLayout';
-import 'antd/dist/antd.css';
-import Home from './pages/Home/Home';
-import { privatePages } from './pages/pages';
 import PrivateRoute from './components/PrivateRoute';
+// import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import Home from './pages/Home/Home';
+import { pages } from './pages/pages';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <AppLayout>
+          {/* <ScrollToTop /> */}
           <Route path="/" exact component={Home} />
           <Switch>
-            {privatePages.map(p => (
+            {pages.map(p => (
               <PrivateRoute {...p} key={p.id} />
             ))}
           </Switch>

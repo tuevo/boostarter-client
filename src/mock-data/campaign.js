@@ -1,90 +1,55 @@
-import campaignStatus from "../constants/campaign-status";
+import { campaignStatus } from "../constants";
+import { mockFeedbackList } from "./feedback";
+import { mockPackageList } from "./package";
+import { mockPostedStatusList } from "./posted-status";
+import { mockDonationLogList } from './donation-log';
 
 export const mockCampaign1 = {
   id: 1,
   thumbnail: 'https://pbs.twimg.com/media/E0xmq8MXIAM4aTa?format=jpg&name=4096x4096',
   title: 'VÌ MIỀN TRUNG THÂN YÊU',
-  desc: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores',
-  category: 'THIỆN NGUYỆN',
-  tags: ['THIỆN NGUYỆN', 'HƯỚNG VỀ MIỀN TRUNG'],
+  desc: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.',
+  categoryId: 2,
+  tags: ['thiennguyen', 'huongvemientrung'],
   targetRaise: 16600000,
   currentRaise: 12500000,
+  currentRaisePeriod: 'Còn 14 ngày',
   currency: 'VNĐ',
-  currentPeriod: 'Còn 15 ngày',
+  startDate: '2021-05-24T17:00:00.000Z',
+  endDate: '2021-06-08T17:00:00.000Z',
   status: campaignStatus.OPENED,
   rating: 4.5,
   numberOfRatings: 1250,
-  story: 'story',
-  donationPackages: [
-    {
-      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVY0YhJwsiGFMZG41z08Qmzn9wZ_UkkQfDUw&usqp=CAU',
-      title: 'QUÀ TRI ÂN + THƯ CẢM ƠN',
-      pricing: 2000000,
-      desc: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores. praesentium.',
-    },
-  ],
+  story: `
+    <p><b>
+      Những ngày này, nhân dân cả nước cùng với Đảng, Chính phủ, các lực lượng quân đội, công an, các ngành chức năng đang nỗ lực, khẩn trương hỗ trợ các tỉnh, thành phố miền Trung khắc phục quả nặng nề do thiên tai gây ra.
+    </b></p>
+    <br>
+    <img src="https://images.hcmcpv.org.vn/res/news/2020/11/01-11-2020-lu-chong-lu-bao-chong-bao-mien-trung-huy-dong-tong-luc-de-ung-pho-1F592CBF-details.jpg?vs=01112020084546" />
+    <center><i>Thôn Hữu Tân, xã Tân Ninh, huyện Quảng Ninh (Quảng Bình) bị nước lũ cô lập hoàn toàn. (Ảnh: TTXVN)</i></center>
+    <br>
+    <p>
+    Những ngày này, nhân dân cả nước cùng với Đảng, Chính phủ, các lực lượng quân đội, công an, các ngành chức năng đang nỗ lực, khẩn trương hỗ trợ các tỉnh, thành phố miền Trung khắc phục quả nặng nề do thiên tai gây ra.
+    </p>
+    <br>
+    <p>
+    Nhìn lại toàn bộ đợt "lũ chồng lũ, bão chồng bão" trong suốt tháng 10 vừa qua trên dải đất miền Trung ruột thịt, để thấy rõ hơn những yêu cầu nhiệm vụ, cũng như bài học kinh nghiệm và biện pháp ứng phó nhằm giảm thiểu tối đa thiệt hại do thiên tai gây ra, hỗ trợ hiệu quả, giúp nhân dân khu vực bị ảnh hưởng sớm ổn định đời sống, khôi phục sản xuất.
+    </p>
+  `,
+  packages: mockPackageList,
   owner: {
+    id: 1,
     avatar: 'https://i.ibb.co/F3nwvK8/tuevo.jpg',
-    name: 'Tue Vo',
+    fullName: 'Tue Vo',
     isFamous: true,
     numberOfCampaigns: 28,
     location: 'TP. Hồ Chí Minh, Việt Nam',
   },
-  contact: {
-    website: 'https://tuevo-resume.herokuapp.com',
-    facebook: 'https://fb.com/tuevo0312',
-  },
-  feedbacks: [
-    {
-      id: 1,
-      avatar: 'https://i.ibb.co/wMrWZjf/thunguyen.jpg',
-      name: 'Thu Nguyen',
-      createdAt: '2021-06-23T18:30:00.000Z',
-      isCampaignOwner: false,
-      rating: 4.5,
-      comment: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias. vero eos et accusamus et iusto odio dignissimos.'
-    },
-    {
-      id: 2,
-      avatar: 'https://i.ibb.co/cbrx5yX/viettran.jpg',
-      name: 'Viet Tran',
-      isCampaignOwner: false,
-      createdAt: '2021-06-23T18:30:00.000Z',
-      rating: 4.5,
-      comment: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias. vero eos et accusamus et iusto odio dignissimos.'
-    },
-    {
-      id: 3,
-      avatar: 'https://i.ibb.co/F3nwvK8/tuevo.jpg',
-      name: 'Tue Vo',
-      isCampaignOwner: true,
-      createdAt: '2021-06-23T18:30:00.000Z',
-      comment: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias. vero eos et accusamus et iusto odio dignissimos.'
-    },
-    {
-      id: 4,
-      avatar: 'https://i.ibb.co/4S5VkHy/vienhuynh.jpg',
-      name: 'Vien Huynh',
-      isCampaignOwner: false,
-      createdAt: '2021-06-23T18:30:00.000Z',
-      rating: 4.5,
-      comment: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias. vero eos et accusamus et iusto odio dignissimos.'
-    },
-  ],
-  timelines: [
-    {
-      createdAt: '2021-06-23T18:30:00.000Z',
-      content: 'Content',
-    },
-    {
-      createdAt: '2021-06-23T18:30:00.000Z',
-      content: 'Content',
-    },
-    {
-      createdAt: '2021-06-23T18:30:00.000Z',
-      content: 'Content',
-    },
-  ]
+  website: 'https://tuevo-resume.herokuapp.com',
+  facebook: 'https://fb.com/tuevo0312',
+  feedbacks: mockFeedbackList,
+  postedStatuses: mockPostedStatusList,
+  donationLogs: mockDonationLogList,
 }
 
 export const mockCampaign2 = {
@@ -92,7 +57,8 @@ export const mockCampaign2 = {
   id: 2,
   thumbnail: 'https://i.ibb.co/t4HR0Z8/tran-hung-daovuong.jpg',
   title: 'VIỆT SỬ KIÊU HÙNG',
-  category: 'SÁNG TẠO NỘI DUNG'
+  categoryId: 3,
+  status: campaignStatus.OPENED,
 }
 
 export const mockCampaign3 = {
@@ -100,6 +66,8 @@ export const mockCampaign3 = {
   id: 3,
   thumbnail: 'https://i.ibb.co/j8YrN02/1-58.jpg',
   title: 'BỮA CƠM TÌNH THƯƠNG',
+  categoryId: 2,
+  status: campaignStatus.REVIEW,
 }
 
 export const mockCampaign4 = {
@@ -107,7 +75,17 @@ export const mockCampaign4 = {
   id: 4,
   thumbnail: 'https://i.ibb.co/kcB08q0/ong-hut-than-thien-moi-truong-4.jpg',
   title: 'ỐNG HÚT SẠCH',
-  category: 'CÔNG NGHỆ & ĐỔI MỚI'
+  categoryId: 1,
+  status: campaignStatus.PENDING,
+}
+
+export const mockCampaign5 = {
+  ...mockCampaign1,
+  id: 5,
+  thumbnail: 'https://i.ibb.co/tXdmdP1/c6680b1f-96c5-47c9-8250-302bf94e6932-rw-1920.jpg',
+  title: 'ẤN TỐNG KINH SÁCH',
+  categoryId: 2,
+  status: campaignStatus.CLOSED,
 }
 
 export const mockCampaignList = [
@@ -115,4 +93,5 @@ export const mockCampaignList = [
   mockCampaign2,
   mockCampaign3,
   mockCampaign4,
+  mockCampaign5,
 ];
