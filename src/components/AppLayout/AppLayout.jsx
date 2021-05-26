@@ -4,7 +4,7 @@ import Text from 'antd/lib/typography/Text';
 import Title from 'antd/lib/typography/Title';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { mockUser1, mockUser2, mockUser4 } from '../../mock-data';
 import { auth } from '../../redux';
 import AppLogo from '../AppLogo';
@@ -37,13 +37,14 @@ const menu = (
 
 export default function AppLayout({ children }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const user = useSelector(state => state.user.auth);
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [authValue, setAuthValue] = useState(0);
 
   const sidebarMenu = {
     1: [
-      { key: '1', title: 'Chiến dịch cá nhân', icon: <FireOutlined />, url: '/' },
+      { key: '1', title: 'Chiến dịch cá nhân', icon: <FireOutlined />, url: '/personal-campaigns' },
     ],
     2: [
       { key: '1', title: 'Chiến dịch đã quyên góp', icon: <FireOutlined />, url: '/' }
@@ -56,6 +57,7 @@ export default function AppLayout({ children }) {
   const logout = () => {
     dispatch(auth(null));
     setAuthValue(0);
+    history.goBack();
   }
 
   return (
@@ -204,7 +206,7 @@ export default function AppLayout({ children }) {
               <Text>{user.role.name}</Text>
             </div>
             <div className="app-sidebar__menu">
-              <Menu>
+              <Menu onClick={() => setSidebarVisible(false)}>
                 {sidebarMenu[user.role.value].map(item => (
                   <Menu.Item key={item.id} icon={item.icon}>
                     <NavLink to={item.url}>{item.title}</NavLink>

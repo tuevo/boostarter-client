@@ -1,0 +1,28 @@
+@import "../../styles/mixin.scss";
+
+.personal-campaign {
+  padding: 30px 0;
+
+  .ant-page-header {
+    padding-left: 0;
+  }
+
+  &__campaigns {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 0;
+
+    &__item {
+      margin-bottom: 20px;
+
+      &:nth-of-type(even) {
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+    }
+  }
+
+  &__btn-create {
+    @include button-color(default, var(--cta-color));
+  }
+}

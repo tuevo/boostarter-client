@@ -1,0 +1,28 @@
+.create-campaign-modal {
+  .steps-content {
+    position: relative;
+    margin-top: 45px;
+    min-height: 550px;
+  }
+
+  .steps-action {
+    margin-top: 24px;
+
+    button {
+      margin: 0 !important;
+      margin-right: 8px !important;
+    }
+  }
+
+  &__policy {
+    &__content {
+      max-height: 500px;
+      overflow: hidden;
+      overflow-y: scroll;
+    }
+
+    &__confirm {
+      padding: 30px 0 15px 0;
+    }
+  }
+}

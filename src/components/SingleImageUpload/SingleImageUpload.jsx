@@ -120,6 +120,7 @@ export default function SingleImageUpload({ uploadText, initImageUrl, onImageCha
       {imagePreviewUrl && (
         <Image src={imagePreviewUrl} />
       )}
+      {!imagePreviewUrl && <div className="single-image-upload__spacing"></div>}
     </div>
   )
 }

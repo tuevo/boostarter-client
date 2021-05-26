@@ -20,7 +20,7 @@ export default function CampaignBasicInfoForm({ form, initValues, onFinished, on
       <Form.Item name="thumbnail">
         <SingleImageUpload
           uploadText="Tải ảnh lên"
-          initImageUrl={initValues.thumbnail}
+          initImageUrl={initValues ? initValues.thumbnail : undefined}
           onImageChange={(img) => {
             // TODO: upload image to cloud & get url
             console.log(img);
@@ -55,7 +55,7 @@ export default function CampaignBasicInfoForm({ form, initValues, onFinished, on
         name="tags"
       >
         <TagInput
-          initTags={initValues.tags}
+          initTags={initValues ? initValues.tags : []}
           onChange={tags => form.setFieldsValue({ tags })}
         />
       </Form.Item>
