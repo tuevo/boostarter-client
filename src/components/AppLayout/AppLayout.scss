@@ -28,9 +28,11 @@
   }
 
   .header-right {
+    display: flex;
+    align-items: center;
     padding-right: 20px;
 
-    .ant-btn {
+    &__btn {
       margin: 0 5px;
       min-width: 125px;
     }
@@ -39,9 +41,11 @@
       @include button-color(outline, var(--primary-color));
     }
 
+    .user-notification {
+      margin: 10px 20px 0 20px;
+    }
+
     .user-menu {
-      display: inline-block;
-      margin-left: 30px;
       min-width: 200px;
       cursor: pointer;
 
@@ -132,6 +136,10 @@
     .ant-menu-item,
     .anticon {
       font-size: 16px;
+    }
+
+    .ant-menu-item-selected {
+      font-weight: 700;
     }
 
     .anticon {

@@ -63,7 +63,7 @@ export default function CreateCampaignModal({ visible, onClose, onSubmit }) {
             <Input />
           </Form.Item>
           <Form.Item label="Gói quyên góp">
-            <Button icon={<PlusOutlined />}>Tạo gói</Button>
+            <Button className="create-campaign-modal__btn-create-package" icon={<PlusOutlined />}>Tạo gói</Button>
           </Form.Item>
         </Form>
       ),
@@ -121,24 +121,28 @@ export default function CreateCampaignModal({ visible, onClose, onSubmit }) {
       </Steps>
       <div className="steps-content">{steps[current].content}</div>
       <div className="steps-action">
-        {current > 0 && (
-          <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
-            Trở lại
-          </Button>
-        )}
-        {current < steps.length - 1 && (
-          <Button type="primary" onClick={() => next()}>
-            Tiếp tục
-          </Button>
-        )}
-        {current === steps.length - 1 && (
-          <Button type="primary" onClick={() => {
-            message.success('Khởi tạo chiến dịch thành công!');
-            onClose();
-          }}>
-            Xong
-          </Button>
-        )}
+        <div>
+          {current > 0 && (
+            <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
+              Trở lại
+            </Button>
+          )}
+        </div>
+        <div>
+          {current < steps.length - 1 && (
+            <Button type="primary" onClick={() => next()}>
+              Tiếp tục
+            </Button>
+          )}
+          {current === steps.length - 1 && (
+            <Button type="primary" onClick={() => {
+              message.success('Khởi tạo chiến dịch thành công!');
+              onClose();
+            }}>
+              Xong
+            </Button>
+          )}
+        </div>
       </div>
     </Modal>
   )

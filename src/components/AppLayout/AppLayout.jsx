@@ -11,6 +11,7 @@ import AppLogo from '../AppLogo';
 import Container from '../Container';
 import './AppLayout.scss';
 import { FireOutlined, PoweroffOutlined } from '@ant-design/icons';
+import NotificationMenu from '../NotificationMenu/NotificationMenu';
 
 const { Header, Content, Footer } = Layout;
 
@@ -57,7 +58,7 @@ export default function AppLayout({ children }) {
   const logout = () => {
     dispatch(auth(null));
     setAuthValue(0);
-    history.goBack();
+    history.push('/');
   }
 
   return (
@@ -83,8 +84,13 @@ export default function AppLayout({ children }) {
           </Menu.Item>
         </Menu>
         <div className="header-right">
-          <Input className="search-input" size="large" placeholder="Tìm kiếm chiến dịch" prefix={<SearchOutlined />} />
-          {!user && (<Button className="btn-register" size="large">Đăng ký</Button>)}
+          <Input className="search-input" size="large" placeholder="Tìm kiếm..." prefix={<SearchOutlined />} />
+          {!user && (<Button className="header-right__btn btn-register" size="large">Đăng ký</Button>)}
+          {user && (
+            <div className="user-notification">
+              <NotificationMenu />
+            </div>
+          )}
           <Popover
             placement="bottom"
             title={<span><b>Chế độ đăng nhập</b></span>}
@@ -126,12 +132,9 @@ export default function AppLayout({ children }) {
             }
             trigger="click"
           >
-            {!user && (<Button className="btn-login" size="large">Đăng nhập</Button>)}
+            {!user && (<Button className="header-right__btn btn-login" size="large">Đăng nhập</Button>)}
             {user && (
-              <div
-                className="user-menu"
-                onClick={() => setSidebarVisible(true)}
-              >
+              <div className="user-menu" onClick={() => setSidebarVisible(true)}>
                 <List.Item.Meta
                   avatar={<Avatar src={user.avatar} size={50} />}
                   title={<span className="user-menu__full-name">{user.fullName}</span>}
@@ -208,7 +211,7 @@ export default function AppLayout({ children }) {
             <div className="app-sidebar__menu">
               <Menu onClick={() => setSidebarVisible(false)}>
                 {sidebarMenu[user.role.value].map(item => (
-                  <Menu.Item key={item.id} icon={item.icon}>
+                  <Menu.Item key={item.key} icon={item.icon}>
                     <NavLink to={item.url}>{item.title}</NavLink>
                   </Menu.Item>
                 ))}

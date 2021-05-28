@@ -35,12 +35,11 @@ export default function ImageUploadPreview({ mediaSources, amountToShow = 4 }) {
           }
 
           return (
-            <div className="more">
+            <div key={i} className="more">
               <Image
                 wrapperClassName="image"
                 width={width}
                 height={height}
-                key={i}
                 src={sources[i]}
               />
               {sources.length > amountToShow && (

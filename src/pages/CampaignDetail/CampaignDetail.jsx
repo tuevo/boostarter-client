@@ -1,5 +1,5 @@
 import { CheckCircleFilled, CheckOutlined, CommentOutlined, ContainerOutlined, DeleteFilled, EditFilled, FacebookFilled, HeartFilled, HeartOutlined, HistoryOutlined, PaperClipOutlined, PlusOutlined, TwitterSquareFilled } from '@ant-design/icons';
-import { Avatar, Button, Col, Divider, Drawer, Form, List, Menu, message, Progress, Rate, Row, Tag, Timeline } from 'antd';
+import { Avatar, Button, Col, Divider, Drawer, Form, List, Menu, message, Progress, Rate, Row, Tag, Timeline, Tooltip } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import TextArea from 'antd/lib/input/TextArea';
 import Title from 'antd/lib/typography/Title';
@@ -338,11 +338,13 @@ export default function CampaignDetail(props) {
                 <div className="inner">
                   <div className="title">
                     <Title level={4}>Gói quyên góp</Title>
-                    <Button
-                      type="primary"
-                      icon={<PlusOutlined />}
-                      shape="circle"
-                    />
+                    <Tooltip title="Tạo gói mới" placement="right">
+                      <Button
+                        type="primary"
+                        icon={<PlusOutlined />}
+                        shape="circle"
+                      />
+                    </Tooltip>
                   </div>
                   <div className="packages">
                     {donationPackageList.map(p => (

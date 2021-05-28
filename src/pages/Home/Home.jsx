@@ -145,7 +145,7 @@ export default function Home() {
                   {f.comment}
                 </p>
                 <div className="feedback__footer">
-                  <Title className="feedback__name" level={5}>{f.name}</Title>
+                  <Title className="feedback__name" level={5}>{f.fullName}</Title>
                   <p className="feedback__bio">
                     {`${f.bio.role} tại `} <span className="feedback__bio__organization">{f.bio.organization}</span>
                   </p>

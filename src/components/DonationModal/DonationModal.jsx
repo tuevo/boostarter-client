@@ -50,7 +50,7 @@ export default function DonationModal({ visible, onClose, data, onSubmit }) {
             <span style={{ color: 'red' }}>*</span> Quyên góp bằng hình thức này sẽ không liên quan đến các <b>Gói quyên góp</b> của chiến dịch này.
           </p>
         </div>
-        <Divider>Hoặc</Divider>
+        <Divider className="donation-modal__divider">Hoặc</Divider>
         <Title level={5}>Chọn gói quyên góp</Title>
         <div className="donation-modal__packages">
           {data.packages.map(p => (
