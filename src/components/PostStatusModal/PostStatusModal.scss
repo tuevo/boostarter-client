@@ -1,0 +1,11 @@
+@import "../../styles/mixin.scss";
+
+.post-status-modal {
+  &__editor {
+    @include editor-height(300px);
+  }
+
+  &__media-upload {
+    padding: 20px 0;
+  }
+}

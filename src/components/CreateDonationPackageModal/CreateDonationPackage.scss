@@ -1,0 +1,13 @@
+@import "../../styles/mixin.scss";
+
+.create-donation-package-modal {
+  &__thumbnail-upload {
+    padding-bottom: 30px;
+  }
+
+  &__desc-editor {
+    padding-top: 10px;
+
+    @include editor-height(250px);
+  }
+}

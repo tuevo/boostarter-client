@@ -12,9 +12,11 @@ import CtaButton from '../../components/CtaButton';
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import SingleCampaignPreviewCarousel from '../../components/SingleCampaignPreviewCarousel/SingleCampaignPreviewCarousel';
 import { mockCategoryList, mockFeedbackList } from '../../mock-data';
+import { useScrollTop } from '../../hooks';
 import './Home.scss';
 
 export default function Home() {
+  useScrollTop();
   const history = useHistory();
   const successCampaignSectionRef = useRef();
   const popularCampaignList = useSelector(state => state.campaigns);

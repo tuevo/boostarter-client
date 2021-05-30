@@ -1,23 +1,19 @@
-import { Modal, Steps, Button, message, Form, DatePicker, Select, Input, Checkbox } from 'antd';
-import React, { useState } from 'react';
-import './CreateCampaignModal.scss';
-import CampaignBasicInfoForm from '../CampaignBasicInfoForm';
-import { useForm } from 'antd/lib/form/Form';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import { PlusOutlined } from '@ant-design/icons';
+import { Button, Checkbox, DatePicker, Form, Input, message, Modal, Select, Steps } from 'antd';
+import { useForm } from 'antd/lib/form/Form';
 import parse from 'html-react-parser';
+import React, { useState } from 'react';
+import CampaignBasicInfoForm from '../CampaignBasicInfoForm';
+import Editor from '../Editor/Editor';
+import './CreateCampaignModal.scss';
+import CreateDonationPackageModal from '../CreateDonationPackageModal';
 
 const { Step } = Steps;
 
 export default function CreateCampaignModal({ visible, onClose, onSubmit }) {
   const [current, setCurrent] = useState(0);
   const [basicInfoForm] = useForm();
-  const [story, setStory] = useState('');
-
-  const handleStoryChange = (value) => {
-    setStory(value);
-  }
+  const [createDonationPackageModalVisible, setCreateDonationModalVisible] = useState(false);
 
   const steps = [
     {
@@ -37,7 +33,9 @@ export default function CreateCampaignModal({ visible, onClose, onSubmit }) {
     {
       title: 'Kể câu chuyện của bạn',
       content: (
-        <ReactQuill theme="snow" value={story} onChange={handleStoryChange} style={{ height: 500 }} />
+        <div className="create-campaign-modal__story-editor">
+          <Editor />
+        </div>
       ),
     },
     {
@@ -48,10 +46,10 @@ export default function CreateCampaignModal({ visible, onClose, onSubmit }) {
           labelCol={{ span: 4 }}
         >
           <Form.Item label="Ngày bắt đầu">
-            <DatePicker style={{ width: '100%' }} />
+            <DatePicker style={{ width: '100%' }} placeholder="Chọn ngày" />
           </Form.Item>
           <Form.Item label="Ngày kết thúc">
-            <DatePicker style={{ width: '100%' }} />
+            <DatePicker style={{ width: '100%' }} placeholder="Chọn ngày" />
           </Form.Item>
           <Form.Item label="Mệnh giá tiền">
             <Select defaultValue="VNĐ">
@@ -63,7 +61,13 @@ export default function CreateCampaignModal({ visible, onClose, onSubmit }) {
             <Input />
           </Form.Item>
           <Form.Item label="Gói quyên góp">
-            <Button className="create-campaign-modal__btn-create-package" icon={<PlusOutlined />}>Tạo gói</Button>
+            <Button
+              className="create-campaign-modal__btn-create-package"
+              icon={<PlusOutlined />}
+              onClick={() => setCreateDonationModalVisible(true)}
+            >
+              Tạo gói
+            </Button>
           </Form.Item>
         </Form>
       ),
@@ -105,45 +109,53 @@ export default function CreateCampaignModal({ visible, onClose, onSubmit }) {
   };
 
   return (
-    <Modal
-      wrapClassName="create-campaign-modal"
-      title="Khởi tạo chiến dịch cá nhân"
-      visible={visible}
-      closable
-      onCancel={() => onClose()}
-      width={1000}
-      footer={null}
-    >
-      <Steps current={current}>
-        {steps.map(item => (
-          <Step key={item.title} title={item.title} />
-        ))}
-      </Steps>
-      <div className="steps-content">{steps[current].content}</div>
-      <div className="steps-action">
-        <div>
-          {current > 0 && (
-            <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
-              Trở lại
-            </Button>
-          )}
+    <>
+      <Modal
+        wrapClassName="create-campaign-modal"
+        title="Khởi tạo chiến dịch cá nhân"
+        visible={visible}
+        closable
+        onCancel={() => onClose()}
+        width={1000}
+        footer={null}
+      >
+        <Steps current={current}>
+          {steps.map(item => (
+            <Step key={item.title} title={item.title} />
+          ))}
+        </Steps>
+        <div className="steps-content">{steps[current].content}</div>
+        <div className="steps-action">
+          <div>
+            {current > 0 && (
+              <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
+                Trở lại
+              </Button>
+            )}
+          </div>
+          <div>
+            {current < steps.length - 1 && (
+              <Button type="primary" onClick={() => next()}>
+                Tiếp tục
+              </Button>
+            )}
+            {current === steps.length - 1 && (
+              <Button type="primary" onClick={() => {
+                message.success('Khởi tạo chiến dịch thành công!');
+                onClose();
+              }}>
+                Xong
+              </Button>
+            )}
+          </div>
         </div>
-        <div>
-          {current < steps.length - 1 && (
-            <Button type="primary" onClick={() => next()}>
-              Tiếp tục
-            </Button>
-          )}
-          {current === steps.length - 1 && (
-            <Button type="primary" onClick={() => {
-              message.success('Khởi tạo chiến dịch thành công!');
-              onClose();
-            }}>
-              Xong
-            </Button>
-          )}
-        </div>
-      </div>
-    </Modal>
+      </Modal>
+
+      <CreateDonationPackageModal
+        visible={createDonationPackageModalVisible}
+        onClose={() => setCreateDonationModalVisible(false)}
+        onSubmit={() => setCreateDonationModalVisible(false)}
+      />
+    </>
   )
 }

@@ -14,8 +14,12 @@
 
     button {
       margin: 0 !important;
-      margin-right: 8px !important;
+      min-width: 100px;
     }
+  }
+
+  &__story-editor {
+    @include editor-height(450px);
   }
 
   &__policy {

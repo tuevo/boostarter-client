@@ -85,7 +85,7 @@ export default function AppLayout({ children }) {
         </Menu>
         <div className="header-right">
           <Input className="search-input" size="large" placeholder="Tìm kiếm..." prefix={<SearchOutlined />} />
-          {!user && (<Button className="header-right__btn btn-register" size="large">Đăng ký</Button>)}
+          {!user && (<Button className="header-right__btn btn-register" type="primary" size="large">Đăng ký</Button>)}
           {user && (
             <div className="user-notification">
               <NotificationMenu />

@@ -30,3 +30,20 @@
   overflow: hidden;
   display: -webkit-box;
 }
+
+@mixin editor-height($height) {
+  .jodit-wysiwyg {
+    height: $height !important;
+  }
+}
+
+@mixin editor-content-style() {
+  img {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  i {
+    margin: 0 5px;
+  }
+}

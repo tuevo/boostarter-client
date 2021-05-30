@@ -8,9 +8,11 @@ import { useHistory } from 'react-router';
 import CampaignPreview from '../../components/CampaignPreview';
 import Container from '../../components/Container';
 import CreateCampaignModal from '../../components/CreateCampaignModal';
+import { useScrollTop } from '../../hooks';
 import './PersonalCampaign.scss';
 
 export default function PersonalCampaign() {
+  useScrollTop();
   const history = useHistory();
   const campaignList = useSelector(state => [...state.campaigns, ...state.campaigns.slice(0, 3)]);
   const [createCampaignVisible, setCreateCampaignVisible] = useState(false);
@@ -128,7 +130,7 @@ export default function PersonalCampaign() {
         <Container>
           <Card className="personal-campaign__card animate__animated animate__fadeInUp">
             <div className="personal-campaign__card__title personal-campaign__card__title personal-campaign__card__title personal-campaign__card__title--extra">
-              <span>Danh sách chiến dịch</span>
+              <span className="list-title">Danh sách chiến dịch</span>
               <div>
                 <Input className="search-input" size="large" placeholder="Tìm kiếm chiến dịch..." prefix={<SearchOutlined />} />
                 <Select className="filter-select" defaultValue={1}>
@@ -143,7 +145,7 @@ export default function PersonalCampaign() {
             <div className="personal-campaign__campaigns">
               {campaignList.map((c, i) => (
                 <div key={i} className="animate__animated animate__zoomIn personal-campaign__campaigns__item" style={{ animationDelay: `${0.1 * i}s` }}>
-                  <CampaignPreview data={c} />
+                  <CampaignPreview data={c} from="personal-campaigns" />
                 </div>
               ))}
             </div>

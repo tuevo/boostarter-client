@@ -6,6 +6,7 @@ import { mockDonationLogList } from './donation-log';
 
 export const mockCampaign1 = {
   id: 1,
+  isPrivate: false,
   thumbnail: 'https://pbs.twimg.com/media/E0xmq8MXIAM4aTa?format=jpg&name=4096x4096',
   title: 'VÌ MIỀN TRUNG THÂN YÊU',
   desc: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.',

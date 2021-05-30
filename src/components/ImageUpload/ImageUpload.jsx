@@ -29,6 +29,7 @@ const ErrorList = {
 
 export const ImageUpload = (props) => {
   const {
+    uploadText,
     name,
     action,
     fileList,
@@ -127,7 +128,7 @@ export const ImageUpload = (props) => {
     return (
       <div>
         { renderLoading()}
-        <div style={{ marginTop: 8 }}>Upload</div>
+        <div style={{ marginTop: 8 }}>{uploadText}</div>
       </div>
     );
   };
@@ -152,7 +153,7 @@ export const ImageUpload = (props) => {
         action={action}
         name={name || ''}
         listType="picture-card"
-        className="avatar-uploader"
+        className="app-image-upload"
         onChange={onChange || handleChange}
         onPreview={handlePreview}
         onRemove={onRemove}

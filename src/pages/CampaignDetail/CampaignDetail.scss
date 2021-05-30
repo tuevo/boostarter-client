@@ -43,10 +43,6 @@
           &__btn-accept {
             @include button-color(default, var(--success-color));
           }
-
-          &__btn-edit {
-            // @include button-color(outline, var(--primary-color));
-          }
         }
       }
 
@@ -103,10 +99,10 @@
           &__buttons {
             .ant-btn {
               min-width: 150px;
+              margin-right: 10px;
             }
 
             .btn-follow {
-              margin-left: 10px;
               @include button-color(outline, var(--primary-color));
             }
           }
@@ -137,36 +133,24 @@
         &--story {
           padding-top: 0;
 
-          img {
-            width: 100%;
-            margin-bottom: 10px;
-          }
-
-          i {
-            margin: 0 5px;
-          }
+          @include editor-content-style();
 
           .btn-edit-story-wrapper {
             padding-bottom: 20px;
             display: flex;
             justify-content: flex-end;
             align-items: center;
-
-            .ant-btn {
-              // @include button-color(outline, var(--primary-color));
-            }
           }
         }
 
         &--timeline {
           .btn-add-new-timeline {
+            margin-bottom: 30px;
             width: 100%;
             @include button-color(outline, var(--primary-color));
           }
 
           .posted-statuses {
-            padding-top: 30px;
-
             &__item {
               margin-bottom: 20px;
             }

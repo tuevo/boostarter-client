@@ -1,4 +1,4 @@
-import { CheckCircleFilled, CheckOutlined, CommentOutlined, ContainerOutlined, DeleteFilled, EditFilled, FacebookFilled, HeartFilled, HeartOutlined, HistoryOutlined, PaperClipOutlined, PlusOutlined, TwitterSquareFilled } from '@ant-design/icons';
+import { CheckCircleFilled, CheckOutlined, CloseOutlined, CommentOutlined, ContainerOutlined, DeleteFilled, EditFilled, FacebookFilled, HeartFilled, HeartOutlined, HistoryOutlined, PaperClipOutlined, PlusOutlined, TwitterSquareFilled, StopOutlined } from '@ant-design/icons';
 import { Avatar, Button, Col, Divider, Drawer, Form, List, Menu, message, Progress, Rate, Row, Tag, Timeline, Tooltip } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import TextArea from 'antd/lib/input/TextArea';
@@ -6,7 +6,7 @@ import Title from 'antd/lib/typography/Title';
 import parse from 'html-react-parser';
 import queryString from 'query-string';
 import QueueAnim from 'rc-queue-anim';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import NumberFormat from 'react-number-format';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
@@ -20,18 +20,18 @@ import Feedback from '../../components/Feedback/Feedback';
 import PackagePreview from '../../components/PackagePreview';
 import PostedStatus from '../../components/PostedStatus';
 import QRPaymentModal from '../../components/QRPaymentModal';
+import CreateDonationPackageModal from '../../components/CreateDonationPackageModal';
 import SectionTitle from '../../components/SectionTitle';
+import { userRole } from '../../constants';
 import { addFeedback } from '../../redux';
 import { daysFromNow } from '../../utils/date-time';
 import './CampaignDetail.scss';
+import PostStatusModal from '../../components/PostStatusModal/PostStatusModal';
+import StoryEditor from '../../components/StoryEditor/StoryEditor';
 
 export default function CampaignDetail(props) {
   const { id } = useParams();
-
-  const queryParams = queryString.parse(props.location.search);
-  if (queryParams['from'] === 'home') {
-    window.scrollTo(0, 0);
-  }
+  let queryParams = queryString.parse(props.location.search);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -59,12 +59,16 @@ export default function CampaignDetail(props) {
   const [donationModalVisible, setDonationModalVisible] = useState(false);
   const [qRPaymentModalVisible, setQRPaymentModalVisible] = useState(false);
 
+  const [createDonationPackageModalVisible, setCreateDonationPackageModalVisible] = useState(false);
+  const [postStatusModalVisible, setPostStatusModalVisible] = useState(false);
+  const [storyEditorVisible, setStoryEditorVisible] = useState(false);
+
   const currentRaisePeriod = daysFromNow(data.endDate);
   const currentRaisePercent = Math.round(data.currentRaise / data.targetRaise * 100);
 
   const handleClickMenu = (key) => {
     setSelectedMenuKey(key);
-    history.push(`/campaign/${id}?tab=${key}`);
+    history.replace(`/campaign/${id}?tab=${key}`);
   };
 
   const handleEditingCampaignFormFinished = (values) => {
@@ -99,6 +103,15 @@ export default function CampaignDetail(props) {
     addCommentForm.resetFields();
   }
 
+  useEffect(() => {
+    if (['home', 'personal-campaigns'].includes(queryParams['from'])) {
+      window.scrollTo(0, 0);
+      delete queryParams['from'];
+      const url = `${props.location.pathname}?${queryString.stringify(queryParams)}`;
+      history.replace(url);
+    }
+  }, []);
+
   return (
     <div className="campaign-detail">
       <section className="campaign-detail__header">
@@ -116,22 +129,32 @@ export default function CampaignDetail(props) {
                     <Tag color={data.status.color}>{data.status.name}</Tag>
                   </div>
                   <div className="toolbar__controls">
-                    <Button
-                      className="toolbar__controls__btn-accept"
-                      icon={<CheckOutlined />}
-                      type="primary"
-                      onClick={() => message.success('Duyệt chiến dịch thành công')}
-                    >
-                      Duyệt
-                    </Button>
-                    <Button icon={<DeleteFilled />} danger>Gỡ bỏ</Button>
-                    <Button
-                      className="toolbar__controls__btn-edit"
-                      icon={<EditFilled />}
-                      onClick={() => setEditingCampaignVisible(true)}
-                    >
-                      Chỉnh sửa
-                    </Button>
+                    {user && user.role.value === userRole.ADMIN.value && (
+                      <>
+                        <Button
+                          className="toolbar__controls__btn-accept"
+                          icon={<CheckOutlined />}
+                          type="primary"
+                          onClick={() => message.success('Duyệt chiến dịch thành công')}
+                        >
+                          Duyệt
+                        </Button>
+                        <Button icon={<CloseOutlined />}>Từ chối</Button>
+                        <Button icon={<DeleteFilled />} danger>Gỡ bỏ</Button>
+                      </>
+                    )}
+                    {user && user.id === data.owner.id && (
+                      <>
+                        <Button icon={<StopOutlined />}>Tạm dừng</Button>
+                        <Button
+                          className="toolbar__controls__btn-edit"
+                          icon={<EditFilled />}
+                          onClick={() => setEditingCampaignVisible(true)}
+                        >
+                          Chỉnh sửa
+                        </Button>
+                      </>
+                    )}
                   </div>
                 </div>
                 <Title className="title">{data.title}</Title>
@@ -219,25 +242,30 @@ export default function CampaignDetail(props) {
                   </div>
                   <div className="raise-info__section bottom">
                     <div className="raise-info__section__buttons">
-                      <Button
-                        type="primary"
-                        size="large"
-                        onClick={() => setDonationModalVisible(true)}
-                      >
-                        Quyên góp
-                      </Button>
-                      <Button
-                        className="btn-follow"
-                        type="primary"
-                        size="large"
-                        icon={btnFollowSelectable ? <HeartFilled /> : <HeartOutlined />}
-                        onClick={() => {
-                          setBtnFollowSelectable(!btnFollowSelectable);
-                          message.success(!btnFollowSelectable ? 'Đã thêm vào Danh sách chiến dịch theo dõi' : 'Đã xóa khỏi Danh sách chiến dịch theo dõi')
-                        }}
-                      >
-                        Theo dõi
-                      </Button>
+                      {(!user || (user && user.role.value === userRole.DONATOR.value)) && (
+                        <Button
+                          className="btn-donate"
+                          type="primary"
+                          size="large"
+                          onClick={() => setDonationModalVisible(true)}
+                        >
+                          Quyên góp
+                        </Button>
+                      )}
+                      {(!user || (user && user.id !== data.owner.id)) && (
+                        <Button
+                          className="btn-follow"
+                          type="primary"
+                          size="large"
+                          icon={btnFollowSelectable ? <HeartFilled /> : <HeartOutlined />}
+                          onClick={() => {
+                            setBtnFollowSelectable(!btnFollowSelectable);
+                            message.success(!btnFollowSelectable ? 'Đã thêm vào Danh sách chiến dịch theo dõi' : 'Đã xóa khỏi Danh sách chiến dịch theo dõi')
+                          }}
+                        >
+                          Theo dõi
+                        </Button>
+                      )}
                     </div>
                     <div className="raise-info__section__social-media">
                       <Button icon={<FacebookFilled />} shape="circle" onClick={() => data.facebook ? window.location.href = data.facebook : false} />
@@ -273,7 +301,15 @@ export default function CampaignDetail(props) {
                     <QueueAnim delay={25}>
                       <div ref={storyRef} key="story" className="tab-content tab-content--story">
                         <div className="btn-edit-story-wrapper">
-                          <Button icon={<EditFilled />} size="small">Chỉnh sửa</Button>
+                          {user && user.id === data.owner.id && (
+                            <Button
+                              icon={<EditFilled />}
+                              size="small"
+                              onClick={() => setStoryEditorVisible(true)}
+                            >
+                              Chỉnh sửa
+                            </Button>
+                          )}
                         </div>
                         {parse(data.story)}
                       </div>
@@ -282,7 +318,15 @@ export default function CampaignDetail(props) {
                   {selectedMenuKey === '2' && (
                     <QueueAnim delay={25}>
                       <div key="timeline" className="tab-content tab-content--timeline">
-                        <Button className="btn-add-new-timeline" size="large">TRẠNG THÁI MỚI</Button>
+                        {user && user.id === data.owner.id && (
+                          <Button
+                            className="btn-add-new-timeline"
+                            size="large"
+                            onClick={() => setPostStatusModalVisible(true)}
+                          >
+                            TRẠNG THÁI MỚI
+                          </Button>
+                        )}
                         <div className="posted-statuses">
                           {postedStatusList.map(s => (
                             <div key={s.id} className="posted-statuses__item">
@@ -338,13 +382,16 @@ export default function CampaignDetail(props) {
                 <div className="inner">
                   <div className="title">
                     <Title level={4}>Gói quyên góp</Title>
-                    <Tooltip title="Tạo gói mới" placement="right">
-                      <Button
-                        type="primary"
-                        icon={<PlusOutlined />}
-                        shape="circle"
-                      />
-                    </Tooltip>
+                    {user && user.id === data.owner.id && (
+                      <Tooltip title="Tạo gói mới" placement="right">
+                        <Button
+                          type="primary"
+                          icon={<PlusOutlined />}
+                          shape="circle"
+                          onClick={() => setCreateDonationPackageModalVisible(true)}
+                        />
+                      </Tooltip>
+                    )}
                   </div>
                   <div className="packages">
                     {donationPackageList.map(p => (
@@ -422,6 +469,26 @@ export default function CampaignDetail(props) {
       <QRPaymentModal
         visible={qRPaymentModalVisible}
         onClose={() => setQRPaymentModalVisible(false)}
+      />
+
+      <CreateDonationPackageModal
+        visible={createDonationPackageModalVisible}
+        data={data}
+        onClose={() => setCreateDonationPackageModalVisible(false)}
+        onSubmit={() => setCreateDonationPackageModalVisible(false)}
+      />
+
+      <PostStatusModal
+        visible={postStatusModalVisible}
+        onClose={() => setPostStatusModalVisible(false)}
+        onSubmit={() => setPostStatusModalVisible(false)}
+      />
+
+      <StoryEditor
+        visible={storyEditorVisible}
+        initContent={data.story}
+        onClose={() => setStoryEditorVisible(false)}
+        onSubmit={() => setStoryEditorVisible(false)}
       />
 
     </div>

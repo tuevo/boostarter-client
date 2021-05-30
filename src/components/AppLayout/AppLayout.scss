@@ -37,7 +37,7 @@
       min-width: 125px;
     }
 
-    .btn-register {
+    .btn-login {
       @include button-color(outline, var(--primary-color));
     }
 
@@ -86,7 +86,7 @@
       border-bottom: 0 !important;
 
       .logo {
-        margin-right: 50px;
+        margin-right: 40px;
       }
     }
   }
