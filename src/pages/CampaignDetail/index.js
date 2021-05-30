@@ -1,1 +1,1 @@
-export * from './CampaignDetail';
+export { default } from './CampaignDetail';

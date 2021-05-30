@@ -86,11 +86,16 @@
 
         .buttons {
           margin-top: 20px;
-          .btn-more {
-            margin-left: 15px;
-            @include button-color(outline, var(--primary-color));
-            background: #fff;
-          }
+        }
+
+        &__btn-register {
+          @include button-color(default, var(--cta-color));
+        }
+
+        &__btn-more {
+          margin-left: 15px;
+          @include button-color(outline, var(--primary-color));
+          background: #fff;
         }
       }
     }

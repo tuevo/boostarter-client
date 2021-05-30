@@ -1,0 +1,62 @@
+@import "../../styles/mixin.scss";
+
+.sign-in {
+  overflow: hidden;
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    padding: 110px 0;
+  }
+
+  &__right {
+    width: 550px;
+    .ant-card {
+      padding: 120px 30px;
+      width: 100%;
+      border: 0;
+      border-radius: 20px;
+      box-shadow: rgba(17, 12, 46, 0.1) 0px 48px 100px 0px;
+    }
+  }
+
+  &__left {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    img {
+      height: 100%;
+    }
+  }
+
+  .ant-form {
+    padding-top: 30px;
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__before-submit {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+  }
+
+  &__btn-submit {
+    width: 100%;
+  }
+
+  &__footer {
+    text-align: center;
+  }
+
+  &__btn-create-account {
+    @include button-color(default, var(--success-color));
+  }
+
+  &__more {
+    padding-top: 15px;
+  }
+}

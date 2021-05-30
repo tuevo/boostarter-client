@@ -1,4 +1,4 @@
-import { CheckCircleFilled, CheckOutlined, CloseOutlined, CommentOutlined, ContainerOutlined, DeleteFilled, EditFilled, FacebookFilled, HeartFilled, HeartOutlined, HistoryOutlined, PaperClipOutlined, PlusOutlined, TwitterSquareFilled, StopOutlined } from '@ant-design/icons';
+import { CheckCircleFilled, CheckOutlined, CloseOutlined, CommentOutlined, ContainerOutlined, DeleteFilled, EditFilled, FacebookFilled, HeartFilled, HeartOutlined, HistoryOutlined, PaperClipOutlined, PlusOutlined, StopOutlined, TwitterSquareFilled } from '@ant-design/icons';
 import { Avatar, Button, Col, Divider, Drawer, Form, List, Menu, message, Progress, Rate, Row, Tag, Timeline, Tooltip } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import TextArea from 'antd/lib/input/TextArea';
@@ -14,23 +14,24 @@ import { v4 } from 'uuid';
 import CampaignBasicInfoForm from '../../components/CampaignBasicInfoForm/CampaignBasicInfoForm';
 import CampaignPreviewCarousel from '../../components/CampaignPreviewCarousel';
 import Container from '../../components/Container';
+import CreateDonationPackageModal from '../../components/CreateDonationPackageModal';
 import DonationLogItem from '../../components/DonationLogItem';
 import DonationModal from '../../components/DonationModal/DonationModal';
 import Feedback from '../../components/Feedback/Feedback';
 import PackagePreview from '../../components/PackagePreview';
 import PostedStatus from '../../components/PostedStatus';
+import PostStatusModal from '../../components/PostStatusModal/PostStatusModal';
 import QRPaymentModal from '../../components/QRPaymentModal';
-import CreateDonationPackageModal from '../../components/CreateDonationPackageModal';
 import SectionTitle from '../../components/SectionTitle';
+import StoryEditor from '../../components/StoryEditor/StoryEditor';
 import { userRole } from '../../constants';
 import { addFeedback } from '../../redux';
 import { daysFromNow } from '../../utils/date-time';
 import './CampaignDetail.scss';
-import PostStatusModal from '../../components/PostStatusModal/PostStatusModal';
-import StoryEditor from '../../components/StoryEditor/StoryEditor';
 
 export default function CampaignDetail(props) {
   const { id } = useParams();
+  const signInLocation = useRef();
   let queryParams = queryString.parse(props.location.search);
 
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ export default function CampaignDetail(props) {
   const relatedCampaignList = campaignList.filter(c => c.id !== +id);
 
   const [data, setData] = useState(campaignList.find(c => c.id === +id));
-  const [selectedMenuKey, setSelectedMenuKey] = useState(queryParams['tab']);
+  const [selectedMenuKey, setSelectedMenuKey] = useState(queryParams['tab'] || '1');
   const [donationLogVisible, setDonationLogVisible] = useState(false);
 
   const [editingCampaignVisible, setEditingCampaignVisible] = useState(false);
@@ -104,12 +105,27 @@ export default function CampaignDetail(props) {
   }
 
   useEffect(() => {
+    let url = `${props.location.pathname}${props.location.search}`;
+
     if (['home', 'personal-campaigns'].includes(queryParams['from'])) {
       window.scrollTo(0, 0);
       delete queryParams['from'];
-      const url = `${props.location.pathname}?${queryString.stringify(queryParams)}`;
+      url = `${props.location.pathname}?${queryString.stringify(queryParams)}`;
       history.replace(url);
     }
+
+    if (!queryParams['tab']) {
+      queryParams['tab'] = '1';
+      url = `${props.location.pathname}?${queryString.stringify(queryParams)}`;
+      history.replace(url);
+    }
+
+    signInLocation.current = {
+      pathname: '/sign-in',
+      state: {
+        from: url
+      }
+    };
   }, []);
 
   return (
@@ -247,7 +263,14 @@ export default function CampaignDetail(props) {
                           className="btn-donate"
                           type="primary"
                           size="large"
-                          onClick={() => setDonationModalVisible(true)}
+                          onClick={() => {
+                            if (!user) {
+                              history.push(signInLocation.current);
+                              return;
+                            }
+
+                            setDonationModalVisible(true);
+                          }}
                         >
                           Quyên góp
                         </Button>
@@ -259,8 +282,13 @@ export default function CampaignDetail(props) {
                           size="large"
                           icon={btnFollowSelectable ? <HeartFilled /> : <HeartOutlined />}
                           onClick={() => {
+                            if (!user) {
+                              history.push(signInLocation.current);
+                              return;
+                            }
+
                             setBtnFollowSelectable(!btnFollowSelectable);
-                            message.success(!btnFollowSelectable ? 'Đã thêm vào Danh sách chiến dịch theo dõi' : 'Đã xóa khỏi Danh sách chiến dịch theo dõi')
+                            message.success(!btnFollowSelectable ? 'Đã thêm vào Danh sách chiến dịch theo dõi' : 'Đã xóa khỏi Danh sách chiến dịch theo dõi');
                           }}
                         >
                           Theo dõi
@@ -396,7 +424,17 @@ export default function CampaignDetail(props) {
                   <div className="packages">
                     {donationPackageList.map(p => (
                       <div className="packages__item" key={p.id}>
-                        <PackagePreview data={p} onClick={(_data) => setQRPaymentModalVisible(true)} />
+                        <PackagePreview
+                          data={p}
+                          onClick={(_data) => {
+                            if (!user) {
+                              history.push(signInLocation.current);
+                              return;
+                            }
+
+                            setQRPaymentModalVisible(true);
+                          }}
+                        />
                       </div>
                     ))}
                   </div>

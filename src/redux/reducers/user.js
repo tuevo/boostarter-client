@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { AUTH_USER } from '../../constants';
+
+const authUser = localStorage.getItem(AUTH_USER);
 
 const user = createSlice(
   {
     name: 'user',
     initialState: {
-      auth: null
+      auth: authUser ? JSON.parse(authUser) : null
     },
     reducers: {
       auth: (state, action) => {

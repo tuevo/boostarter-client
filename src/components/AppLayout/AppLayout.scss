@@ -37,8 +37,12 @@
       min-width: 125px;
     }
 
+    .btn-register {
+      @include button-color(default, var(--success-color));
+    }
+
     .btn-login {
-      @include button-color(outline, var(--primary-color));
+      // @include button-color(outline, var(--primary-color));
     }
 
     .user-notification {
@@ -93,7 +97,7 @@
 
   .app-footer {
     padding: 60px 0 35px 0;
-    background-color: #eeeeee !important;
+    background-color: #f0f2f5 !important;
 
     .left p {
       margin-top: 30px;

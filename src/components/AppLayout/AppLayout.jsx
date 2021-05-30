@@ -1,17 +1,16 @@
-import { DownOutlined, EnvironmentFilled, MailFilled, PhoneFilled, SearchOutlined } from '@ant-design/icons';
-import { Avatar, Button, Col, Drawer, Dropdown, Input, Layout, List, Menu, Popover, Radio, Row } from 'antd';
+import { DownOutlined, EnvironmentFilled, FireOutlined, MailFilled, PhoneFilled, PoweroffOutlined, SearchOutlined } from '@ant-design/icons';
+import { Avatar, Button, Col, Drawer, Dropdown, Input, Layout, List, Menu, Row } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import Title from 'antd/lib/typography/Title';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
-import { mockUser1, mockUser2, mockUser4 } from '../../mock-data';
+import { AUTH_USER } from '../../constants';
 import { auth } from '../../redux';
 import AppLogo from '../AppLogo';
 import Container from '../Container';
-import './AppLayout.scss';
-import { FireOutlined, PoweroffOutlined } from '@ant-design/icons';
 import NotificationMenu from '../NotificationMenu/NotificationMenu';
+import './AppLayout.scss';
 
 const { Header, Content, Footer } = Layout;
 
@@ -36,12 +35,17 @@ const menu = (
   </Menu>
 );
 
-export default function AppLayout({ children }) {
+export default function AppLayout({ children, location }) {
+  const signInLocation = {
+    pathname: '/sign-in',
+    state: {
+      from: `${location.pathname}${location.search}`
+    }
+  }
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector(state => state.user.auth);
   const [sidebarVisible, setSidebarVisible] = useState(false);
-  const [authValue, setAuthValue] = useState(0);
 
   const sidebarMenu = {
     1: [
@@ -55,10 +59,10 @@ export default function AppLayout({ children }) {
     ],
   }
 
-  const logout = () => {
+  const signOut = () => {
+    localStorage.removeItem(AUTH_USER);
     dispatch(auth(null));
-    setAuthValue(0);
-    history.push('/');
+    history.push(signInLocation);
   }
 
   return (
@@ -79,9 +83,6 @@ export default function AppLayout({ children }) {
               </div>
             </Dropdown>
           </Menu.Item>
-          <Menu.Item>
-            <NavLink to="/">Về chúng tôi</NavLink>
-          </Menu.Item>
         </Menu>
         <div className="header-right">
           <Input className="search-input" size="large" placeholder="Tìm kiếm..." prefix={<SearchOutlined />} />
@@ -91,59 +92,25 @@ export default function AppLayout({ children }) {
               <NotificationMenu />
             </div>
           )}
-          <Popover
-            placement="bottom"
-            title={<span><b>Chế độ đăng nhập</b></span>}
-            content={
-              <Radio.Group
-                style={{ display: 'flex', flexDirection: 'column' }}
-                value={authValue}
-                onChange={e => {
-                  const { value } = e.target;
-                  setAuthValue(value);
+          {!user && (
+            <Button
+              className="header-right__btn btn-login"
+              size="large"
+              onClick={() => history.push(signInLocation)}
+            >
+              Đăng nhập
+            </Button>
+          )}
+          {user && (
+            <div className="user-menu" onClick={() => setSidebarVisible(true)}>
+              <List.Item.Meta
+                avatar={<Avatar src={user.avatar} size={50} />}
+                title={<span className="user-menu__full-name">{user.fullName}</span>}
+                description={<span className="user-menu__role">{user.role.name}</span>}
+              />
+            </div>
 
-                  switch (value) {
-                    case 0:
-                      logout();
-                      break;
-
-                    case 1:
-                      dispatch(auth(mockUser1));
-                      break;
-
-                    case 2:
-                      dispatch(auth(mockUser4))
-                      break;
-
-                    case 3:
-                      dispatch(auth(mockUser2));
-                      break;
-
-                    default:
-                      break;
-                  }
-                }}
-              >
-                <Radio value={0}>Chưa đăng nhập</Radio>
-                <Radio value={1}>Người vận động</Radio>
-                <Radio value={2}>Người quyên góp</Radio>
-                <Radio value={3}>Quản trị viên</Radio>
-              </Radio.Group>
-            }
-            trigger="click"
-          >
-            {!user && (<Button className="header-right__btn btn-login" size="large">Đăng nhập</Button>)}
-            {user && (
-              <div className="user-menu" onClick={() => setSidebarVisible(true)}>
-                <List.Item.Meta
-                  avatar={<Avatar src={user.avatar} size={50} />}
-                  title={<span className="user-menu__full-name">{user.fullName}</span>}
-                  description={<span className="user-menu__role">{user.role.name}</span>}
-                />
-              </div>
-
-            )}
-          </Popover>
+          )}
         </div>
       </Header>
       <Content style={{ padding: '0 50px' }}>
@@ -215,7 +182,7 @@ export default function AppLayout({ children }) {
                     <NavLink to={item.url}>{item.title}</NavLink>
                   </Menu.Item>
                 ))}
-                <Menu.Item onClick={() => logout()} icon={<PoweroffOutlined />}>Đăng xuất</Menu.Item>
+                <Menu.Item onClick={() => signOut()} icon={<PoweroffOutlined />}>Đăng xuất</Menu.Item>
               </Menu>
             </div>
           </div>

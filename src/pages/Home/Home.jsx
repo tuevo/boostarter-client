@@ -8,11 +8,10 @@ import { useHistory } from 'react-router';
 import quoteIcon from '../../assets/images/quote-white.png';
 import CampaignPreviewCarousel from '../../components/CampaignPreviewCarousel/CampaignPreviewCarousel';
 import Container from '../../components/Container';
-import CtaButton from '../../components/CtaButton';
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import SingleCampaignPreviewCarousel from '../../components/SingleCampaignPreviewCarousel/SingleCampaignPreviewCarousel';
-import { mockCategoryList, mockFeedbackList } from '../../mock-data';
 import { useScrollTop } from '../../hooks';
+import { mockCategoryList, mockFeedbackList } from '../../mock-data';
 import './Home.scss';
 
 export default function Home() {
@@ -68,8 +67,8 @@ export default function Home() {
                   <b>Boostarter</b> là một website dành cho những người muốn gây quỹ từ cộng đồng bằng cách lan tỏa câu chuyện của họ đến với nhiều người hơn và thay mặt họ tiếp nhận sự đóng góp từ cộng đồng.
                 </p>
                 <div className="buttons">
-                  <CtaButton size="large">Đăng ký ngay</CtaButton>
-                  <Button className="btn-more" size="large">Tìm hiểu thêm</Button>
+                  <Button className="featured-content__btn-register" size="large" type="primary">Trải nghiệm ngay</Button>
+                  <Button className="featured-content__btn-more" size="large">Tìm hiểu thêm</Button>
                 </div>
               </div>
             </div>
