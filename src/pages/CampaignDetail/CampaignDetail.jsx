@@ -37,6 +37,7 @@ export default function CampaignDetail(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const storyRef = useRef();
+  const commentTextAreaRef = useRef();
 
   const user = useSelector(state => state.user.auth);
   const campaignList = useSelector(state => state.campaigns);
@@ -89,17 +90,25 @@ export default function CampaignDetail(props) {
   }
 
   const handleAddCommentFormFinished = (values) => {
-    if (!user.id)
+    if (!user) {
+      history.push(signInLocation.current);
       return;
+    }
+
+    const { comment } = values;
+    if (!comment) {
+      return;
+    }
 
     const newFeedback = {
       id: v4(),
       createdAt: new Date().toISOString(),
       rating: 4.5,
       isCampaignOwner: user.id ? user.id === data.owner.id : false,
-      comment: values['comment'],
+      comment,
       ...user
     };
+
     dispatch(addFeedback(newFeedback));
     addCommentForm.resetFields();
   }
@@ -126,7 +135,7 @@ export default function CampaignDetail(props) {
         from: url
       }
     };
-  }, []);
+  }, [props.location.search]);
 
   return (
     <div className="campaign-detail">
@@ -375,7 +384,20 @@ export default function CampaignDetail(props) {
                             onFinish={handleAddCommentFormFinished}
                           >
                             <Form.Item name="comment">
-                              <TextArea rows={4} placeholder={user ? `${user.fullName}, bạn nghĩ gì về chiến dịch này?` : 'Bạn nghĩ gì về chiến dịch này?'} />
+                              <TextArea
+                                ref={commentTextAreaRef}
+                                rows={4}
+                                placeholder={user ? `${user.fullName}, bạn nghĩ gì về chiến dịch này?` : 'Bạn nghĩ gì về chiến dịch này?'}
+                                onKeyUp={e => {
+                                  if (e.keyCode === 13) {
+                                    addCommentForm.submit();
+
+                                    if (commentTextAreaRef.current) {
+                                      commentTextAreaRef.current.focus();
+                                    }
+                                  }
+                                }}
+                              />
                             </Form.Item>
                             <Button
                               type="primary"

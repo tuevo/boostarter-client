@@ -58,12 +58,6 @@ export default function SignIn(props) {
     message.error('Đăng nhập thất bại');
   }
 
-  const handleKeyUp = (e) => {
-    if (e.keyCode === 13) {
-      form.submit();
-    }
-  }
-
   return (
     <div className="sign-in">
       <Container>
@@ -93,7 +87,7 @@ export default function SignIn(props) {
                         message: 'Vui lòng nhập địa chỉ email'
                       }]}
                     >
-                      <Input autoFocus onKeyUp={handleKeyUp} />
+                      <Input autoFocus />
                     </Form.Item>
                     <Form.Item
                       label="Mật khẩu"
@@ -103,7 +97,13 @@ export default function SignIn(props) {
                         message: 'Vui lòng nhập mật khẩu'
                       }]}
                     >
-                      <Input.Password onKeyUp={handleKeyUp} />
+                      <Input.Password
+                        onKeyUp={e => {
+                          if (e.keyCode === 13) {
+                            form.submit();
+                          }
+                        }}
+                      />
                     </Form.Item>
                     <div className="sign-in__before-submit">
                       <Checkbox>Lưu tài khoản</Checkbox>
