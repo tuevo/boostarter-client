@@ -1,235 +1,250 @@
 @import "../../styles/mixin.scss";
 
 .campaign-detail {
-  h5 {
-    margin: 0 !important;
-  }
-
-  &__header {
-    margin: 50px 0;
-
-    &__left {
-      img {
-        width: 100%;
-        height: 448px;
-      }
+    h5 {
+        margin: 0 !important;
     }
 
-    &__right {
-      padding-left: 50px;
-      color: #000;
+    &__header {
+        margin: 50px 0;
 
-      .toolbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-
-        &__status {
-          .ant-tag {
-            font-size: 14px;
-            padding: 8px 20px !important;
-          }
-        }
-
-        &__controls {
-          .ant-btn {
-            min-width: 100px;
-
-            &:nth-of-type(even) {
-              margin: 0 5px;
+        &__left {
+            img {
+                width: 100%;
+                height: 448px;
             }
-          }
-
-          &__btn-accept {
-            @include button-color(default, var(--success-color));
-          }
-        }
-      }
-
-      .title {
-        margin: 30px 0 15px 0;
-      }
-
-      .desc {
-        margin: 0;
-        text-align: justify;
-      }
-
-      .featured-info {
-        display: flex;
-        justify-content: space-between;
-        padding: 30px 0;
-
-        &__owner {
-          width: 70%;
         }
 
-        &__owner__name {
-          font-size: 18px;
-          font-weight: 700;
-          color: rgba($color: #000000, $alpha: 0.7);
-        }
+        &__right {
+            padding-left: 50px;
+            color: #000;
 
-        &__owner__popular-icon {
-          margin-left: 10px;
-          color: var(--primary-color);
-        }
+            .toolbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
 
-        &__rating {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
+                &__status {
+                    .ant-tag {
+                        font-size: 14px;
+                        padding: 8px 20px !important;
+                    }
+                }
 
-          &__text {
-            margin-right: 1px;
-          }
-        }
-      }
+                &__controls {
+                    .ant-btn {
+                        min-width: 100px;
 
-      .raise-info {
-        &__section {
-          display: flex;
-          justify-content: space-between;
+                        &:nth-of-type(even) {
+                            margin: 0 5px;
+                        }
+                    }
 
-          &.bottom {
-            padding-top: 20px;
-            align-items: flex-end;
-          }
-
-          &__buttons {
-            .ant-btn {
-              min-width: 150px;
-              margin-right: 10px;
+                    &__btn-accept {
+                        @include button-color(default, var(--success-color));
+                    }
+                }
             }
 
-            .btn-follow {
-              @include button-color(outline, var(--primary-color));
+            .title {
+                margin: 30px 0 15px 0;
             }
-          }
 
-          &__social-media {
-            .ant-btn {
-              border: 0;
+            .desc {
+                margin: 0;
+                text-align: justify;
             }
-          }
+
+            .featured-info {
+                display: flex;
+                justify-content: space-between;
+                padding: 30px 0;
+
+                &__owner {
+                    width: 70%;
+                }
+
+                &__owner__name {
+                    font-size: 18px;
+                    font-weight: 700;
+                    color: rgba($color: #000000, $alpha: 0.7);
+                }
+
+                &__owner__popular-icon {
+                    margin-left: 10px;
+                    color: var(--primary-color);
+                }
+
+                &__rating {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-end;
+
+                    &__text {
+                        margin-right: 1px;
+                    }
+                }
+            }
+
+            .raise-info {
+                &__section {
+                    display: flex;
+                    justify-content: space-between;
+
+                    &.bottom {
+                        padding-top: 20px;
+                        align-items: flex-end;
+                    }
+
+                    &__buttons {
+                        .ant-btn {
+                            min-width: 150px;
+                            margin-right: 10px;
+                        }
+
+                        .btn-follow {
+                            @include button-color(outline, var(--primary-color));
+                        }
+                    }
+
+                    &__social-media {
+                        .ant-btn {
+                            border: 0;
+                        }
+                    }
+                }
+            }
         }
-      }
     }
-  }
 
-  &__body {
-    .ant-menu-item {
-      margin-left: 0 !important;
-      margin-right: 40px !important;
-    }
-
-    &__left {
-      width: 100%;
-
-      .tab-content {
-        padding-top: 30px;
-        color: #000;
-
-        &--story {
-          padding-top: 0;
-
-          @include editor-content-style();
-
-          .btn-edit-story-wrapper {
-            padding-bottom: 20px;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-          }
+    &__body {
+        .ant-menu-item {
+            margin-left: 0 !important;
+            margin-right: 40px !important;
         }
 
-        &--timeline {
-          .btn-add-new-timeline {
-            margin-bottom: 30px;
+        &__left {
             width: 100%;
-            @include button-color(outline, var(--primary-color));
-          }
 
-          .posted-statuses {
-            &__item {
-              margin-bottom: 20px;
+            .tab-content {
+                padding-top: 30px;
+                color: #000;
+
+                &--story {
+                    padding-top: 0;
+
+                    @include editor-content-style();
+
+                    .btn-edit-story-wrapper {
+                        padding: 20px 0 15px 0;
+                        display: flex;
+                        justify-content: flex-end;
+                        align-items: center;
+                    }
+                }
+
+                &--timeline {
+                    .btn-add-new-timeline {
+                        margin-bottom: 30px;
+                        width: 100%;
+                        @include button-color(outline, var(--primary-color));
+                    }
+
+                    .posted-statuses {
+                        &__item {
+                            margin-bottom: 20px;
+                        }
+                    }
+                }
+
+                &--feedback {
+                    .comment-input {
+                        display: flex;
+
+                        .ant-form {
+                            margin-left: 20px;
+                            width: 90%;
+                        }
+
+                        .ant-form-item {
+                            margin-bottom: 10px;
+                        }
+
+                        .ant-form-item .ant-mentions,
+                        .ant-form-item textarea.ant-input {
+                            border-radius: 5px;
+                            padding: 10px;
+                        }
+                    }
+
+                    .feedbacks {
+                        padding-top: 30px;
+
+                        &__item {
+                            margin-bottom: 15px;
+                        }
+                    }
+                }
+
+                &--stander {
+                    display: flex;
+                    justify-content: space-between;
+                    padding-top: 45px;
+
+                    &__left > img {
+                        width: 125px;
+                    }
+
+                    &__right {
+                        padding-left: 30px;
+                        text-align: justify;
+                    }
+                }
             }
-          }
+
+            .tags {
+                padding: 30px 0;
+                margin-left: -5px;
+
+                .ant-tag {
+                    background: #f5f5f5 !important;
+                }
+            }
         }
 
-        &--feedback {
-          .comment-input {
-            display: flex;
+        &__right {
+            padding: 15px 0 15px 50px;
 
-            .ant-form {
-              margin-left: 20px;
-              width: 90%;
+            .inner {
+                padding: 30px 15px;
+                border: 1px solid #eee;
+                border-radius: 20px;
+
+                .title {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    h4 {
+                        margin: 0 !important;
+                        color: rgba($color: #000000, $alpha: 0.7);
+                    }
+                }
+
+                .packages__item {
+                    margin-top: 20px;
+                }
             }
-
-            .ant-form-item {
-              margin-bottom: 10px;
-            }
-
-            .ant-form-item .ant-mentions,
-            .ant-form-item textarea.ant-input {
-              border-radius: 5px;
-              padding: 10px;
-            }
-          }
-
-          .feedbacks {
-            padding-top: 30px;
-
-            &__item {
-              margin-bottom: 15px;
-            }
-          }
         }
-      }
-
-      .tags {
-        padding: 30px 0;
-        margin-left: -5px;
-
-        .ant-tag {
-          background: #f5f5f5 !important;
-        }
-      }
     }
 
-    &__right {
-      padding: 15px 0 15px 50px;
+    &__suggestion {
+        padding: 40px 0;
 
-      .inner {
-        padding: 30px 15px;
-        border: 1px solid #eee;
-        border-radius: 20px;
-
-        .title {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-
-          h4 {
-            margin: 0 !important;
-            color: rgba($color: #000000, $alpha: 0.7);
-          }
+        .carousel {
+            padding: 40px 0;
+            margin-left: -20px;
+            width: 100%;
         }
-
-        .packages__item {
-          margin-top: 20px;
-        }
-      }
     }
-  }
-
-  &__suggestion {
-    padding: 40px 0;
-
-    .carousel {
-      padding: 40px 0;
-      margin-left: -20px;
-      width: 100%;
-    }
-  }
 }
