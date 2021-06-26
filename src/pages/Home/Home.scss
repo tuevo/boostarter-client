@@ -1,262 +1,263 @@
 @import "../../styles/mixin.scss";
 
 .home {
-  .banner {
-    position: relative;
-    z-index: 1;
-    height: 450px;
-    background-size: 100% 100%;
-    background-position: center -150px;
-    background-attachment: fixed;
-
-    .dark-cover {
-      position: absolute;
-      z-index: 2;
-      inset: 0;
-      padding: 100px 0;
-      background-color: rgba(0, 0, 0, 0.5);
-      color: var(--text-color-contrast);
-    }
-
-    .left {
-      float: left;
-      padding: 30px 0 0 285px;
-    }
-
-    .campaign {
-      .title {
-        color: inherit;
-      }
-
-      .desc {
-        width: 394px;
-      }
-    }
-
-    .btn-view-campaign-detail {
-      padding: 0;
-      margin-top: 10px;
-      color: inherit;
-    }
-
-    .slide-controls {
-      $control-mr: 16px;
-
-      display: flex;
-      align-items: center;
-      margin-top: 22px;
-
-      .btn {
-        margin-right: $control-mr;
-        width: 40px;
-        height: 40px;
-        color: inherit;
-        transition: 0.35s ease;
-
-        &:hover {
-          background-color: #fff;
-          color: #000;
-          border-color: #fff;
-        }
-      }
-
-      .status {
-        font-size: 14px;
-      }
-    }
-
-    .right {
-      float: right;
-      width: 600px;
-      height: 250px;
-      background-color: rgba(255, 255, 255, 0.8);
-
-      .featured-content {
-        padding: 35px 40px 40px 40px;
-
-        .title {
-          font-weight: 400;
-        }
-
-        .desc {
-          font-size: 14px;
-          line-height: 22px;
-          color: rgba(0, 0, 0, 0.65);
-        }
-
-        .buttons {
-          margin-top: 20px;
-        }
-
-        &__btn-register {
-          @include button-color(default, var(--cta-color));
-        }
-
-        &__btn-more {
-          margin-left: 15px;
-          @include button-color(outline, var(--primary-color));
-          background: #fff;
-        }
-      }
-    }
-  }
-
-  .popular-campaigns {
-    padding: 120px 0;
-
-    .carousel {
-      margin-top: 40px;
-    }
-  }
-
-  .success-campaigns {
-    position: relative;
-    z-index: 1;
-    padding: 90px 0;
-    height: 800px;
-    background-size: 100% 100%;
-    background-position: center center;
-    background-attachment: fixed;
-
-    .dark-cover {
-      position: absolute;
-      z-index: 2;
-      inset: 0;
-      padding: 100px 0 75px 0;
-      background: rgba($color: #000000, $alpha: 0.6);
-      backdrop-filter: blur(24px);
-    }
-
-    .carousel {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      margin-top: 45px;
-      width: 700px;
-    }
-  }
-
-  .featured-categories {
-    padding: 90px 45px 45px 45px;
-
-    .categories {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 30px 0;
-
-      .category {
+    .banner {
         position: relative;
         z-index: 1;
-        margin-top: 20px;
-        width: 660px;
-        height: 330px;
-        border-radius: 20px;
-        overflow: hidden;
+        height: 450px;
+        background-size: 100% 100%;
+        background-position: center -150px;
+        background-attachment: fixed;
+
+        .dark-cover {
+            position: absolute;
+            z-index: 2;
+            inset: 0;
+            padding: 100px 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: var(--text-color-contrast);
+        }
+
+        .left {
+            float: left;
+            padding: 30px 0 0 285px;
+        }
+
+        .campaign {
+            .title {
+                color: inherit;
+            }
+
+            .desc {
+                width: 475px;
+                @include text-overflow(3);
+            }
+        }
+
+        .btn-view-campaign-detail {
+            padding: 0;
+            margin-top: 10px;
+            color: inherit;
+        }
+
+        .slide-controls {
+            $control-mr: 16px;
+
+            display: flex;
+            align-items: center;
+            margin-top: 22px;
+
+            .btn {
+                margin-right: $control-mr;
+                width: 40px;
+                height: 40px;
+                color: inherit;
+                transition: 0.35s ease;
+
+                &:hover {
+                    background-color: #fff;
+                    color: #000;
+                    border-color: #fff;
+                }
+            }
+
+            .status {
+                font-size: 14px;
+            }
+        }
+
+        .right {
+            float: right;
+            width: 600px;
+            height: 250px;
+            background-color: rgba(255, 255, 255, 0.8);
+
+            .featured-content {
+                padding: 35px 40px 40px 40px;
+
+                .title {
+                    font-weight: 400;
+                }
+
+                .desc {
+                    font-size: 14px;
+                    line-height: 22px;
+                    color: rgba(0, 0, 0, 0.65);
+                }
+
+                .buttons {
+                    margin-top: 20px;
+                }
+
+                &__btn-register {
+                    @include button-color(default, var(--cta-color));
+                }
+
+                &__btn-more {
+                    margin-left: 15px;
+                    @include button-color(outline, var(--primary-color));
+                    background: #fff;
+                }
+            }
+        }
+    }
+
+    .popular-campaigns {
+        padding: 120px 0;
+
+        .carousel {
+            margin-top: 40px;
+        }
+    }
+
+    .success-campaigns {
+        position: relative;
+        z-index: 1;
+        padding: 90px 0;
+        height: 800px;
         background-size: 100% 100%;
         background-position: center center;
-        color: var(--text-color-contrast);
-        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+        background-attachment: fixed;
 
-        &__dark-cover {
-          position: absolute;
-          z-index: 2;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.4);
-          box-shadow: inset 0px -80px 200px rgba(0, 0, 0, 0.5);
-          cursor: pointer;
-          transition: 0.35s ease;
-
-          &:hover {
-            background-color: rgba($color: #000000, $alpha: 0.2);
-          }
+        .dark-cover {
+            position: absolute;
+            z-index: 2;
+            inset: 0;
+            padding: 100px 0 75px 0;
+            background: rgba($color: #000000, $alpha: 0.6);
+            backdrop-filter: blur(24px);
         }
 
-        &__detail {
-          position: absolute;
-          left: 45px;
-          bottom: 35px;
+        .carousel {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 45px;
+            width: 700px;
         }
-
-        &__name {
-          color: inherit;
-        }
-
-        &__statistics {
-          margin: 0;
-          color: inherit;
-          font-weight: 400;
-        }
-
-        &:nth-of-type(odd) {
-          margin-right: 20px;
-        }
-      }
-    }
-  }
-
-  .featured-feedbacks {
-    padding: 100px 0;
-    background-color: #f8f8f8;
-
-    .feedbacks {
-      display: flex;
-      justify-content: center;
-      margin-top: 60px;
     }
 
-    .feedback {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      padding: 25px;
-      width: 350px;
-      background: #fff;
-      box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.05);
+    .featured-categories {
+        padding: 90px 45px 45px 45px;
 
-      &:nth-of-type(even) {
-        margin: 0 20px;
-      }
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 30px 0;
 
-      &__icon {
-        position: absolute;
-        left: 25px;
-        top: -25px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 50px;
-        height: 50px;
-        background: var(--cta-color);
-      }
+            .category {
+                position: relative;
+                z-index: 1;
+                margin-top: 20px;
+                width: 660px;
+                height: 330px;
+                border-radius: 20px;
+                overflow: hidden;
+                background-size: 100% 100%;
+                background-position: center center;
+                color: var(--text-color-contrast);
+                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 
-      &__comment {
-        margin: 25px 0 30px 0;
-        text-align: center;
-      }
+                &__dark-cover {
+                    position: absolute;
+                    z-index: 2;
+                    inset: 0;
+                    background: rgba(0, 0, 0, 0.4);
+                    box-shadow: inset 0px -80px 200px rgba(0, 0, 0, 0.5);
+                    cursor: pointer;
+                    transition: 0.35s ease;
 
-      &__footer {
-        text-align: center;
-      }
+                    &:hover {
+                        background-color: rgba($color: #000000, $alpha: 0.2);
+                    }
+                }
 
-      &__bio__organization {
-        font-weight: 700;
-        color: var(--cta-color);
-      }
+                &__detail {
+                    position: absolute;
+                    left: 45px;
+                    bottom: 35px;
+                }
+
+                &__name {
+                    color: inherit;
+                }
+
+                &__statistics {
+                    margin: 0;
+                    color: inherit;
+                    font-weight: 400;
+                }
+
+                &:nth-of-type(odd) {
+                    margin-right: 20px;
+                }
+            }
+        }
     }
-  }
 
-  .partners {
-    padding: 100px 0;
+    .featured-feedbacks {
+        padding: 100px 0;
+        background-color: #f8f8f8;
 
-    &__list {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 80px;
+        .feedbacks {
+            display: flex;
+            justify-content: center;
+            margin-top: 60px;
+        }
 
-      img {
-          width: 100px;
-      }
+        .feedback {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 25px;
+            width: 350px;
+            background: #fff;
+            box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.05);
+
+            &:nth-of-type(even) {
+                margin: 0 20px;
+            }
+
+            &__icon {
+                position: absolute;
+                left: 25px;
+                top: -25px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 50px;
+                height: 50px;
+                background: var(--cta-color);
+            }
+
+            &__comment {
+                margin: 25px 0 30px 0;
+                text-align: center;
+            }
+
+            &__footer {
+                text-align: center;
+            }
+
+            &__bio__organization {
+                font-weight: 700;
+                color: var(--cta-color);
+            }
+        }
     }
-  }
+
+    .partners {
+        padding: 100px 0;
+
+        &__list {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 80px;
+
+            img {
+                width: 100px;
+            }
+        }
+    }
 }

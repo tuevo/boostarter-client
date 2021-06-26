@@ -1,0 +1,36 @@
+.app-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    background: #fff;
+    width: 100vw;
+    height: 100vh;
+
+    @mixin centered {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translate(-45%, -45%);
+    }
+
+    &__spinner {
+        @include centered();
+
+        .anticon {
+            font-size: 120px;
+            color: var(--cta-color);
+        }
+    }
+
+    &__logo {
+        @include centered();
+        top: 45.5%;
+        width: 60px;
+    }
+
+    &__name {
+        @include centered();
+        top: 56%;
+    }
+}

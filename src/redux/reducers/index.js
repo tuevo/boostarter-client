@@ -1,3 +1,4 @@
+export * from './app';
 export * from './campaign';
 export * from './user';
 export * from './feedback';

@@ -1,8 +1,20 @@
 import { campaignStatus } from "../constants";
+import { mockDonationLogList } from './donation-log';
 import { mockFeedbackList } from "./feedback";
 import { mockPackageList } from "./package";
 import { mockPostedStatusList } from "./posted-status";
-import { mockDonationLogList } from './donation-log';
+import { mockUser1 } from "./user";
+
+export const newCampaign = {
+    isPrivate: false,
+    currentRaise: 0,
+    status: campaignStatus.OPENED,
+    rating: 0,
+    numberOfRatings: 0,
+    postedStatuses: [],
+    donationLogs: [],
+    feedbacks: [],
+}
 
 export const mockCampaign1 = {
     id: 1,
@@ -38,14 +50,7 @@ export const mockCampaign1 = {
     </p>
   `,
     packages: mockPackageList,
-    owner: {
-        id: 1,
-        avatar: 'https://i.ibb.co/F3nwvK8/tuevo.jpg',
-        fullName: 'Tue Vo',
-        isFamous: true,
-        numberOfCampaigns: 28,
-        location: 'TP. Hồ Chí Minh, Việt Nam',
-    },
+    owner: mockUser1,
     website: 'https://tuevo-resume.herokuapp.com',
     facebook: 'https://fb.com/tuevo0312',
     feedbacks: mockFeedbackList,
@@ -95,10 +100,40 @@ export const mockCampaign5 = {
     status: campaignStatus.CLOSED,
 }
 
+export const mockCampaign6 = {
+    ...mockCampaign1,
+    id: 6,
+    thumbnail: 'https://i.ibb.co/kcB08q0/ong-hut-than-thien-moi-truong-4.jpg',
+    title: 'ỐNG HÚT SẠCH',
+    categoryId: 1,
+    status: campaignStatus.PENDING,
+}
+
+export const mockCampaign7 = {
+    ...mockCampaign1,
+    id: 7,
+    thumbnail: 'https://i.ibb.co/t4HR0Z8/tran-hung-daovuong.jpg',
+    title: 'VIỆT SỬ KIÊU HÙNG',
+    categoryId: 3,
+    status: campaignStatus.OPENED,
+}
+
+export const mockCampaign8 = {
+    ...mockCampaign1,
+    id: 8,
+    thumbnail: 'https://i.ibb.co/j8YrN02/1-58.jpg',
+    title: 'BỮA CƠM TÌNH THƯƠNG',
+    categoryId: 2,
+    status: campaignStatus.REVIEW,
+}
+
 export const mockCampaignList = [
-    mockCampaign1,
     mockCampaign2,
     mockCampaign3,
     mockCampaign4,
     mockCampaign5,
+    mockCampaign6,
+    mockCampaign1,
+    mockCampaign7,
+    mockCampaign8,
 ];

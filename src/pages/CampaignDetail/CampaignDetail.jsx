@@ -1,9 +1,9 @@
-import { CheckCircleFilled, CheckOutlined, CloseOutlined, CommentOutlined, ContainerOutlined, DeleteFilled, EditFilled, FacebookFilled, HeartFilled, HeartOutlined, HistoryOutlined, PaperClipOutlined, PlusOutlined, StopOutlined, TwitterSquareFilled, TeamOutlined } from '@ant-design/icons';
+import { CheckCircleFilled, CheckOutlined, CloseOutlined, CommentOutlined, ContainerOutlined, DeleteFilled, EditFilled, FacebookFilled, HeartFilled, HeartOutlined, HistoryOutlined, PaperClipOutlined, PlusOutlined, StopOutlined, TeamOutlined, TwitterSquareFilled } from '@ant-design/icons';
 import { Avatar, Button, Col, Divider, Drawer, Form, List, Menu, message, Progress, Rate, Row, Tag, Timeline, Tooltip } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import TextArea from 'antd/lib/input/TextArea';
 import Title from 'antd/lib/typography/Title';
-import parse from 'html-react-parser';
+import htmlParse from 'html-react-parser';
 import queryString from 'query-string';
 import QueueAnim from 'rc-queue-anim';
 import React, { useEffect, useRef, useState } from 'react';
@@ -23,8 +23,8 @@ import PostedStatus from '../../components/PostedStatus';
 import PostStatusModal from '../../components/PostStatusModal/PostStatusModal';
 import QRPaymentModal from '../../components/QRPaymentModal';
 import SectionTitle from '../../components/SectionTitle';
-import StoryEditor from '../../components/StoryEditor/StoryEditor';
-import { userRole } from '../../constants';
+import StoryEditingModal from '../../components/StoryEditingModal';
+import { defaultUserAvatar, userRole } from '../../constants';
 import { addFeedback } from '../../redux';
 import { daysFromNow } from '../../utils/date-time';
 import './CampaignDetail.scss';
@@ -78,7 +78,16 @@ export default function CampaignDetail(props) {
         console.log(values);
 
         setTimeout(() => {
-            setData({ ...data, ...values });
+            setData({
+                ...data,
+                ...values,
+                stander: {
+                    logo: values.standerLogo,
+                    name: values.standerName,
+                    website: values.standerWebsite,
+                    introduction: values.standerIntroduction,
+                }
+            });
             setSubmitEditingCampaignFormLoading(false);
             setEditingCampaignVisible(false);
             message.success('Cập nhật thông tin chiến dịch thành công!');
@@ -163,21 +172,21 @@ export default function CampaignDetail(props) {
                                                     onClick={() => message.success('Duyệt chiến dịch thành công')}
                                                 >
                                                     Duyệt
-                        </Button>
+                                                </Button>
                                                 <Button icon={<CloseOutlined />}>Từ chối</Button>
                                                 <Button icon={<DeleteFilled />} danger>Gỡ bỏ</Button>
                                             </>
                                         )}
                                         {user && user.id === data.owner.id && (
                                             <>
-                                                <Button icon={<StopOutlined />}>Tạm dừng</Button>
+                                                <Button icon={<StopOutlined />} ghost danger>Tạm dừng</Button>
                                                 <Button
                                                     className="toolbar__controls__btn-edit"
                                                     icon={<EditFilled />}
                                                     onClick={() => setEditingCampaignVisible(true)}
                                                 >
                                                     Chỉnh sửa
-                        </Button>
+                                                </Button>
                                             </>
                                         )}
                                     </div>
@@ -240,9 +249,17 @@ export default function CampaignDetail(props) {
                                             onClick={() => setDonationLogVisible(true)}
                                         >
                                             Lịch sử nhận quyên góp
-                    </Button>
+                                        </Button>
                                     </div>
-                                    <Progress percent={currentRaisePercent} showInfo={false} status="active" />
+                                    <Progress
+                                        percent={currentRaisePercent}
+                                        showInfo={false}
+                                        status="active"
+                                        strokeColor={{
+                                            '0%': '#108ee9',
+                                            '100%': '#87d068',
+                                        }}
+                                    />
                                     <div className="raise-info__section">
                                         <div>
                                             {`${currentRaisePercent}% của `}
@@ -334,7 +351,7 @@ export default function CampaignDetail(props) {
                                     </Menu.Item>
                                     <Menu.Item key="4" icon={<TeamOutlined />}>
                                         Tổ chức đại diện
-                  </Menu.Item>
+                                    </Menu.Item>
                                 </Menu>
                                 <div className="campaign-detail__body__left__content" style={{ minHeight: storyRef.current ? storyRef.current.clientHeight : 800 }}>
                                     {selectedMenuKey === '1' && (
@@ -351,7 +368,7 @@ export default function CampaignDetail(props) {
                                                         </Button>
                                                     )}
                                                 </div>
-                                                {parse(data.story)}
+                                                {htmlParse(data.story)}
                                             </div>
                                         </QueueAnim>
                                     )}
@@ -381,7 +398,7 @@ export default function CampaignDetail(props) {
                                         <QueueAnim delay={25}>
                                             <div key="feedbacks" className="tab-content tab-content--feedback">
                                                 <div className="comment-input">
-                                                    <Avatar src={user ? user.avatar : 'https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg'} size={50} />
+                                                    <Avatar src={user ? user.avatar : defaultUserAvatar} size={50} />
                                                     <Form
                                                         form={addCommentForm}
                                                         onFinish={handleAddCommentFormFinished}
@@ -511,14 +528,20 @@ export default function CampaignDetail(props) {
 
             <Drawer
                 title="Chỉnh sửa thông tin chiến dịch"
-                width={600}
+                width={800}
                 visible={editingCampaignVisible}
                 closable
                 onClose={() => setEditingCampaignVisible(false)}
             >
                 <CampaignBasicInfoForm
                     form={editingCampaignForm}
-                    initValues={{ ...data }}
+                    initValues={{
+                        ...data,
+                        standerLogo: data.stander.logo,
+                        standerName: data.stander.name,
+                        standerWebsite: data.stander.website,
+                        standerIntroduction: data.stander.introduction,
+                    }}
                     onFinished={handleEditingCampaignFormFinished}
                     onFinishFailed={handleEditingCampaignFormFinishFailed}
                 />
@@ -530,7 +553,7 @@ export default function CampaignDetail(props) {
                     onClick={() => editingCampaignForm.submit()}
                 >
                     Cập nhật thông tin chiến dịch
-        </Button>
+                </Button>
             </Drawer>
 
             <DonationModal
@@ -550,7 +573,9 @@ export default function CampaignDetail(props) {
 
             <CreateDonationPackageModal
                 visible={createDonationPackageModalVisible}
-                data={data}
+                data={{
+                    concurrency: data.concurrency,
+                }}
                 onClose={() => setCreateDonationPackageModalVisible(false)}
                 onSubmit={() => setCreateDonationPackageModalVisible(false)}
             />
@@ -561,11 +586,14 @@ export default function CampaignDetail(props) {
                 onSubmit={() => setPostStatusModalVisible(false)}
             />
 
-            <StoryEditor
+            <StoryEditingModal
                 visible={storyEditorVisible}
                 initContent={data.story}
                 onClose={() => setStoryEditorVisible(false)}
-                onSubmit={() => setStoryEditorVisible(false)}
+                onSubmit={(story) => {
+                    setData({ ...data, story });
+                    setStoryEditorVisible(false);
+                }}
             />
 
         </div>

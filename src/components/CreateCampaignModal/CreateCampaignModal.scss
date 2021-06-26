@@ -1,40 +1,55 @@
 @import "../../styles/mixin.scss";
 
 .create-campaign-modal {
-  .steps-content {
-    position: relative;
-    margin-top: 45px;
-    min-height: 550px;
-  }
-
-  .steps-action {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 24px;
-
-    button {
-      margin: 0 !important;
-      min-width: 100px;
-    }
-  }
-
-  &__story-editor {
-    @include editor-height(450px);
-  }
-
-  &__policy {
-    &__content {
-      max-height: 500px;
-      overflow: hidden;
-      overflow-y: scroll;
+    .steps-content {
+        position: relative;
+        margin-top: 45px;
+        min-height: 550px;
     }
 
-    &__confirm {
-      padding: 30px 0 15px 0;
-    }
-  }
+    .steps-action {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 24px;
 
-  &__btn-create-package {
-    @include button-color(outline, var(--primary-color));
-  }
+        button {
+            margin: 0 !important;
+            min-width: 100px;
+        }
+    }
+
+    .ant-input-number {
+        width: 100%;
+    }
+
+    &__story-editor {
+        @include editor-height(450px);
+    }
+
+    &__policy {
+        &__content {
+            max-height: 500px;
+            overflow: hidden;
+            overflow-y: scroll;
+        }
+
+        &__confirm {
+            padding: 30px 0 15px 0;
+        }
+    }
+
+    &__btn-create-package {
+        @include button-color(outline, var(--primary-color));
+    }
+
+    &__packages {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        &__item {
+            margin-bottom: 20px;
+            width: 48%;
+        }
+    }
 }

@@ -10,102 +10,102 @@ import './CampaignPreview.scss';
 const { Meta } = Card;
 
 export default function CampaignPreview({ data, featured, from }) {
-  const currentRaisePercent = Math.round(data.currentRaise / data.targetRaise * 100);
-  const currentRaisePeriod = daysFromNow(data.endDate);
+    const currentRaisePercent = Math.round(data.currentRaise / data.targetRaise * 100);
+    const currentRaisePeriod = daysFromNow(data.endDate);
 
-  if (featured) {
-    return (
-      <div
-        className="featured-campaign-preview"
-        style={{ backgroundImage: `url(${data.thumbnail})` }}
-      >
-        <div className="dark-cover">
-          <div className="footer">
-            <Title className="title" level={2}>
-              <NavLink to={`/campaign/${data.id}?tab=1${from ? `&from=${from}` : ''}`}>{data.title}</NavLink>
-            </Title>
-            <Title className="raise" level={3}>
-              <NumberFormat
-                displayType="text"
-                value={data.currentRaise}
-                thousandSeparator={'.'}
-                decimalSeparator={','}
-                suffix={` ${data.currency}`}
-              />
-            </Title>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="campaign-preview">
-      <Card
-        style={{ width: 300 }}
-        cover={
-          <img
-            alt="example"
-            src={data.thumbnail}
-          />
-        }
-      >
-        <Meta
-          avatar={
-            <div className="owner-avatar">
-              <Avatar src={data.owner.avatar} />
-              <CheckCircleFilled className="famous-icon" />
-              <div className="famous-icon-bg"></div>
-            </div>
-          }
-          title={(
-            <>
-              <Title className="title" level={5}>
-                <NavLink to={`/campaign/${data.id}?tab=1${from ? `&from=${from}` : ''}`}>{data.title}</NavLink>
-              </Title>
-              <div className="subtitle">
-                <Tag color={data.status.color}>{data.status.name}</Tag>
-                <div className="rating">
-                  <span>{data.rating}</span>
-                  <StarFilled className="icon" />
+    if (featured) {
+        return (
+            <div
+                className="featured-campaign-preview"
+                style={{ backgroundImage: `url(${data.thumbnail})` }}
+            >
+                <div className="dark-cover">
+                    <div className="footer">
+                        <Title className="title" level={2}>
+                            <NavLink to={`/campaign/${data.id}?tab=1${from ? `&from=${from}` : ''}`}>{data.title}</NavLink>
+                        </Title>
+                        <Title className="raise" level={3}>
+                            <NumberFormat
+                                displayType="text"
+                                value={data.currentRaise}
+                                thousandSeparator={'.'}
+                                decimalSeparator={','}
+                                suffix={` ${data.currency}`}
+                            />
+                        </Title>
+                    </div>
                 </div>
-              </div>
-            </>
-          )}
-        />
-        <div className="footer">
-          <p className="desc">{data.desc}</p>
-          <p className="category">{data.category}</p>
-          <div className="raise-info">
-            <div className="section-1">
-              <Title level={5} style={{ margin: 0 }}>
-                <NumberFormat
-                  displayType="text"
-                  value={data.currentRaise}
-                  thousandSeparator={'.'}
-                  decimalSeparator={','}
-                  suffix={` ${data.currency}`}
+            </div>
+        );
+    }
+
+    return (
+        <div className="campaign-preview">
+            <Card
+                style={{ width: 300 }}
+                cover={
+                    <img
+                        alt="example"
+                        src={data.thumbnail}
+                    />
+                }
+            >
+                <Meta
+                    avatar={
+                        <div className="owner-avatar">
+                            <Avatar src={data.owner.avatar} />
+                            <CheckCircleFilled className="famous-icon" />
+                            <div className="famous-icon-bg"></div>
+                        </div>
+                    }
+                    title={(
+                        <>
+                            <Title className="title" level={5}>
+                                <NavLink to={`/campaign/${data.id}?tab=1${from ? `&from=${from}` : ''}`}>{data.title}</NavLink>
+                            </Title>
+                            <div className="subtitle">
+                                <Tag color={data.status?.color}>{data.status?.name}</Tag>
+                                <div className="rating">
+                                    <span>{data.rating}</span>
+                                    <StarFilled className="icon" />
+                                </div>
+                            </div>
+                        </>
+                    )}
                 />
-              </Title>
-              <p className="current-raise-percent">
-                {currentRaisePercent}%
+                <div className="footer">
+                    <p className="desc">{data.desc}</p>
+                    <p className="category">{data.category}</p>
+                    <div className="raise-info">
+                        <div className="section-1">
+                            <Title level={5} style={{ margin: 0 }}>
+                                <NumberFormat
+                                    displayType="text"
+                                    value={data.currentRaise}
+                                    thousandSeparator={'.'}
+                                    decimalSeparator={','}
+                                    suffix={` ${data.currency}`}
+                                />
+                            </Title>
+                            <p className="current-raise-percent">
+                                {currentRaisePercent}%
               </p>
-            </div>
-            <Progress percent={currentRaisePercent} showInfo={false} status="active" />
-            <div className="section-2">
-              <ClockCircleFilled className="icon" />
-              <NumberFormat
-                displayType="text"
-                value={currentRaisePeriod}
-                thousandSeparator={'.'}
-                decimalSeparator={','}
-                prefix={'Còn '}
-                suffix={' ngày'}
-              />
-            </div>
-          </div>
+                        </div>
+                        <Progress percent={currentRaisePercent} showInfo={false} status="active" />
+                        <div className="section-2">
+                            <ClockCircleFilled className="icon" />
+                            <NumberFormat
+                                displayType="text"
+                                value={currentRaisePeriod}
+                                thousandSeparator={'.'}
+                                decimalSeparator={','}
+                                prefix={'Còn '}
+                                suffix={' ngày'}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </Card>
         </div>
-      </Card>
-    </div>
-  )
+    )
 }

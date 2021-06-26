@@ -1,71 +1,75 @@
 :root {
-  --primary-color: #1890ff;
-  --success-color: #52c41a;
-  --cta-color: #e36924;
-  --text-color-contrast: #fff;
+    --primary-color: #1890ff;
+    --success-color: #52c41a;
+    --cta-color: #e36924;
+    --text-color-contrast: #fff;
 }
 
 body {
-  margin: 0;
-  font-family: "Quicksand", sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: "Quicksand", sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-  &::-webkit-scrollbar {
-    width: 10px !important;
-  }
+    &::-webkit-scrollbar {
+        width: 10px !important;
+    }
 
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba($color: #000000, $alpha: 0.15) !important;
-    border-radius: 48px !important;
-  }
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba($color: #000000, $alpha: 0.15) !important;
+        border-radius: 48px !important;
+    }
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 button {
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
 }
 
 h1 {
-  font-size: 44px;
+    font-size: 44px;
 }
 
 h2 {
-  font-size: 38px;
+    font-size: 38px;
 }
 
 h3 {
-  font-size: 30px;
+    font-size: 30px;
 }
 
 h4 {
-  font-size: 24px;
+    font-size: 24px;
 }
 
 h5 {
-  font-size: 20px;
+    font-size: 20px;
 }
 
 h6 {
-  font-size: 18px;
+    font-size: 18px;
 }
 
 .ant-tag {
-  padding: 4px 10px !important;
-  font-weight: 700 !important;
-  border: 0 !important;
-  border-radius: 48px !important;
+    padding: 4px 10px !important;
+    font-weight: 700 !important;
+    border: 0 !important;
+    border-radius: 48px !important;
 }
 
 .ant-btn-link {
-  padding: 0 !important;
+    padding: 0 !important;
 }
 
 .ant-drawer-title,
 .ant-modal-title {
-  font-weight: 700 !important;
+    font-weight: 700 !important;
+}
+
+.ant-form-item-label {
+    font-weight: bold;
 }

@@ -1,0 +1,6 @@
+.better-input-number {
+    display: flex;
+    .ant-input-number {
+        flex-grow: 1;
+    }
+}
