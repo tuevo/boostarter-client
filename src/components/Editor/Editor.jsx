@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
 import JoditEditor from "jodit-react";
+import React, { useRef } from 'react';
 
 export default function Editor({ content, onChange }) {
     const editor = useRef(null)

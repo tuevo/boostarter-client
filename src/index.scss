@@ -1,9 +1,12 @@
 :root {
     --primary-color: #1890ff;
     --success-color: #52c41a;
-    --cta-color: #e36924;
+    --cta-color: #ff6e29;
     --text-color-contrast: #fff;
 }
+
+$zaloBottom: 280px;
+$zaloSize: 56px;
 
 body {
     margin: 0;
@@ -52,6 +55,35 @@ h5 {
 
 h6 {
     font-size: 18px;
+}
+
+.eactc-main-component {
+    position: fixed !important;
+    z-index: 999 !important;
+    top: 400px !important;
+    right: 24px !important;
+}
+
+.fcta-zalo-mess {
+    bottom: $zaloBottom !important;
+    display: none !important;
+}
+
+.fcta-zalo-vi-tri-nut {
+    right: 26px !important;
+    bottom: $zaloBottom !important;
+}
+
+.fcta-zalo-nen-nut {
+    width: $zaloSize !important;
+    height: $zaloSize !important;
+    background-color: var(--cta-color) !important;
+}
+
+.fcta-zalo-nen-nut::after,
+.fcta-zalo-nen-nut::before {
+    border-color: var(--cta-color) !important;
+    background-color: rgba($color: #ff6e29, $alpha: 0.25) !important;
 }
 
 .ant-tag {
