@@ -11,6 +11,7 @@ import CampaignPreviewCarousel from '../../components/CampaignPreviewCarousel/Ca
 import Container from '../../components/Container';
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import SingleCampaignPreviewCarousel from '../../components/SingleCampaignPreviewCarousel/SingleCampaignPreviewCarousel';
+import { APP_MISSION, APP_NAME } from '../../constants';
 import { useScrollTop } from '../../hooks';
 import { mockCampaign1, mockCategoryList, mockFeedbackList } from '../../mock-data';
 import { setAppLoading } from '../../redux';
@@ -77,7 +78,7 @@ export default function Home() {
                             <div className="featured-content">
                                 <Title className="title" level={2}>{'Tầm nhìn & sứ mệnh'}</Title>
                                 <p className="desc">
-                                    <b>Boostarter</b> là một website dành cho những người muốn gây quỹ từ cộng đồng bằng cách lan tỏa câu chuyện của họ đến với nhiều người hơn và thay mặt họ tiếp nhận sự đóng góp từ cộng đồng.
+                                    <b>{APP_NAME}</b> {APP_MISSION}
                                 </p>
                                 <div className="buttons">
                                     <Button className="featured-content__btn-register" size="large" type="primary">Trải nghiệm ngay</Button>

@@ -3,3 +3,4 @@ export const defaultCampaignThumbnail = 'https://vcdn1-vnexpress.vnecdn.net/2018
 export const defaultDonationPackageThumbnail = 'https://innbythesea.com/media/6173/gift-certificate-image.jpg';
 export const APP_NAME = 'Boostarter';
 export const APP_SLOGAN = 'Nền tảng gây quỹ';
+export const APP_MISSION = 'là một website dành cho những người muốn gây quỹ từ cộng đồng bằng cách lan tỏa câu chuyện của họ đến với nhiều người hơn và thay mặt họ tiếp nhận sự đóng góp từ cộng đồng.';

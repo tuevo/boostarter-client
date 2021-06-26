@@ -1,4 +1,4 @@
-import { DownOutlined, EnvironmentFilled, FireOutlined, MailFilled, PhoneFilled, PoweroffOutlined, SearchOutlined } from '@ant-design/icons';
+import { DownOutlined, EnvironmentFilled, FireOutlined, MailFilled, PhoneFilled, PoweroffOutlined, SearchOutlined, HeartOutlined } from '@ant-design/icons';
 import { Avatar, Button, Col, Drawer, Dropdown, Input, Layout, List, Menu, Row } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import Title from 'antd/lib/typography/Title';
@@ -50,12 +50,15 @@ export default function AppLayout({ children, location }) {
     const sidebarMenu = {
         1: [
             { key: '1', title: 'Chiến dịch cá nhân', icon: <FireOutlined />, url: '/personal-campaigns' },
+            { key: '2', title: 'Chiến dịch đang theo dõi', icon: <HeartOutlined />, url: '/' },
         ],
         2: [
-            { key: '1', title: 'Chiến dịch đã quyên góp', icon: <FireOutlined />, url: '/' }
+            { key: '1', title: 'Chiến dịch đã quyên góp', icon: <FireOutlined />, url: '/' },
+            { key: '2', title: 'Chiến dịch đang theo dõi', icon: <HeartOutlined />, url: '/' },
         ],
         3: [
-            { key: '1', title: 'Tất cả chiến dịch', icon: <FireOutlined />, url: '/' }
+            { key: '1', title: 'Tất cả chiến dịch', icon: <FireOutlined />, url: '/' },
+            { key: '2', title: 'Chiến dịch đang theo dõi', icon: <HeartOutlined />, url: '/' },
         ],
     }
 

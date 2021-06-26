@@ -29,6 +29,10 @@ import { addFeedback } from '../../redux';
 import { daysFromNow } from '../../utils/date-time';
 import './CampaignDetail.scss';
 
+const UpdateDonationPackageModal = (props) => (
+    <CreateDonationPackageModal {...props} />
+)
+
 export default function CampaignDetail(props) {
     const { id } = useParams();
     const signInLocation = useRef();
@@ -43,7 +47,6 @@ export default function CampaignDetail(props) {
     const campaignList = useSelector(state => state.campaigns);
     const postedStatusList = useSelector(state => state.postedStatuses);
     const feedbackList = useSelector(state => state.feedbacks);
-    const donationPackageList = useSelector(state => state.donationPackages);
     const relatedCampaignList = campaignList.filter(c => c.id !== +id);
 
     const [data, setData] = useState(campaignList.find(c => c.id === +id));
@@ -62,6 +65,9 @@ export default function CampaignDetail(props) {
     const [qRPaymentModalVisible, setQRPaymentModalVisible] = useState(false);
 
     const [createDonationPackageModalVisible, setCreateDonationPackageModalVisible] = useState(false);
+    const [updateDonationPackageModalVisible, setUpdateDonationPackageModalVisible] = useState(false);
+    const [selectedPackage, setSelectedPackage] = useState();
+
     const [postStatusModalVisible, setPostStatusModalVisible] = useState(false);
     const [storyEditorVisible, setStoryEditorVisible] = useState(false);
 
@@ -122,6 +128,10 @@ export default function CampaignDetail(props) {
         addCommentForm.resetFields();
     }
 
+    const findPackageIndex = (packageData) => {
+        return data.packages.findIndex((p) => p.id === packageData.id);
+    }
+
     useEffect(() => {
         let url = `${props.location.pathname}${props.location.search}`;
 
@@ -145,6 +155,12 @@ export default function CampaignDetail(props) {
             }
         };
     }, [props.location.search]);
+
+    useEffect(() => {
+        if (selectedPackage) {
+            setUpdateDonationPackageModalVisible(true);
+        }
+    }, [selectedPackage]);
 
     return (
         <div className="campaign-detail">
@@ -342,7 +358,7 @@ export default function CampaignDetail(props) {
                                 <Menu onClick={(e) => handleClickMenu(e.key)} selectedKeys={[selectedMenuKey]} mode="horizontal">
                                     <Menu.Item key="1" icon={<ContainerOutlined />}>
                                         Câu chuyện
-                  </Menu.Item>
+                                    </Menu.Item>
                                     <Menu.Item key="2" icon={<HistoryOutlined />}>
                                         {`Dòng thời gian (${postedStatusList.length})`}
                                     </Menu.Item>
@@ -424,7 +440,7 @@ export default function CampaignDetail(props) {
                                                             onClick={() => addCommentForm.submit()}
                                                         >
                                                             Gửi bình luận
-                            </Button>
+                                                        </Button>
                                                     </Form>
                                                 </div>
                                                 <div className="feedbacks">
@@ -478,17 +494,21 @@ export default function CampaignDetail(props) {
                                         )}
                                     </div>
                                     <div className="packages">
-                                        {donationPackageList.map(p => (
+                                        {data.packages.map(p => (
                                             <div className="packages__item" key={p.id}>
                                                 <PackagePreview
                                                     data={p}
-                                                    onClick={(_data) => {
+                                                    onClick={(packageData) => {
                                                         if (!user) {
                                                             history.push(signInLocation.current);
                                                             return;
                                                         }
 
-                                                        setQRPaymentModalVisible(true);
+                                                        setSelectedPackage({ ...packageData });
+
+                                                        if (user.id !== data.owner.id) {
+                                                            setQRPaymentModalVisible(true);
+                                                        }
                                                     }}
                                                 />
                                             </div>
@@ -520,7 +540,7 @@ export default function CampaignDetail(props) {
                 <Timeline>
                     {data.donationLogs.map(l => (
                         <Timeline.Item key={l.id}>
-                            <DonationLogItem data={l} donationPackages={donationPackageList} />
+                            <DonationLogItem data={l} donationPackages={[data.packages]} />
                         </Timeline.Item>
                     ))}
                 </Timeline>
@@ -593,6 +613,44 @@ export default function CampaignDetail(props) {
                 onSubmit={(story) => {
                     setData({ ...data, story });
                     setStoryEditorVisible(false);
+                }}
+            />
+
+            <UpdateDonationPackageModal
+                title="Cập nhật gói quyên góp"
+                data={{
+                    ...selectedPackage,
+                    currency: data.currency,
+                }}
+                visible={updateDonationPackageModalVisible}
+                onClose={() => setUpdateDonationPackageModalVisible(false)}
+                onSubmit={packageData => {
+                    setUpdateDonationPackageModalVisible(false);
+                    const index = findPackageIndex(packageData);
+                    if (index > -1) {
+                        const newPackage = { ...data.packages[index], ...packageData };
+                        setData({
+                            ...data,
+                            packages: [
+                                ...data.packages.slice(0, index),
+                                newPackage,
+                                ...data.packages.slice(index + 1)
+                            ]
+                        })
+                    }
+                }}
+                onRemove={packageData => {
+                    setUpdateDonationPackageModalVisible(false);
+                    const index = findPackageIndex(packageData);
+                    if (index > -1) {
+                        setData({
+                            ...data,
+                            packages: [
+                                ...data.packages.slice(0, index),
+                                ...data.packages.slice(index + 1)
+                            ]
+                        })
+                    }
                 }}
             />
 
