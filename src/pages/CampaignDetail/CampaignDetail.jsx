@@ -158,7 +158,11 @@ export default function CampaignDetail(props) {
 
     useEffect(() => {
         if (selectedPackage) {
-            setUpdateDonationPackageModalVisible(true);
+            if (user.id === data.owner.id) {
+                setUpdateDonationPackageModalVisible(true);
+            } else {
+                setQRPaymentModalVisible(true);
+            }
         }
     }, [selectedPackage]);
 
@@ -505,10 +509,6 @@ export default function CampaignDetail(props) {
                                                         }
 
                                                         setSelectedPackage({ ...packageData });
-
-                                                        if (user.id !== data.owner.id) {
-                                                            setQRPaymentModalVisible(true);
-                                                        }
                                                     }}
                                                 />
                                             </div>
