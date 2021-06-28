@@ -1,7 +1,10 @@
 ![Boostarter](https://www.linkpicture.com/q/boostarter-logo.png)
 
 # <b>Boostarter Client</b>
-built with `ReactJS`
+- Built with `ReactJS`
+- Click [here](https://boostarter.web.app/) to see demo
+
+![Homepage](https://www.linkpicture.com/q/Screenshot-from-2021-06-28-13-31-51.png)
 
 ## <b>Quick start</b>
 
