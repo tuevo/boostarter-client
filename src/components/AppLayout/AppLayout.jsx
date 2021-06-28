@@ -14,25 +14,51 @@ import './AppLayout.scss';
 
 const { Header, Content, Footer } = Layout;
 
+const discoveryMenuItems = [
+    {
+        name: 'Công nghệ & Đổi mới',
+        subItems: ['Y tế', 'Giáo dục', 'Môi trường', 'Thời trang']
+    },
+    {
+        name: 'Thiện nguyện',
+        subItems: ['Hướng về miền Trung', 'Giúp trẻ em vùng cao', 'Hỗ trợ người khuyết tật', 'Bảo vệ động vật']
+    },
+    {
+        name: 'Sáng tạo nội dung',
+        subItems: ['Tìm hiểu lịch sử', 'Phản ảnh xã hội', 'Hoạt động nghệ thuật', 'Nghiên cứu khoa học']
+    },
+]
+
 const menu = (
-    <Menu>
-        <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                1st menu item
-      </a>
-        </Menu.Item>
-        <Menu.Item icon={<DownOutlined />} disabled>
-            <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-                2nd menu item
-      </a>
-        </Menu.Item>
-        <Menu.Item disabled>
-            <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-                3rd menu item
-      </a>
-        </Menu.Item>
-        <Menu.Item danger>a danger item</Menu.Item>
-    </Menu>
+    <div className="discovery-menu">
+        <div className="discovery-menu__section">
+            <Menu>
+                <Menu.Item>
+                    <NavLink to="/"><b>Tất cả chiến dịch</b></NavLink>
+                </Menu.Item>
+                <Menu.Item>
+                    <NavLink to="/"><b>Top 10 chiến dịch nổi bật nhất</b></NavLink>
+                </Menu.Item>
+                <Menu.Item>
+                    <NavLink to="/"><b>Chiến dịch đã thành công</b></NavLink>
+                </Menu.Item>
+            </Menu>
+        </div>
+        {discoveryMenuItems.map(item => (
+            <div key={item.name} className="discovery-menu__section">
+                <Menu>
+                    <Menu.Item disabled>
+                        <b>{item.name}</b>
+                    </Menu.Item>
+                    {item.subItems.map(subItem => (
+                        <Menu.Item key={subItem}>
+                            <NavLink to="/">{subItem}</NavLink>
+                        </Menu.Item>
+                    ))}
+                </Menu>
+            </div>
+        ))}
+    </div>
 );
 
 export default function AppLayout({ children, location }) {

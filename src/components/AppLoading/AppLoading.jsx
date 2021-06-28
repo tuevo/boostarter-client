@@ -11,7 +11,7 @@ export default function AppLoading() {
         <div className="app-loading">
             <div className="app-loading__spinner"><Spin indicator={<LoadingOutlined spin />} /></div>
             <img className="app-loading__logo" src={logo} alt="boostarter" />
-            <Title className="app-loading__name" level={2}>{APP_NAME}</Title>
+            <Title className="app-loading__name" level={3}>{APP_NAME}</Title>
         </div>
     )
 }

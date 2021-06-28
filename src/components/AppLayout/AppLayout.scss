@@ -156,3 +156,23 @@
         }
     }
 }
+
+.discovery-menu {
+    display: flex;
+    padding: 20px;
+    background: #fff;
+    box-shadow: rgba(17, 12, 46, 0.1) 0px 48px 100px 0px;
+
+    &__section:not(:last-child) {
+        border-right: 1px solid #eee;
+    }
+
+    .ant-menu {
+        width: 250px;
+        border: 0;
+    }
+
+    .ant-menu-item-disabled {
+        color: rgba($color: #000000, $alpha: 0.85) !important;
+    }
+}

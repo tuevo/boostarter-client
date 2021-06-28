@@ -18,6 +18,7 @@ import CreateDonationPackageModal from '../../components/CreateDonationPackageMo
 import DonationLogItem from '../../components/DonationLogItem';
 import DonationModal from '../../components/DonationModal/DonationModal';
 import Feedback from '../../components/Feedback/Feedback';
+import PackageDetailModal from '../../components/PackageDetailModal/PackageDetailModal';
 import PackagePreview from '../../components/PackagePreview';
 import PostedStatus from '../../components/PostedStatus';
 import PostStatusModal from '../../components/PostStatusModal/PostStatusModal';
@@ -66,6 +67,7 @@ export default function CampaignDetail(props) {
 
     const [createDonationPackageModalVisible, setCreateDonationPackageModalVisible] = useState(false);
     const [updateDonationPackageModalVisible, setUpdateDonationPackageModalVisible] = useState(false);
+    const [donationPackageDetailModalVisible, setDonationPackageDetailModalVisible] = useState(false);
     const [selectedPackage, setSelectedPackage] = useState();
 
     const [postStatusModalVisible, setPostStatusModalVisible] = useState(false);
@@ -158,10 +160,10 @@ export default function CampaignDetail(props) {
 
     useEffect(() => {
         if (selectedPackage) {
-            if (user.id === data.owner.id) {
+            if (user?.id === data.owner.id) {
                 setUpdateDonationPackageModalVisible(true);
             } else {
-                setQRPaymentModalVisible(true);
+                setDonationPackageDetailModalVisible(true);
             }
         }
     }, [selectedPackage]);
@@ -468,7 +470,7 @@ export default function CampaignDetail(props) {
                                                 <div className="tab-content--stander__right">
                                                     <Title level={3}>{data.stander.name}</Title>
                                                     <p>{data.stander.introduction}</p>
-                                                    <p>Website: <a href={data.stander.website}>{data.stander.website}</a></p>
+                                                    <p>Website: <a href={data.stander.website} target="_blank" rel="noopener noreferrer">{data.stander.website}</a></p>
                                                 </div>
                                             </div>
                                         </QueueAnim>
@@ -503,11 +505,6 @@ export default function CampaignDetail(props) {
                                                 <PackagePreview
                                                     data={p}
                                                     onClick={(packageData) => {
-                                                        if (!user) {
-                                                            history.push(signInLocation.current);
-                                                            return;
-                                                        }
-
                                                         setSelectedPackage({ ...packageData });
                                                     }}
                                                 />
@@ -540,7 +537,7 @@ export default function CampaignDetail(props) {
                 <Timeline>
                     {data.donationLogs.map(l => (
                         <Timeline.Item key={l.id}>
-                            <DonationLogItem data={l} donationPackages={[data.packages]} />
+                            <DonationLogItem data={l} donationPackages={data.packages} />
                         </Timeline.Item>
                     ))}
                 </Timeline>
@@ -580,9 +577,22 @@ export default function CampaignDetail(props) {
                 visible={donationModalVisible}
                 onClose={() => setDonationModalVisible(false)}
                 data={data}
-                onSubmit={(option, _data) => {
+                onSubmit={(option, packageData) => {
                     setDonationModalVisible(false);
-                    setQRPaymentModalVisible(true);
+
+                    switch (option) {
+                        case 1:
+                            setQRPaymentModalVisible(true);
+                            break;
+
+                        case 2:
+                            setDonationPackageDetailModalVisible(true);
+                            setSelectedPackage(packageData);
+                            break;
+
+                        default:
+                            break;
+                    }
                 }}
             />
 
@@ -652,6 +662,26 @@ export default function CampaignDetail(props) {
                         })
                     }
                 }}
+            />
+
+            <PackageDetailModal
+                data={{
+                    ...selectedPackage,
+                    currency: data.currency,
+                }}
+                visible={donationPackageDetailModalVisible}
+                onClose={() => {
+                    setDonationPackageDetailModalVisible(false);
+                }}
+                onDonate={() => {
+                    if (!user) {
+                        history.push(signInLocation.current);
+                        return;
+                    }
+                    setDonationPackageDetailModalVisible(false);
+                    setQRPaymentModalVisible(true);
+                }}
+                btnDonateVisible={!user || (user && user.role.value === userRole.DONATOR.value)}
             />
 
         </div>

@@ -7,8 +7,22 @@ export default class BetterInputNumber extends React.Component {
         if (this.props.addonAfter) {
             return (
                 <div className="better-input-number">
-                    <InputNumber style={{ verticalAlign: 'middle', borderBottomRightRadius: 0, borderTopRightRadius: 0 }} {...this.props} />
-                    <div className="ant-input-group-addon" style={{ paddingTop: '2px', verticalAlign: 'middle', display: 'inline-table', lineHeight: '24px', height: '32px' }}>{this.props.addonAfter}</div>
+                    <InputNumber
+                        style={{ verticalAlign: 'middle', borderBottomRightRadius: 0, borderTopRightRadius: 0 }}
+                        {...this.props}
+                    />
+                    <div
+                        className="ant-input-group-addon"
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            width: 'fit-content',
+                            height: this.props.size === 'large' ? 40 : 32
+                        }}
+                    >
+                        {this.props.addonAfter}
+                    </div>
                 </div>
             );
         } else {

@@ -174,7 +174,7 @@ export default function Home() {
                 <Container>
                     <SectionTitle center>
                         Đối tác của chúng tôi
-          </SectionTitle>
+                    </SectionTitle>
                     <div className="partners__list">
                         <img src="https://i.ibb.co/ydFT0Dr/1-1.jpg" alt="1" />
                         <img src="https://i.ibb.co/2jRvbsj/8.png" alt="8" />

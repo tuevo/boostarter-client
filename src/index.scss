@@ -1,10 +1,13 @@
 :root {
     --primary-color: #1890ff;
     --success-color: #52c41a;
-    --cta-color: #ff6e29;
+    --cta-color: #ff8000;
     --text-color-contrast: #fff;
+
+    --float-button-right: 25px !important;
 }
 
+$callBottom: 450px;
 $zaloBottom: 280px;
 $zaloSize: 56px;
 
@@ -59,19 +62,18 @@ h6 {
 
 .eactc-main-component {
     position: fixed !important;
-    z-index: 999 !important;
-    top: 400px !important;
-    right: 24px !important;
+    bottom: $callBottom !important;
+    right: var(--float-button-right) !important;
 }
 
-.fcta-zalo-mess {
-    bottom: $zaloBottom !important;
-    display: none !important;
+.eactc-button-component {
+    background-color: var(--cta-color) !important;
 }
 
 .fcta-zalo-vi-tri-nut {
-    right: 26px !important;
+    z-index: 99999 !important;
     bottom: $zaloBottom !important;
+    right: var(--float-button-right) !important;
 }
 
 .fcta-zalo-nen-nut {
@@ -83,7 +85,11 @@ h6 {
 .fcta-zalo-nen-nut::after,
 .fcta-zalo-nen-nut::before {
     border-color: var(--cta-color) !important;
-    background-color: rgba($color: #ff6e29, $alpha: 0.25) !important;
+    background-color: transparent !important;
+}
+
+.ant-drawer {
+    z-index: 999999999 !important;
 }
 
 .ant-tag {

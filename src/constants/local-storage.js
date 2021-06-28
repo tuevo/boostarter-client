@@ -1,2 +1,2 @@
-const prefix = '__boostarter__';
-export const AUTH_USER = `${prefix}auth_user`;
+const prefix = '__boostarterClient__';
+export const AUTH_USER = `${prefix}authUser`;
