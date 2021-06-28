@@ -1,8 +1,7 @@
 ![Boostarter](https://www.linkpicture.com/q/boostarter-logo.png)
 
-# <b>Boostarter Client</b>
-- Built with `ReactJS`
-- Click [here](https://boostarter.web.app/) to see demo
+# <b>Boostarter Client (ReactJS + Firebase)</b>
+Click [here](https://boostarter.web.app/) to see live demo.
 
 ![Homepage](https://www.linkpicture.com/q/Screenshot-from-2021-06-28-13-31-51.png)
 
