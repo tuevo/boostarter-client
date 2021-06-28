@@ -6,6 +6,10 @@
 
 ![Homepage](https://www.linkpicture.com/q/Screenshot-from-2021-06-28-13-31-51.png)
 
+![CampaignDetailPage](https://www.linkpicture.com/q/Screenshot-from-2021-06-28-13-32-11.png)
+
+![PersonalCampaignManagement](https://www.linkpicture.com/q/Screenshot-from-2021-06-28-13-31-27.png)
+
 ## <b>Quick start</b>
 
 ```
