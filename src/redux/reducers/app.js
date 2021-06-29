@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const app = createSlice(
     {
-        name: 'campaigns',
+        name: 'app',
         initialState: {
             loading: true,
         },

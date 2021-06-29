@@ -43,6 +43,10 @@
                     &__btn-accept {
                         @include button-color(default, var(--success-color));
                     }
+
+                    &__btn-restart {
+                        @include button-color(default, var(--success-color));
+                    }
                 }
             }
 

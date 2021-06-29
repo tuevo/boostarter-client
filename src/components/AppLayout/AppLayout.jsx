@@ -1,4 +1,4 @@
-import { DownOutlined, EnvironmentFilled, FireOutlined, MailFilled, PhoneFilled, PoweroffOutlined, SearchOutlined, HeartOutlined } from '@ant-design/icons';
+import { DownOutlined, EnvironmentFilled, FireOutlined, HeartOutlined, MailFilled, PhoneFilled, PoweroffOutlined, RocketOutlined, SearchOutlined } from '@ant-design/icons';
 import { Avatar, Button, Col, Drawer, Dropdown, Input, Layout, List, Menu, Row } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import Title from 'antd/lib/typography/Title';
@@ -75,7 +75,7 @@ export default function AppLayout({ children, location }) {
 
     const sidebarMenu = {
         1: [
-            { key: '1', title: 'Chiến dịch cá nhân', icon: <FireOutlined />, url: '/personal-campaigns' },
+            { key: '1', title: 'Chiến dịch cá nhân', icon: <RocketOutlined />, url: '/personal-campaigns' },
             { key: '2', title: 'Chiến dịch đang theo dõi', icon: <HeartOutlined />, url: '/' },
         ],
         2: [
@@ -124,7 +124,16 @@ export default function AppLayout({ children, location }) {
                 </Menu>
                 <div className="header-right">
                     <Input className="search-input" size="large" placeholder="Tìm kiếm..." prefix={<SearchOutlined />} />
-                    {!user && (<Button className="header-right__btn btn-register" type="primary" size="large">Đăng ký</Button>)}
+                    {!user && (
+                        <Button
+                            className="header-right__btn btn-register"
+                            type="primary"
+                            size="large"
+                            onClick={() => history.push('/sign-up')}
+                        >
+                            Đăng ký
+                        </Button>
+                    )}
                     {user && (
                         <div className="user-notification">
                             <NotificationMenu />
@@ -195,7 +204,7 @@ export default function AppLayout({ children, location }) {
                         </Col>
                     </Row>
                     <div className="copyright">
-                        © Bản quyền Boostarter.vn 2021 - Boostarter Technology.
+                        © Bản quyền Boostarter.web.app 2021 - Boostarter Technology.
           </div>
                 </Container>
             </Footer>

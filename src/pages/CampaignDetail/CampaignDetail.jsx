@@ -1,5 +1,5 @@
-import { CheckCircleFilled, CheckOutlined, CloseOutlined, CommentOutlined, ContainerOutlined, DeleteFilled, EditFilled, FacebookFilled, HeartFilled, HeartOutlined, HistoryOutlined, PaperClipOutlined, PlusOutlined, StopOutlined, TeamOutlined, TwitterSquareFilled } from '@ant-design/icons';
-import { Avatar, Button, Col, Divider, Drawer, Form, List, Menu, message, Progress, Rate, Row, Tag, Timeline, Tooltip } from 'antd';
+import { CheckCircleFilled, CheckOutlined, CloseOutlined, CommentOutlined, RocketFilled, ExclamationCircleOutlined, ContainerOutlined, DeleteFilled, EditFilled, FacebookFilled, HeartFilled, HeartOutlined, HistoryOutlined, PaperClipOutlined, PlusOutlined, StopOutlined, TeamOutlined, TwitterSquareFilled } from '@ant-design/icons';
+import { Avatar, Button, Col, Divider, Drawer, Form, Input, List, Menu, message, Modal, Progress, Rate, Row, Tag, Timeline, Tooltip } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import TextArea from 'antd/lib/input/TextArea';
 import Title from 'antd/lib/typography/Title';
@@ -25,8 +25,8 @@ import PostStatusModal from '../../components/PostStatusModal/PostStatusModal';
 import QRPaymentModal from '../../components/QRPaymentModal';
 import SectionTitle from '../../components/SectionTitle';
 import StoryEditingModal from '../../components/StoryEditingModal';
-import { defaultUserAvatar, userRole } from '../../constants';
-import { addFeedback } from '../../redux';
+import { campaignStatus, defaultUserAvatar, userRole } from '../../constants';
+import { addFeedback, updateCampaign } from '../../redux';
 import { daysFromNow } from '../../utils/date-time';
 import './CampaignDetail.scss';
 
@@ -73,6 +73,8 @@ export default function CampaignDetail(props) {
     const [postStatusModalVisible, setPostStatusModalVisible] = useState(false);
     const [storyEditorVisible, setStoryEditorVisible] = useState(false);
 
+    const [confirmPendingCampaignForm] = useForm();
+
     const currentRaisePeriod = daysFromNow(data.endDate);
     const currentRaisePercent = Math.round(data.currentRaise / data.targetRaise * 100);
 
@@ -83,7 +85,6 @@ export default function CampaignDetail(props) {
 
     const handleEditingCampaignFormFinished = (values) => {
         setSubmitEditingCampaignFormLoading(true);
-        console.log(values);
 
         setTimeout(() => {
             setData({
@@ -134,6 +135,42 @@ export default function CampaignDetail(props) {
         return data.packages.findIndex((p) => p.id === packageData.id);
     }
 
+    const onClickBtnPendingCampaign = () => {
+        Modal.confirm({
+            title: 'Xác nhận',
+            icon: <ExclamationCircleOutlined />,
+            content: (
+                <>
+                    <p>Bạn có thật sự muốn tạm dừng chiến dịch này?</p>
+                    <Form
+                        form={confirmPendingCampaignForm}
+                        onFinish={values => {
+                            setData({
+                                ...data,
+                                status: campaignStatus.PENDING,
+                                pendingReason: values.reason,
+                            });
+                            message.success('Tạm dừng chiến dịch thành công');
+                        }}
+                        onFinishFailed={() => {
+                            message.error('Vui lòng điền đầy đủ thông tin');
+                            onClickBtnPendingCampaign();
+                        }}
+                    >
+                        <Form.Item name="reason" rules={[{ required: true }]}>
+                            <Input.TextArea rows={5} placeholder="Vui lòng cho biết lý do" />
+                        </Form.Item>
+                    </Form>
+                </>
+            ),
+            width: 500,
+            maskClosable: true,
+            okText: 'Đồng ý',
+            cancelText: 'Hủy bỏ',
+            onOk: () => confirmPendingCampaignForm.submit(),
+        })
+    }
+
     useEffect(() => {
         let url = `${props.location.pathname}${props.location.search}`;
 
@@ -168,6 +205,13 @@ export default function CampaignDetail(props) {
         }
     }, [selectedPackage]);
 
+    useEffect(() => {
+        if (data) {
+            console.log(data);
+            dispatch(updateCampaign(data));
+        }
+    }, [data, dispatch]);
+
     return (
         <div className="campaign-detail">
             <section className="campaign-detail__header">
@@ -182,7 +226,7 @@ export default function CampaignDetail(props) {
                             <div className="campaign-detail__header__right">
                                 <div className="toolbar">
                                     <div className="toolbar__status">
-                                        <Tag color={data.status.color}>{data.status.name}</Tag>
+                                        <Tag color={data.status.color} icon={data.status.icon}>{data.status.name}</Tag>
                                     </div>
                                     <div className="toolbar__controls">
                                         {user && user.role.value === userRole.ADMIN.value && (
@@ -201,7 +245,31 @@ export default function CampaignDetail(props) {
                                         )}
                                         {user && user.id === data.owner.id && (
                                             <>
-                                                <Button icon={<StopOutlined />} ghost danger>Tạm dừng</Button>
+                                                {data.status.value === campaignStatus.OPENED.value && (
+                                                    <Button
+                                                        icon={<StopOutlined />}
+                                                        ghost danger
+                                                        onClick={() => onClickBtnPendingCampaign()}
+                                                    >
+                                                        Tạm dừng
+                                                    </Button>
+                                                )}
+                                                {data.status.value === campaignStatus.PENDING.value && (
+                                                    <Button
+                                                        className="toolbar__controls__btn-restart"
+                                                        icon={<RocketFilled />}
+                                                        type="primary"
+                                                        onClick={() => {
+                                                            setData({
+                                                                ...data,
+                                                                status: campaignStatus.OPENED,
+                                                            });
+                                                            message.success('Khởi động chiến dịch thành công');
+                                                        }}
+                                                    >
+                                                        Khởi động lại
+                                                    </Button>
+                                                )}
                                                 <Button
                                                     className="toolbar__controls__btn-edit"
                                                     icon={<EditFilled />}
@@ -623,6 +691,7 @@ export default function CampaignDetail(props) {
                 onSubmit={(story) => {
                     setData({ ...data, story });
                     setStoryEditorVisible(false);
+                    message.success('Câu chuyện cập nhật sẽ được chuyển đến Quản trị viên để kiểm duyệt');
                 }}
             />
 

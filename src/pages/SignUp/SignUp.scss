@@ -1,6 +1,6 @@
 @import "../../styles/mixin.scss";
 
-.sign-in {
+.sign-up {
     overflow: hidden;
 
     &__content {
@@ -10,9 +10,9 @@
     }
 
     &__right {
-        width: 550px;
+        width: 600px;
         .ant-card {
-            padding: 120px 30px;
+            padding: 45px 30px;
             width: 100%;
             border: 0;
             border-radius: 20px;
@@ -25,7 +25,7 @@
         justify-content: center;
         align-content: center;
         width: 50%;
-        height: 660px;
+        height: 760px;
 
         img {
             height: 100%;
@@ -39,12 +39,6 @@
 
     &__title {
         text-align: center;
-    }
-
-    &__before-submit {
-        display: flex;
-        justify-content: space-between;
-        padding-bottom: 20px;
     }
 
     &__btn-submit {

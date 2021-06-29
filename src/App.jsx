@@ -10,6 +10,7 @@ import { pages } from './pages/pages';
 import CampaignDetail from './pages/CampaignDetail';
 import { Button, BackTop } from 'antd';
 import { UpOutlined } from '@ant-design/icons';
+import SignUp from './pages/SignUp/SignUp';
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                         {/* <ScrollToTop /> */}
                         <Route path="/" exact component={Home} />
                         <Route path="/sign-in" exact component={SignIn} />
+                        <Route path="/sign-up" exact component={SignUp} />
                         <Route path="/campaign/:id" exact component={CampaignDetail} />
                         <Switch>
                             {pages.map(p => (

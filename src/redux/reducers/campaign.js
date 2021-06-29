@@ -12,6 +12,18 @@ const campaign = createSlice(
                     ...action.payload,
                     id: v4(),
                 });
+            },
+            updateCampaign: (state, action) => {
+                const index = state.findIndex((c) => c.id === action.payload.id);
+                if (index > -1) {
+                    return [
+                        ...state.slice(0, index),
+                        action.payload,
+                        ...state.slice(index + 1),
+                    ]
+                }
+
+                return state;
             }
         }
     },
@@ -19,6 +31,7 @@ const campaign = createSlice(
 
 const { reducer, actions } = campaign;
 export const {
-    addCampaign
+    addCampaign,
+    updateCampaign,
 } = actions;
 export const campaignReducer = reducer;

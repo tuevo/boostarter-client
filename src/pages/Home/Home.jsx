@@ -1,4 +1,5 @@
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, Button } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import React, { useLayoutEffect, useRef } from 'react';
@@ -11,7 +12,7 @@ import CampaignPreviewCarousel from '../../components/CampaignPreviewCarousel/Ca
 import Container from '../../components/Container';
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import SingleCampaignPreviewCarousel from '../../components/SingleCampaignPreviewCarousel/SingleCampaignPreviewCarousel';
-import { APP_MISSION, APP_NAME } from '../../constants';
+import { APP_MISSION, APP_NAME, featuredServices } from '../../constants';
 import { useScrollTop } from '../../hooks';
 import { mockCampaign1, mockCategoryList, mockFeedbackList } from '../../mock-data';
 import { setAppLoading } from '../../redux';
@@ -22,9 +23,12 @@ export default function Home() {
     const history = useHistory();
     const dispatch = useDispatch();
     const successCampaignSectionRef = useRef();
-    const featuredCampaign = mockCampaign1;
+
     const app = useSelector(state => state.app);
+
     const popularCampaignList = useSelector(state => state.campaigns);
+    const featuredCampaign = popularCampaignList.find((c) => c.id === mockCampaign1.id);
+
     const successCampaignList = useSelector(state => state.campaigns.slice(1, 4));
     let activeSuccessCampaign = successCampaignList[0];
 
@@ -81,13 +85,33 @@ export default function Home() {
                                     <b>{APP_NAME}</b> {APP_MISSION}
                                 </p>
                                 <div className="buttons">
-                                    <Button className="featured-content__btn-register" size="large" type="primary">Trải nghiệm ngay</Button>
+                                    <Button
+                                        className="featured-content__btn-register"
+                                        size="large"
+                                        type="primary"
+                                        onClick={() => history.push('/sign-up')}
+                                    >
+                                        Trải nghiệm ngay
+                                    </Button>
                                     <Button className="featured-content__btn-more" size="large">Tìm hiểu thêm</Button>
                                 </div>
                             </div>
                         </div>
                     </Container>
                 </div>
+            </section>
+            <section className="featured-services">
+                <Container>
+                    <div className="service-list">
+                        {featuredServices.map((s, i) => (
+                            <div key={i} className="featured-service">
+                                <FontAwesomeIcon icon={s.icon} size="6x" className="featured-service__icon" />
+                                <Title level={4}>{s.name}</Title>
+                                <p>{s.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </Container>
             </section>
             <section className="popular-campaigns">
                 <Container>
@@ -106,7 +130,7 @@ export default function Home() {
                     <Container>
                         <SectionTitle center success>
                             Chiến dịch thành công
-            </SectionTitle>
+                        </SectionTitle>
                         <div className="carousel">
                             <SingleCampaignPreviewCarousel
                                 campaigns={successCampaignList}
@@ -121,10 +145,11 @@ export default function Home() {
                 <Container>
                     <SectionTitle center>
                         Có thể bạn quan tâm
-          </SectionTitle>
+                    </SectionTitle>
                     <div className="categories">
                         {mockCategoryList.map(c => (
-                            <div key={c.id} className="category" style={{ backgroundImage: `url(${c.thumbnail})` }}>
+                            <div key={c.id} className="category">
+                                <img src={c.thumbnail} alt="" />
                                 <div className="category__dark-cover">
                                     <div className="category__detail">
                                         <Title className="category__name" level={3}>{c.name}</Title>
@@ -148,7 +173,7 @@ export default function Home() {
                 <Container>
                     <SectionTitle center>
                         Đánh giá hàng đầu
-                </SectionTitle>
+                    </SectionTitle>
                     <div className="feedbacks">
                         {mockFeedbackList.slice(0, 3).map(f => (
                             <div key={f.id} className="feedback">

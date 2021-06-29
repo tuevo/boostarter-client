@@ -89,9 +89,17 @@ export default function CampaignPreview({ data, featured, from }) {
                             </Title>
                             <p className="current-raise-percent">
                                 {currentRaisePercent}%
-              </p>
+                            </p>
                         </div>
-                        <Progress percent={currentRaisePercent} showInfo={false} status="active" />
+                        <Progress
+                            percent={currentRaisePercent}
+                            showInfo={false}
+                            status="active"
+                            strokeColor={{
+                                '0%': '#108ee9',
+                                '100%': '#87d068',
+                            }}
+                        />
                         <div className="section-2">
                             <ClockCircleFilled className="icon" />
                             <NumberFormat

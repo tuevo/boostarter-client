@@ -8,7 +8,7 @@ import { mockUser1 } from "./user";
 export const newCampaign = {
     isPrivate: false,
     currentRaise: 0,
-    status: campaignStatus.OPENED,
+    status: campaignStatus.REVIEW,
     rating: 0,
     numberOfRatings: 0,
     postedStatuses: [],

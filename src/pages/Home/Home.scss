@@ -102,6 +102,51 @@
         }
     }
 
+    .featured-services {
+        padding: 120px 0;
+        background-color: #f8f8f8;
+
+        .service-list {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .featured-service {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 350px;
+            height: 200px;
+
+            &__icon {
+                color: rgba($color: #000000, $alpha: 0.85);
+            }
+
+            h4 {
+                margin: 20px 0;
+            }
+
+            &:nth-of-type(1) {
+                .featured-service__icon {
+                    color: crimson;
+                }
+            }
+
+            &:nth-of-type(3) {
+                .featured-service__icon {
+                    color: green;
+                }
+            }
+
+            &:nth-of-type(2) {
+                .featured-service__icon {
+                    color: var(--primary-color);
+                }
+            }
+        }
+    }
+
     .popular-campaigns {
         padding: 120px 0;
 
@@ -142,15 +187,19 @@
 
         .categories {
             display: flex;
+            justify-content: center;
             flex-wrap: wrap;
             padding: 30px 0;
 
             .category {
+                $width: 600px;
+                $height: 300px;
+
                 position: relative;
                 z-index: 1;
                 margin-top: 20px;
-                width: 660px;
-                height: 330px;
+                width: $width;
+                height: $height;
                 border-radius: 20px;
                 overflow: hidden;
                 background-size: 100% 100%;
@@ -158,17 +207,23 @@
                 color: var(--text-color-contrast);
                 box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 
+                img {
+                    position: relative;
+                    z-index: 2;
+                    width: $width;
+                    height: $height;
+                }
+
                 &__dark-cover {
                     position: absolute;
-                    z-index: 2;
+                    z-index: 3;
                     inset: 0;
-                    background: rgba(0, 0, 0, 0.4);
-                    box-shadow: inset 0px -80px 200px rgba(0, 0, 0, 0.5);
+                    box-shadow: inset 0 -100px 50px rgba($color: #000000, $alpha: 0.65);
                     cursor: pointer;
                     transition: 0.35s ease;
 
                     &:hover {
-                        background-color: rgba($color: #000000, $alpha: 0.2);
+                        box-shadow: inset 0 -150px 50px rgba($color: #000000, $alpha: 0.65);
                     }
                 }
 

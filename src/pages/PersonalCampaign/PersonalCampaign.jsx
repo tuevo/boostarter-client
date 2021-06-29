@@ -8,14 +8,16 @@ import { useHistory } from 'react-router';
 import CampaignPreview from '../../components/CampaignPreview';
 import Container from '../../components/Container';
 import CreateCampaignModal from '../../components/CreateCampaignModal';
+import { userRole } from '../../constants';
 import { useScrollTop } from '../../hooks';
-import { addCampaign } from '../../redux';
+import { addCampaign, updateUser } from '../../redux';
 import './PersonalCampaign.scss';
 
-export default function PersonalCampaign() {
+export default function PersonalCampaign(props) {
     useScrollTop();
     const history = useHistory();
     const dispatch = useDispatch();
+    const user = useSelector(state => state.user.auth);
     const campaignList = useSelector(state => state.campaigns);
     const [createCampaignVisible, setCreateCampaignVisible] = useState(false);
 
@@ -60,6 +62,20 @@ export default function PersonalCampaign() {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+
+    if (!user) {
+        return history.push({
+            pathname: '/sign-in',
+            state: {
+                from: `${props.location.pathname}${props.location.search}`
+            }
+        });
+    }
+
+    if (user && user.role.value !== userRole.CAMPAIGN_OWNER.value) {
+        history.push('/');
+        return <></>;
+    }
 
     return (
         <div className="personal-campaign">
@@ -163,6 +179,7 @@ export default function PersonalCampaign() {
                 onClose={() => setCreateCampaignVisible(false)}
                 onSubmit={newCampaignData => {
                     setCreateCampaignVisible(false);
+                    dispatch(updateUser({ ...user, numberOfCampaigns: user.numberOfCampaigns + 1 }));
                     dispatch(addCampaign(newCampaignData));
                 }}
             />
