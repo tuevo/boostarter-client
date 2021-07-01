@@ -38,11 +38,12 @@
         }
 
         .btn-register {
-            @include button-color(default, var(--primary-color));
+            // @include button-color(default, var(--primary-color));
+            @include button-color(outline, var(--primary-color));
         }
 
         .btn-login {
-            @include button-color(outline, var(--primary-color));
+            // @include button-color(outline, var(--primary-color));
         }
 
         .user-notification {

@@ -1,10 +1,10 @@
 export const userRole = {
     CAMPAIGN_OWNER: {
-        name: 'Người vận động',
+        name: 'Nhà vận động',
         value: 1
     },
     DONATOR: {
-        name: 'Người quyên góp',
+        name: 'Nhà quyên góp',
         value: 2
     },
     ADMIN: {

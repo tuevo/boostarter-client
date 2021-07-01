@@ -4,7 +4,7 @@ import Title from 'antd/lib/typography/Title';
 import QueueAnim from 'rc-queue-anim';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Container from '../../components/Container';
 import { AUTH_USER } from '../../constants';
 import { useScrollTop } from '../../hooks';
@@ -89,7 +89,7 @@ export default function SignIn(props) {
                                         <button type="submit" hidden />
                                         <div className="sign-in__before-submit">
                                             <Checkbox>Lưu tài khoản</Checkbox>
-                                            <NavLink to="/">Quên mật khẩu?</NavLink>
+                                            <Button type="link">Quên mật khẩu?</Button>
                                         </div>
                                         <Button
                                             className="sign-in__btn-submit"

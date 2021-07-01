@@ -6,9 +6,10 @@ import { mockPostedStatusList } from "./posted-status";
 import { mockUser1 } from "./user";
 
 export const newCampaign = {
-    isPrivate: false,
+    isPrivate: true,
+    isFollowed: false,
     currentRaise: 0,
-    status: campaignStatus.REVIEW,
+    status: campaignStatus.OPENED,
     rating: 0,
     numberOfRatings: 0,
     postedStatuses: [],
@@ -19,9 +20,10 @@ export const newCampaign = {
 export const mockCampaign1 = {
     id: 1,
     isPrivate: false,
+    isFollowed: false,
     thumbnail: 'https://pbs.twimg.com/media/E0xmq8MXIAM4aTa?format=jpg&name=4096x4096',
     title: 'VÌ MIỀN TRUNG THÂN YÊU',
-    desc: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.',
+    desc: 'Nhìn lại toàn bộ đợt "lũ chồng lũ, bão chồng bão" trong suốt tháng 10 vừa qua trên dải đất miền Trung ruột thịt, để thấy rõ hơn những yêu cầu nhiệm vụ, cũng như bài học kinh nghiệm và biện pháp ứng phó nhằm giảm thiểu tối đa thiệt hại do thiên tai gây ra, hỗ trợ hiệu quả, giúp nhân dân khu vực bị ảnh hưởng sớm ổn định đời sống, khôi phục sản xuất.',
     categoryId: 2,
     tags: ['thiennguyen', 'huongvemientrung'],
     targetRaise: 16600000,
@@ -61,7 +63,7 @@ export const mockCampaign1 = {
         name: 'Giáo hội Phật giáo Việt Nam',
         introduction: 'Giáo hội Phật giáo Việt Nam là tổ chức Phật giáo toàn quốc của Việt Nam, là đại diện Tăng, Ni, Phật tử Việt Nam trong và ngoài nước, là thành viên các tổ chức Phật giáo Quốc tế mà Giáo hội tham gia và là thành viên của Mặt trận Tổ quốc Việt Nam.',
         website: 'https://phatgiao.org.vn'
-    }
+    },
 }
 
 export const mockCampaign2 = {
@@ -80,6 +82,7 @@ export const mockCampaign3 = {
     title: 'BỮA CƠM TÌNH THƯƠNG',
     categoryId: 2,
     status: campaignStatus.REVIEW,
+    isPrivate: true,
 }
 
 export const mockCampaign4 = {
@@ -125,15 +128,16 @@ export const mockCampaign8 = {
     title: 'BỮA CƠM TÌNH THƯƠNG',
     categoryId: 2,
     status: campaignStatus.REVIEW,
+    isPrivate: true,
 }
 
 export const mockCampaignList = [
+    mockCampaign1,
     mockCampaign2,
     mockCampaign3,
     mockCampaign4,
     mockCampaign5,
     mockCampaign6,
-    mockCampaign1,
     mockCampaign7,
     mockCampaign8,
 ];

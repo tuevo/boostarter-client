@@ -183,7 +183,6 @@ export default function PersonalCampaign(props) {
                     dispatch(addCampaign(newCampaignData));
                 }}
             />
-
         </div>
     )
 }

@@ -127,7 +127,6 @@ export default function AppLayout({ children, location }) {
                     {!user && (
                         <Button
                             className="header-right__btn btn-register"
-                            type="primary"
                             size="large"
                             onClick={() => history.push('/sign-up')}
                         >

@@ -1,29 +1,35 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { v4 } from 'uuid';
+import { createSlice } from '@reduxjs/toolkit';
+import { CAMPAIGNS, saveCampaignsToLocalStorage } from '../../constants';
 import { mockCampaignList } from '../../mock-data';
+import { randomNumberNotInArray } from '../../utils';
+
+const campaigns = localStorage.getItem(CAMPAIGNS) ? JSON.parse(localStorage.getItem(CAMPAIGNS)) : mockCampaignList;
 
 const campaign = createSlice(
     {
         name: 'campaigns',
-        initialState: [...mockCampaignList],
+        initialState: campaigns,
         reducers: {
             addCampaign: (state, action) => {
-                state.unshift({
+                const newId = randomNumberNotInArray(state.map((c) => c.id));
+                state.push({
                     ...action.payload,
-                    id: v4(),
+                    id: newId,
                 });
+                saveCampaignsToLocalStorage(state);
             },
             updateCampaign: (state, action) => {
                 const index = state.findIndex((c) => c.id === action.payload.id);
+                let newCampaigns = [...state];
                 if (index > -1) {
-                    return [
+                    newCampaigns = [
                         ...state.slice(0, index),
                         action.payload,
                         ...state.slice(index + 1),
                     ]
                 }
-
-                return state;
+                saveCampaignsToLocalStorage(newCampaigns);
+                return newCampaigns;
             }
         }
     },

@@ -1,4 +1,4 @@
-import { CheckCircleFilled, CheckOutlined, CloseOutlined, CommentOutlined, RocketFilled, ExclamationCircleOutlined, ContainerOutlined, DeleteFilled, EditFilled, FacebookFilled, HeartFilled, HeartOutlined, HistoryOutlined, PaperClipOutlined, PlusOutlined, StopOutlined, TeamOutlined, TwitterSquareFilled } from '@ant-design/icons';
+import { CheckCircleFilled, CheckOutlined, CloseOutlined, CommentOutlined, ContainerOutlined, DeleteFilled, EditFilled, ExclamationCircleOutlined, FacebookFilled, HeartFilled, HeartOutlined, HistoryOutlined, PaperClipOutlined, PlusOutlined, RocketFilled, StopOutlined, TeamOutlined, TwitterSquareFilled } from '@ant-design/icons';
 import { Avatar, Button, Col, Divider, Drawer, Form, Input, List, Menu, message, Modal, Progress, Rate, Row, Tag, Timeline, Tooltip } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import TextArea from 'antd/lib/input/TextArea';
@@ -25,7 +25,8 @@ import PostStatusModal from '../../components/PostStatusModal/PostStatusModal';
 import QRPaymentModal from '../../components/QRPaymentModal';
 import SectionTitle from '../../components/SectionTitle';
 import StoryEditingModal from '../../components/StoryEditingModal';
-import { campaignStatus, defaultUserAvatar, userRole } from '../../constants';
+import NotFound from '../../components/NotFound';
+import { campaignStatus, defaultUserAvatar, getCampaignStatusIcon, userRole } from '../../constants';
 import { addFeedback, updateCampaign } from '../../redux';
 import { daysFromNow } from '../../utils/date-time';
 import './CampaignDetail.scss';
@@ -58,7 +59,7 @@ export default function CampaignDetail(props) {
     const [editingCampaignForm] = useForm();
     const [submitEditingCampaignLoading, setSubmitEditingCampaignFormLoading] = useState(false);
 
-    const [btnFollowSelectable, setBtnFollowSelectable] = useState(data.isFollowed || false);
+    const [btnFollowSelectable, setBtnFollowSelectable] = useState();
 
     const [addCommentForm] = useForm();
 
@@ -75,8 +76,8 @@ export default function CampaignDetail(props) {
 
     const [confirmPendingCampaignForm] = useForm();
 
-    const currentRaisePeriod = daysFromNow(data.endDate);
-    const currentRaisePercent = Math.round(data.currentRaise / data.targetRaise * 100);
+    const [currentRaisePeriod, setCurrentRaisePeriod] = useState();
+    const [currentRaisePercent, setCurrentRaisePercent] = useState();
 
     const handleClickMenu = (key) => {
         setSelectedMenuKey(key);
@@ -208,9 +209,16 @@ export default function CampaignDetail(props) {
     useEffect(() => {
         if (data) {
             console.log(data);
+            setBtnFollowSelectable(data.isFollowed || false);
+            setCurrentRaisePeriod(daysFromNow(data.endDate));
+            setCurrentRaisePercent(Math.round(data.currentRaise / data.targetRaise * 100));
             dispatch(updateCampaign(data));
         }
     }, [data, dispatch]);
+
+    if (!data) {
+        return <NotFound />;
+    }
 
     return (
         <div className="campaign-detail">
@@ -226,7 +234,7 @@ export default function CampaignDetail(props) {
                             <div className="campaign-detail__header__right">
                                 <div className="toolbar">
                                     <div className="toolbar__status">
-                                        <Tag color={data.status.color} icon={data.status.icon}>{data.status.name}</Tag>
+                                        <Tag color={data.status.color} icon={getCampaignStatusIcon(data.status.value)}>{data.status.name}</Tag>
                                     </div>
                                     <div className="toolbar__controls">
                                         {user && user.role.value === userRole.ADMIN.value && (

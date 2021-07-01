@@ -10,7 +10,7 @@ export const mockFeedbackList = [
             role: 'CEO',
             organization: 'Quỹ từ thiện ThuRapper'
         },
-        comment: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi. et quas molestias. vero eos et accusamus et iusto odio dignissimos.'
+        comment: 'Đây là một nền tảng tuyệt vời cho những nhà vận động chiến dịch thiện nguyện. Các đây vài năm, tôi được bạn bè giới thiệu nền tảng này, sau khi sử dụng tôi cảm thấy rất hài lòng với những gì nền tảng đã đáp ứng cho tôi.'
     },
     {
         id: 3,
@@ -22,7 +22,7 @@ export const mockFeedbackList = [
             role: 'CEO',
             organization: 'Quỹ từ thiện TueIT',
         },
-        comment: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi. et quas molestias. vero eos et accusamus et iusto odio dignissimos.'
+        comment: 'Đây là một nền tảng tuyệt vời cho những nhà vận động chiến dịch thiện nguyện. Các đây vài năm, tôi được bạn bè giới thiệu nền tảng này, sau khi sử dụng tôi cảm thấy rất hài lòng với những gì nền tảng đã đáp ứng cho tôi.'
     },
     {
         id: 4,
@@ -35,7 +35,7 @@ export const mockFeedbackList = [
             role: 'CEO',
             organization: 'Quỹ từ thiện TIIT',
         },
-        comment: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi. et quas molestias. vero eos et accusamus et iusto odio dignissimos.'
+        comment: 'Đây là một nền tảng tuyệt vời cho những nhà vận động chiến dịch thiện nguyện. Các đây vài năm, tôi được bạn bè giới thiệu nền tảng này, sau khi sử dụng tôi cảm thấy rất hài lòng với những gì nền tảng đã đáp ứng cho tôi.'
     },
     {
         id: 2,
@@ -48,6 +48,6 @@ export const mockFeedbackList = [
             role: 'CEO',
             organization: 'Quỹ từ thiện DuckyTran',
         },
-        comment: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi. et quas molestias. vero eos et accusamus et iusto odio dignissimos.'
+        comment: 'Đây là một nền tảng tuyệt vời cho những nhà vận động chiến dịch thiện nguyện. Các đây vài năm, tôi được bạn bè giới thiệu nền tảng này, sau khi sử dụng tôi cảm thấy rất hài lòng với những gì nền tảng đã đáp ứng cho tôi.'
     },
 ];

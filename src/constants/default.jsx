@@ -10,16 +10,16 @@ export const featuredServices = [
     {
         icon: faRocket,
         name: 'Phát động chiến dịch',
-        desc: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.'
+        desc: 'Giúp các nhà vận động giới thiệu các chiến dịch cá nhân và đại diện cho tổ chức của họ đến với cộng đồng nhiều hơn.'
     },
     {
         icon: faChartLine,
         name: 'Theo dõi chiến dịch',
-        desc: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.'
+        desc: 'Giúp nhà vận động theo dõi chi tiết các chiến dịch đang được vận động với nhiều tính năng báo cáo, thống kê, tiện ích đi kèm.'
     },
     {
         icon: faMoneyBill,
         name: 'Nhận quyên góp',
-        desc: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.'
+        desc: 'Chúng tôi sẽ nhận các khoản quyên góp cho chiến dịch từ các nhà quyên góp và sẽ chuyển về cho người chủ chiến dịch.'
     },
 ]

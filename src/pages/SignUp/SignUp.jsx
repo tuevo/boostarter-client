@@ -1,11 +1,11 @@
-import { Button, Card, Checkbox, Divider, Form, Input, message, Radio } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Button, Card, Checkbox, Divider, Form, Input, message, Radio, Tooltip } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import Title from 'antd/lib/typography/Title';
 import QueueAnim from 'rc-queue-anim';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { NavLink, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Container from '../../components/Container';
 import { mapUserRole, userRole } from '../../constants';
 import { useScrollTop } from '../../hooks';
@@ -77,16 +77,29 @@ export default function SignUp(props) {
                                         onFinishFailed={onFinishFailed}
                                         initialValues={{ roleId: userRole.CAMPAIGN_OWNER.value }}
                                     >
-                                        <Form.Item
-                                            label="Loại tài khoản"
-                                            name="roleId"
-                                        >
-                                            <Radio.Group>
-                                                {[userRole.CAMPAIGN_OWNER, userRole.DONATOR].map((r) => (
-                                                    <Radio key={r.value} value={r.value}>{r.name}</Radio>
-                                                ))}
-                                            </Radio.Group>
-                                        </Form.Item>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <Form.Item
+                                                label="Loại tài khoản"
+                                                name="roleId"
+                                                style={{ flexGrow: 1 }}
+                                            >
+                                                <Radio.Group>
+                                                    {[userRole.CAMPAIGN_OWNER, userRole.DONATOR].map((r) => (
+                                                        <Radio key={r.value} value={r.value}>{r.name}</Radio>
+                                                    ))}
+                                                </Radio.Group>
+                                            </Form.Item>
+                                            <div style={{ marginBottom: 20 }}>
+                                                <Tooltip placement="right" title="Nhấn để tìm hiểu thêm về các loại tài khoản">
+                                                    <Button
+                                                        icon={<QuestionCircleOutlined />}
+                                                        shape="circle"
+                                                        style={{ border: 0 }}
+                                                    />
+                                                </Tooltip>
+                                            </div>
+
+                                        </div>
                                         <div style={{ marginLeft: -2.5 }}>
                                             <Form.Item
                                                 label="Họ và tên"
@@ -160,7 +173,7 @@ export default function SignUp(props) {
                                             <Checkbox
                                                 onChange={e => form.setFieldsValue({ privacyChecked: e.target.checked })}
                                             >
-                                                Tôi đồng ý với <NavLink to="/"><b>Các điều khoản sử dụng</b></NavLink>
+                                                Tôi đồng ý với <Button type="link">Các điều khoản sử dụng</Button>
                                             </Checkbox>
                                         </Form.Item>
                                         <Button

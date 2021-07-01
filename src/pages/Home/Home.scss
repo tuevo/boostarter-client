@@ -15,6 +15,7 @@
             inset: 0;
             padding: 100px 0;
             background-color: rgba(0, 0, 0, 0.5);
+            box-shadow: inset 0 -150px 50px rgba($color: #000000, $alpha: 0.5);
             color: var(--text-color-contrast);
         }
 
@@ -90,12 +91,12 @@
                 }
 
                 &__btn-register {
-                    @include button-color(default, var(--cta-color));
+                    @include button-color(default, var(--success-color));
                 }
 
                 &__btn-more {
                     margin-left: 15px;
-                    @include button-color(outline, var(--primary-color));
+                    // @include button-color(outline, var(--primary-color));
                     background: #fff;
                 }
             }
@@ -108,7 +109,7 @@
 
         .service-list {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
         }
 
         .featured-service {
@@ -116,33 +117,15 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            width: 350px;
+            width: 300px;
             height: 200px;
 
             &__icon {
-                color: rgba($color: #000000, $alpha: 0.85);
+                color: var(--cta-color);
             }
 
             h4 {
                 margin: 20px 0;
-            }
-
-            &:nth-of-type(1) {
-                .featured-service__icon {
-                    color: crimson;
-                }
-            }
-
-            &:nth-of-type(3) {
-                .featured-service__icon {
-                    color: green;
-                }
-            }
-
-            &:nth-of-type(2) {
-                .featured-service__icon {
-                    color: var(--primary-color);
-                }
             }
         }
     }
@@ -265,7 +248,7 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            padding: 25px;
+            padding: 50px 25px;
             width: 350px;
             background: #fff;
             box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.05);

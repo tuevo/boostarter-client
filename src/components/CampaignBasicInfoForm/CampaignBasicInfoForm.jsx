@@ -16,7 +16,10 @@ export default function CampaignBasicInfoForm({ form, initValues, onFinished, on
             initialValues={initValues}
             labelAlign="left"
             labelCol={{ span: 4 }}
-            onFinish={onFinished}
+            onFinish={values => onFinished({
+                ...values,
+                tags: values.tags || [],
+            })}
             onFinishFailed={onFinishFailed}
         >
             <Form.Item name="thumbnail">

@@ -4,7 +4,7 @@ export const mockPackage1 = {
     title: 'QUÀ TRI ÂN + THƯ CẢM ƠN',
     pricing: 2000000,
     currency: 'VNĐ',
-    desc: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.. praesentium.',
+    desc: 'Bạn sẽ nhận được <b>01 thư cảm ơn</b>, <b>01 album ảnh danh lam thắng cảnh xứ Huế chất lượng cao</b> và <b>01 kỷ niệm chương</b>. Sau khi chiến dịch này kết thúc, chúng tôi sẽ sắp xếp gửi các phần quà tri ân đến bạn trong thời gian sớm nhất.',
 };
 
 export const mockPackage2 = {

@@ -1,15 +1,16 @@
+import { UpOutlined } from '@ant-design/icons';
+import { BackTop, Button } from 'antd';
 import 'antd/dist/antd.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.scss';
 import AppLayout from './components/AppLayout';
+import NotFound from './components/NotFound/NotFound';
 import PrivateRoute from './components/PrivateRoute';
+import CampaignDetail from './pages/CampaignDetail';
 // import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import Home from './pages/Home';
-import SignIn from './pages/SignIn';
 import { pages } from './pages/pages';
-import CampaignDetail from './pages/CampaignDetail';
-import { Button, BackTop } from 'antd';
-import { UpOutlined } from '@ant-design/icons';
+import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 
 function App() {
@@ -19,14 +20,15 @@ function App() {
                 <Switch>
                     <AppLayout>
                         {/* <ScrollToTop /> */}
-                        <Route path="/" exact component={Home} />
-                        <Route path="/sign-in" exact component={SignIn} />
-                        <Route path="/sign-up" exact component={SignUp} />
-                        <Route path="/campaign/:id" exact component={CampaignDetail} />
                         <Switch>
+                            <Route exact path="/" component={Home} />
+                            <Route exact path="/sign-in" component={SignIn} />
+                            <Route exact path="/sign-up" component={SignUp} />
+                            <Route exact path="/campaign/:id" component={CampaignDetail} />
                             {pages.map(p => (
-                                <PrivateRoute {...p} key={p.id} />
+                                <PrivateRoute key={p.id} exact {...p} />
                             ))}
+                            <Route component={NotFound} />
                         </Switch>
                         <BackTop>
                             <Button className="btn-back-top" icon={<UpOutlined />} shape="circle" />
