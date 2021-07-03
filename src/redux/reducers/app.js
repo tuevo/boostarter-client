@@ -5,10 +5,14 @@ const app = createSlice(
         name: 'app',
         initialState: {
             loading: true,
+            elementIdToScroll: null,
         },
         reducers: {
             setAppLoading: (state, action) => {
                 state.loading = action.payload;
+            },
+            scrollToElement: (state, action) => {
+                state.elementIdToScroll = action.payload;
             }
         }
     },
@@ -16,6 +20,7 @@ const app = createSlice(
 
 const { reducer, actions } = app;
 export const {
-    setAppLoading
+    setAppLoading,
+    scrollToElement,
 } = actions;
 export const appReducer = reducer;

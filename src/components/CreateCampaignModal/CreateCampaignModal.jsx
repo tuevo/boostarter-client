@@ -5,6 +5,7 @@ import htmlParse from 'html-react-parser';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { APP_PRIVACY } from '../../constants';
 import { newCampaign } from '../../mock-data';
 import BetterInputNumber from '../BetterInputNumber';
 import CampaignBasicInfoForm from '../CampaignBasicInfoForm';
@@ -225,24 +226,11 @@ export default function CreateCampaignModal({ visible, onClose, onSubmit }) {
             content: (
                 <div className="create-campaign-modal__policy">
                     <div className="create-campaign-modal__policy__content">
-                        {htmlParse(`
-                            <h2>Điều khoản dịch vụ và chính sách bảo mật</h2>
-                            <p>
-                            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.
-                            </p>
-                            <h4>1. Điều khoản</h4>
-                            <p>
-                            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.
-                            </p>
-                            <h4>2. Giấy phép sử dụng</h4>
-                            <p>
-                            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.
-                            </p>
-                        `)}
+                        {htmlParse(APP_PRIVACY)}
                     </div>
                     <div className="create-campaign-modal__policy__confirm">
                         <Checkbox checked={privacyChecked} onChange={e => checkPrivacy(e.target.checked)}>
-                            Tôi đồng ý với các <b>Điều khoản dịch vụ và chính sách bảo mật</b>
+                            Tôi đồng ý với <b>Điều khoản dịch vụ và chính sách bảo mật</b>
                         </Checkbox>
                     </div>
                 </div>

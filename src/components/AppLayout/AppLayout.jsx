@@ -1,12 +1,12 @@
-import { DownOutlined, EnvironmentFilled, FireOutlined, HeartOutlined, MailFilled, PhoneFilled, PoweroffOutlined, RocketOutlined, SearchOutlined } from '@ant-design/icons';
-import { Avatar, Button, Col, Drawer, Dropdown, Input, Layout, List, Menu, Row } from 'antd';
+import { EnvironmentFilled, FireOutlined, HeartOutlined, MailFilled, PhoneFilled, PoweroffOutlined, DownOutlined, RocketOutlined, SearchOutlined } from '@ant-design/icons';
+import { Avatar, Button, Col, Drawer, Input, Layout, List, Menu, Row, Dropdown } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import Title from 'antd/lib/typography/Title';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 import { AUTH_USER } from '../../constants';
-import { auth } from '../../redux';
+import { auth, scrollToElement } from '../../redux';
 import AppLogo from '../AppLogo';
 import Container from '../Container';
 import NotificationMenu from '../NotificationMenu/NotificationMenu';
@@ -97,12 +97,13 @@ export default function AppLayout({ children, location }) {
     return (
         <Layout className="layout">
             <Header>
-                <Menu mode="horizontal">
-                    <Menu.Item className="logo-wrapper">
+                <Menu className="app-header-menu" mode="horizontal" onClick={e => {
+                    dispatch(scrollToElement(e.key));
+                    history.push('/');
+                }}>
+                    <Menu.Item className="logo-wrapper" key="home">
                         <div className="logo">
-                            <NavLink to="/">
-                                <AppLogo />
-                            </NavLink>
+                            <AppLogo />
                         </div>
                     </Menu.Item>
                     <Menu.Item>
@@ -112,22 +113,44 @@ export default function AppLayout({ children, location }) {
                             </div>
                         </Dropdown>
                     </Menu.Item>
-                    <Menu.Item>
-                        Giới thiệu
+                    <Menu.Item key="featured-service">
+                        Tính năng
+                    </Menu.Item>
+                    <Menu.Item key="featured-campaign">
+                        Chiến dịch nổi bật
+                    </Menu.Item>
+                    <Menu.Item key="success-campaign">
+                        Chiến dịch thành công
+                    </Menu.Item>
+                    <Menu.Item key="featured-category">
+                        Lĩnh vực
+                    </Menu.Item>
+                    <Menu.Item key="featured-feedback">
+                        Đánh giá
+                    </Menu.Item>
+                    <Menu.Item key="strategic-partner">
+                        Đối tác
                     </Menu.Item>
                     <Menu.Item>
-                        Hoạt động
-                    </Menu.Item>
-                    <Menu.Item>
-                        Liên hệ
+                        Hướng dẫn
                     </Menu.Item>
                 </Menu>
                 <div className="header-right">
                     <Input className="search-input" size="large" placeholder="Tìm kiếm..." prefix={<SearchOutlined />} />
                     {!user && (
                         <Button
+                            className="header-right__btn btn-login"
+                            size="large"
+                            onClick={() => history.push(signInLocation)}
+                        >
+                            Đăng nhập
+                        </Button>
+                    )}
+                    {!user && (
+                        <Button
                             className="header-right__btn btn-register"
                             size="large"
+                            type="primary"
                             onClick={() => history.push('/sign-up')}
                         >
                             Đăng ký
@@ -137,15 +160,6 @@ export default function AppLayout({ children, location }) {
                         <div className="user-notification">
                             <NotificationMenu />
                         </div>
-                    )}
-                    {!user && (
-                        <Button
-                            className="header-right__btn btn-login"
-                            size="large"
-                            onClick={() => history.push(signInLocation)}
-                        >
-                            Đăng nhập
-                        </Button>
                     )}
                     {user && (
                         <div className="user-menu" onClick={() => setSidebarVisible(true)}>

@@ -11,6 +11,10 @@ $callBottom: 450px;
 $zaloBottom: 280px;
 $zaloSize: 56px;
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     font-family: "Quicksand", sans-serif !important;

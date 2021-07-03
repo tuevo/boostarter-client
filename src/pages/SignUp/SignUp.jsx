@@ -3,10 +3,11 @@ import { Button, Card, Checkbox, Divider, Form, Input, message, Radio, Tooltip }
 import { useForm } from 'antd/lib/form/Form';
 import Title from 'antd/lib/typography/Title';
 import QueueAnim from 'rc-queue-anim';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Container from '../../components/Container';
+import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import { mapUserRole, userRole } from '../../constants';
 import { useScrollTop } from '../../hooks';
 import { newUser } from '../../mock-data';
@@ -19,6 +20,7 @@ export default function SignUp(props) {
     const dispatch = useDispatch();
     const [form] = useForm();
     const users = useSelector(state => state.user.users);
+    const [privacyModalVisible, setPrivacyModalVisible] = useState(false);
 
     const onFinished = (values) => {
         const { fullName, email, password, retype, roleId, privacyChecked } = values;
@@ -83,14 +85,14 @@ export default function SignUp(props) {
                                                 name="roleId"
                                                 style={{ flexGrow: 1 }}
                                             >
-                                                <Radio.Group>
+                                                <Radio.Group style={{ paddingLeft: 7.5 }}>
                                                     {[userRole.CAMPAIGN_OWNER, userRole.DONATOR].map((r) => (
                                                         <Radio key={r.value} value={r.value}>{r.name}</Radio>
                                                     ))}
                                                 </Radio.Group>
                                             </Form.Item>
                                             <div style={{ marginBottom: 20 }}>
-                                                <Tooltip placement="right" title="Nhấn để tìm hiểu thêm về các loại tài khoản">
+                                                <Tooltip placement="right" title="Nhấn để tìm hiểu thêm">
                                                     <Button
                                                         icon={<QuestionCircleOutlined />}
                                                         shape="circle"
@@ -173,7 +175,7 @@ export default function SignUp(props) {
                                             <Checkbox
                                                 onChange={e => form.setFieldsValue({ privacyChecked: e.target.checked })}
                                             >
-                                                Tôi đồng ý với <Button type="link">Các điều khoản sử dụng</Button>
+                                                Tôi đồng ý với <Button type="link" onClick={() => setPrivacyModalVisible(true)}>Điều khoản dịch vụ & Chính sách bảo mật</Button>
                                             </Checkbox>
                                         </Form.Item>
                                         <Button
@@ -202,6 +204,11 @@ export default function SignUp(props) {
                     </div>
                 </div>
             </Container>
+
+            <PrivacyModal
+                visible={privacyModalVisible}
+                onClose={() => setPrivacyModalVisible(false)}
+            />
         </div>
     )
 }

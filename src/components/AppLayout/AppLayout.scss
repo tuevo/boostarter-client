@@ -1,6 +1,13 @@
 @import "../../styles/mixin.scss";
 
 .layout {
+    .app-header-menu {
+        .ant-menu-item-selected {
+            color: inherit !important;
+            border-bottom-color: transparent !important;
+        }
+    }
+
     .ant-layout-header,
     .ant-layout-content {
         background: #fff !important;
@@ -38,12 +45,10 @@
         }
 
         .btn-register {
-            // @include button-color(default, var(--primary-color));
-            @include button-color(outline, var(--primary-color));
         }
 
         .btn-login {
-            // @include button-color(outline, var(--primary-color));
+            @include button-color(outline, var(--primary-color));
         }
 
         .user-notification {

@@ -2,7 +2,7 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, Button } from 'antd';
 import Title from 'antd/lib/typography/Title';
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import NumberFormat from 'react-number-format';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -15,16 +15,22 @@ import SingleCampaignPreviewCarousel from '../../components/SingleCampaignPrevie
 import { APP_MISSION, APP_NAME, featuredServices } from '../../constants';
 import { useScrollTop } from '../../hooks';
 import { mockCampaign1, mockCategoryList, mockFeedbackList } from '../../mock-data';
-import { setAppLoading } from '../../redux';
+import { scrollToElement, setAppLoading } from '../../redux';
 import './Home.scss';
 
 export default function Home() {
     useScrollTop();
     const history = useHistory();
     const dispatch = useDispatch();
-    const successCampaignSectionRef = useRef();
 
     const app = useSelector(state => state.app);
+
+    const featuredServiceRef = useRef(null);
+    const featuredCampaignRef = useRef(null);
+    const successCampaignRef = useRef(null);
+    const featuredCategoryRef = useRef(null);
+    const featuredFeedbackRef = useRef(null);
+    const strategicPartnerRef = useRef(null);
 
     const popularCampaignList = useSelector(state => state.campaigns);
     const featuredCampaign = popularCampaignList.find((c) => c.id === mockCampaign1.id);
@@ -37,8 +43,8 @@ export default function Home() {
             return;
 
         activeSuccessCampaign = successCampaignList[index];
-        if (activeSuccessCampaign && successCampaignSectionRef.current) {
-            successCampaignSectionRef.current.style.backgroundImage = `url(${activeSuccessCampaign.thumbnail})`;
+        if (activeSuccessCampaign && successCampaignRef.current) {
+            successCampaignRef.current.style.backgroundImage = `url(${activeSuccessCampaign.thumbnail})`;
         }
     }
 
@@ -47,6 +53,49 @@ export default function Home() {
             dispatch(setAppLoading(false));
         }, 1000);
     }, [dispatch]);
+
+    useEffect(() => {
+        switch (app.elementIdToScroll) {
+            case 'home':
+                window.scrollTo({ top: 0 });
+                break;
+            case 'featured-service':
+                if (featuredServiceRef.current) {
+                    window.scrollTo({ top: featuredServiceRef.current.offsetTop - (featuredServiceRef.current.clientHeight / 2) });
+                }
+                break;
+            case 'featured-campaign':
+                if (featuredCampaignRef.current) {
+                    window.scrollTo({ top: featuredCampaignRef.current.offsetTop - (featuredCampaignRef.current.clientHeight / 12) });
+                }
+                break;
+            case 'success-campaign':
+                if (successCampaignRef.current) {
+                    window.scrollTo({ top: successCampaignRef.current.offsetTop - (successCampaignRef.current.clientHeight / 10) });
+                }
+                break;
+            case 'featured-category':
+                if (featuredCategoryRef.current) {
+                    window.scrollTo({ top: featuredCategoryRef.current.offsetTop - (featuredCategoryRef.current.clientHeight / 25) });
+                }
+                break;
+            case 'featured-feedback':
+                if (featuredFeedbackRef.current) {
+                    window.scrollTo({ top: featuredFeedbackRef.current.offsetTop - (featuredFeedbackRef.current.clientHeight / 7) });
+                }
+                break;
+            case 'strategic-partner':
+                if (strategicPartnerRef.current) {
+                    window.scrollTo({ top: strategicPartnerRef.current.offsetTop - (strategicPartnerRef.current.clientHeight / 2) });
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        dispatch(scrollToElement(null));
+    }, [app.elementIdToScroll]);
 
     if (app.loading) {
         return <AppLoading />
@@ -100,7 +149,7 @@ export default function Home() {
                     </Container>
                 </div>
             </section>
-            <section className="featured-services">
+            <section className="featured-services" ref={featuredServiceRef}>
                 <Container>
                     <div className="service-list">
                         {featuredServices.map((s, i) => (
@@ -113,7 +162,7 @@ export default function Home() {
                     </div>
                 </Container>
             </section>
-            <section className="popular-campaigns">
+            <section className="popular-campaigns" ref={featuredCampaignRef}>
                 <Container>
                     <SectionTitle center>Chiến dịch nổi bật</SectionTitle>
                     <div className="carousel">
@@ -122,7 +171,7 @@ export default function Home() {
                 </Container>
             </section>
             <section
-                ref={successCampaignSectionRef}
+                ref={successCampaignRef}
                 className="success-campaigns"
                 style={{ backgroundImage: `url(${activeSuccessCampaign.thumbnail})` }}
             >
@@ -141,10 +190,10 @@ export default function Home() {
                     </Container>
                 </div>
             </section>
-            <section className="featured-categories">
+            <section className="featured-categories" ref={featuredCategoryRef}>
                 <Container>
                     <SectionTitle center>
-                        Có thể bạn quan tâm
+                        Lĩnh vực bạn quan tâm
                     </SectionTitle>
                     <div className="categories">
                         {mockCategoryList.map(c => (
@@ -169,7 +218,7 @@ export default function Home() {
                     </div>
                 </Container>
             </section>
-            <section className="featured-feedbacks">
+            <section className="featured-feedbacks" ref={featuredFeedbackRef}>
                 <Container>
                     <SectionTitle center>
                         Đánh giá hàng đầu
@@ -195,7 +244,7 @@ export default function Home() {
                     </div>
                 </Container>
             </section>
-            <section className="partners">
+            <section className="partners" ref={strategicPartnerRef}>
                 <Container>
                     <SectionTitle center>
                         Đối tác của chúng tôi

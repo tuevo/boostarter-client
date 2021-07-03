@@ -51,7 +51,7 @@ export default function CampaignDetail(props) {
     const feedbackList = useSelector(state => state.feedbacks);
     const relatedCampaignList = campaignList.filter(c => c.id !== +id);
 
-    const [data, setData] = useState(campaignList.find(c => c.id === +id));
+    const [data, setData] = useState();
     const [selectedMenuKey, setSelectedMenuKey] = useState(queryParams['tab'] || '1');
     const [donationLogVisible, setDonationLogVisible] = useState(false);
 
@@ -175,11 +175,11 @@ export default function CampaignDetail(props) {
     useEffect(() => {
         let url = `${props.location.pathname}${props.location.search}`;
 
-        if (['home', 'personal-campaigns'].includes(queryParams['from'])) {
+        if (['home', 'personal-campaigns', 'campaign'].includes(queryParams['from'])) {
             window.scrollTo(0, 0);
             delete queryParams['from'];
             url = `${props.location.pathname}?${queryString.stringify(queryParams)}`;
-            history.replace(url);
+            history.push(url);
         }
 
         if (!queryParams['tab']) {
@@ -195,6 +195,10 @@ export default function CampaignDetail(props) {
             }
         };
     }, [props.location.search]);
+
+    useEffect(() => {
+        setData(campaignList.find(c => c.id === +id));
+    }, [id]);
 
     useEffect(() => {
         if (selectedPackage) {
@@ -418,6 +422,17 @@ export default function CampaignDetail(props) {
                                                     Theo dõi
                                                 </Button>
                                             )}
+                                            {user && user.id === data.owner.id && (
+                                                <Button
+                                                    className="btn-follow"
+                                                    type="primary"
+                                                    size="large"
+                                                    icon={<RocketFilled />}
+                                                    onClick={() => history.push('/personal-campaigns')}
+                                                >
+                                                    Quản lý chiến dịch cá nhân
+                                                </Button>
+                                            )}
                                         </div>
                                         <div className="raise-info__section__social-media">
                                             <Button icon={<FacebookFilled />} shape="circle" onClick={() => data.facebook ? window.location.href = data.facebook : false} />
@@ -598,7 +613,7 @@ export default function CampaignDetail(props) {
                 <Container>
                     <SectionTitle level={3}>Có thể bạn quan tâm</SectionTitle>
                     <div className="carousel">
-                        <CampaignPreviewCarousel campaigns={relatedCampaignList} />
+                        <CampaignPreviewCarousel campaigns={relatedCampaignList} from="campaign" />
                     </div>
                 </Container>
             </section>
