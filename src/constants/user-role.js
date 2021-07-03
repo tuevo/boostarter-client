@@ -4,7 +4,7 @@ export const userRole = {
         value: 1
     },
     DONATOR: {
-        name: 'Nhà quyên góp',
+        name: 'Nhà ủng hộ',
         value: 2
     },
     ADMIN: {

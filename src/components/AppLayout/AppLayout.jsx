@@ -1,11 +1,12 @@
-import { EnvironmentFilled, FireOutlined, HeartOutlined, MailFilled, PhoneFilled, PoweroffOutlined, DownOutlined, RocketOutlined, SearchOutlined } from '@ant-design/icons';
-import { Avatar, Button, Col, Drawer, Input, Layout, List, Menu, Row, Dropdown } from 'antd';
+import { EnvironmentFilled, FireOutlined, PlusOutlined, HeartOutlined, MailFilled, PhoneFilled, PoweroffOutlined, DownOutlined, RocketOutlined, SearchOutlined } from '@ant-design/icons';
+import { Avatar, Button, Col, Drawer, Input, Layout, List, Menu, Row, Dropdown, Popover } from 'antd';
+import Sider from 'antd/lib/layout/Sider';
 import Text from 'antd/lib/typography/Text';
 import Title from 'antd/lib/typography/Title';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
-import { AUTH_USER } from '../../constants';
+import { AUTH_USER, userRole } from '../../constants';
 import { auth, scrollToElement } from '../../redux';
 import AppLogo from '../AppLogo';
 import Container from '../Container';
@@ -28,6 +29,34 @@ const discoveryMenuItems = [
         subItems: ['Tìm hiểu lịch sử', 'Phản ảnh xã hội', 'Hoạt động nghệ thuật', 'Nghiên cứu khoa học']
     },
 ]
+
+const SidebarContent = ({ user, sidebarMenu, setSidebarVisible, signOut, activeUrl }) => {
+    let selectedMenuKey = '';
+    const index = sidebarMenu.findIndex(item => item.url === activeUrl);
+    if (index > -1) {
+        selectedMenuKey = sidebarMenu[index].key;
+    }
+
+    return (
+        <div className="app-sidebar">
+            <div className="app-sidebar__avatar">
+                <Avatar src={user.avatar} size={70} />
+                <Title level={4}>{user.fullName}</Title>
+                <Text>{user.role.name}</Text>
+            </div>
+            <div className="app-sidebar__menu">
+                <Menu selectedKeys={[selectedMenuKey]} onClick={() => setSidebarVisible(false)}>
+                    {sidebarMenu.map(item => (
+                        <Menu.Item key={item.key} icon={item.icon}>
+                            <NavLink to={item.url}>{item.title}</NavLink>
+                        </Menu.Item>
+                    ))}
+                    <Menu.Item onClick={() => signOut()} icon={<PoweroffOutlined />}>Đăng xuất</Menu.Item>
+                </Menu>
+            </div>
+        </div>
+    );
+}
 
 const menu = (
     <div className="discovery-menu">
@@ -72,19 +101,22 @@ export default function AppLayout({ children, location }) {
     const history = useHistory();
     const user = useSelector(state => state.user.auth);
     const [sidebarVisible, setSidebarVisible] = useState(false);
+    const [searchFormVisible, setSearchFormVisible] = useState(false);
 
+    const [shouldRenderSidebar, renderSidebar] = useState(false);
+    const sidebarWidth = 250;
     const sidebarMenu = {
         1: [
             { key: '1', title: 'Chiến dịch cá nhân', icon: <RocketOutlined />, url: '/personal-campaigns' },
-            { key: '2', title: 'Chiến dịch đang theo dõi', icon: <HeartOutlined />, url: '/' },
+            { key: '2', title: 'Chiến dịch theo dõi', icon: <HeartOutlined />, url: '/' },
         ],
         2: [
             { key: '1', title: 'Chiến dịch đã quyên góp', icon: <FireOutlined />, url: '/' },
-            { key: '2', title: 'Chiến dịch đang theo dõi', icon: <HeartOutlined />, url: '/' },
+            { key: '2', title: 'Chiến dịch theo dõi', icon: <HeartOutlined />, url: '/' },
         ],
         3: [
             { key: '1', title: 'Tất cả chiến dịch', icon: <FireOutlined />, url: '/' },
-            { key: '2', title: 'Chiến dịch đang theo dõi', icon: <HeartOutlined />, url: '/' },
+            { key: '2', title: 'Chiến dịch theo dõi', icon: <HeartOutlined />, url: '/' },
         ],
     }
 
@@ -94,8 +126,23 @@ export default function AppLayout({ children, location }) {
         history.push(signInLocation);
     }
 
+    useEffect(() => {
+        renderSidebar(user && location.pathname === '/personal-campaigns');
+    }, [user, location.pathname]);
+
     return (
-        <Layout className="layout">
+        <Layout className="app-layout">
+            {shouldRenderSidebar && user && (
+                <Sider width={sidebarWidth} className="app-sidebar-container" theme="light">
+                    <SidebarContent
+                        user={user}
+                        sidebarMenu={sidebarMenu[user.role.value]}
+                        setSidebarVisible={setSidebarVisible}
+                        signOut={signOut}
+                        activeUrl={location.pathname}
+                    />
+                </Sider>
+            )}
             <Header>
                 <Menu className="app-header-menu" mode="horizontal" onClick={e => {
                     dispatch(scrollToElement(e.key));
@@ -136,7 +183,29 @@ export default function AppLayout({ children, location }) {
                     </Menu.Item>
                 </Menu>
                 <div className="header-right">
-                    <Input className="search-input" size="large" placeholder="Tìm kiếm..." prefix={<SearchOutlined />} />
+                    {user && user.role.value === userRole.CAMPAIGN_OWNER.value && location.pathname !== '/personal-campaigns' && (
+                        <Button
+                            className="header-right__btn header-right__btn-create-campaign"
+                            size="large"
+                            icon={<PlusOutlined />}
+                            type="primary"
+                            onClick={() => history.push('/personal-campaigns?action=create-campaign')}
+                        >
+                            Tạo chiến dịch
+                        </Button>
+                    )}
+
+                    <Popover
+                        title="Tìm kiếm"
+                        trigger="click"
+                        placement="bottomRight"
+                        content={<Input className="app-search-input" size="large" placeholder="Nhập từ khóa..." prefix={<SearchOutlined />} />}
+                        visible={searchFormVisible}
+                        onVisibleChange={visible => setSearchFormVisible(visible)}
+                    >
+                        <Button icon={<SearchOutlined />} shape="circle" size="large" />
+                    </Popover>
+
                     {!user && (
                         <Button
                             className="header-right__btn btn-login"
@@ -173,9 +242,11 @@ export default function AppLayout({ children, location }) {
                     )}
                 </div>
             </Header>
-            <Content style={{ padding: '0 50px' }}>
-                {children}
-            </Content>
+            <Layout style={{ marginLeft: shouldRenderSidebar ? sidebarWidth : 0 }}>
+                <Content style={{ padding: '0 50px' }}>
+                    {children}
+                </Content>
+            </Layout>
             <Footer className="app-footer">
                 <Container>
                     <Row style={{ width: '100%' }}>
@@ -218,7 +289,7 @@ export default function AppLayout({ children, location }) {
                     </Row>
                     <div className="copyright">
                         © Bản quyền Boostarter.web.app 2021 - Boostarter Technology.
-          </div>
+                    </div>
                 </Container>
             </Footer>
 
@@ -227,25 +298,15 @@ export default function AppLayout({ children, location }) {
                     closable
                     visible={sidebarVisible}
                     onClose={() => setSidebarVisible(false)}
-                    width={350}
+                    width={sidebarWidth + 50}
                 >
-                    <div className="app-sidebar">
-                        <div className="app-sidebar__avatar">
-                            <Avatar src={user.avatar} size={90} />
-                            <Title level={4}>{user.fullName}</Title>
-                            <Text>{user.role.name}</Text>
-                        </div>
-                        <div className="app-sidebar__menu">
-                            <Menu onClick={() => setSidebarVisible(false)}>
-                                {sidebarMenu[user.role.value].map(item => (
-                                    <Menu.Item key={item.key} icon={item.icon}>
-                                        <NavLink to={item.url}>{item.title}</NavLink>
-                                    </Menu.Item>
-                                ))}
-                                <Menu.Item onClick={() => signOut()} icon={<PoweroffOutlined />}>Đăng xuất</Menu.Item>
-                            </Menu>
-                        </div>
-                    </div>
+                    <SidebarContent
+                        user={user}
+                        sidebarMenu={sidebarMenu[user.role.value]}
+                        setSidebarVisible={setSidebarVisible}
+                        signOut={signOut}
+                        activeUrl={location.pathname}
+                    />
                 </Drawer>
             )}
         </Layout>

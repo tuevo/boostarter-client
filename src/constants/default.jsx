@@ -64,7 +64,7 @@ export const featuredServices = [
     {
         icon: faRocket,
         name: 'Phát động chiến dịch',
-        desc: 'Giúp các nhà vận động giới thiệu các chiến dịch cá nhân và đại diện cho tổ chức của họ đến với cộng đồng nhiều hơn.'
+        desc: 'Giúp các nhà vận động giới thiệu các chiến dịch cá nhân hoặc đại diện cho tổ chức của họ đến với cộng đồng nhiều hơn.'
     },
     {
         icon: faChartLine,

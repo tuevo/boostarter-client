@@ -11,15 +11,17 @@ import CreateCampaignModal from '../../components/CreateCampaignModal';
 import { userRole } from '../../constants';
 import { useScrollTop } from '../../hooks';
 import { addCampaign, updateUser } from '../../redux';
+import queryString from 'query-string';
 import './PersonalCampaign.scss';
 
 export default function PersonalCampaign(props) {
     useScrollTop();
+    const queryParam = queryString.parse(props.location.search);
     const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector(state => state.user.auth);
     const campaignList = useSelector(state => state.campaigns);
-    const [createCampaignVisible, setCreateCampaignVisible] = useState(false);
+    const [createCampaignVisible, setCreateCampaignVisible] = useState(queryParam.action === 'create-campaign' || false);
 
     const pieChartData = {
         labels: ['Đã kết thúc', 'Đang chờ duyệt', 'Đang gây quỹ', 'Đã tạm dừng'],
@@ -150,7 +152,7 @@ export default function PersonalCampaign(props) {
                         <div className="personal-campaign__card__title personal-campaign__card__title personal-campaign__card__title personal-campaign__card__title--extra">
                             <span className="list-title">Danh sách chiến dịch</span>
                             <div>
-                                <Input className="search-input" size="large" placeholder="Tìm kiếm chiến dịch..." prefix={<SearchOutlined />} />
+                                <Input className="app-search-input" size="large" placeholder="Tìm kiếm chiến dịch..." prefix={<SearchOutlined />} />
                                 <Select className="filter-select" defaultValue={1}>
                                     <Select.Option value={1}>Tất cả</Select.Option>
                                     <Select.Option value={2}>Đang chờ duyệt</Select.Option>
@@ -176,7 +178,10 @@ export default function PersonalCampaign(props) {
 
             <CreateCampaignModal
                 visible={createCampaignVisible}
-                onClose={() => setCreateCampaignVisible(false)}
+                onClose={() => {
+                    setCreateCampaignVisible(false);
+                    history.replace(props.location.pathname);
+                }}
                 onSubmit={newCampaignData => {
                     setCreateCampaignVisible(false);
                     dispatch(updateUser({ ...user, numberOfCampaigns: user.numberOfCampaigns + 1 }));

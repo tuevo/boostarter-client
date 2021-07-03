@@ -24,6 +24,7 @@ export default function Home() {
     const dispatch = useDispatch();
 
     const app = useSelector(state => state.app);
+    const user = useSelector(state => state.user.auth);
 
     const featuredServiceRef = useRef(null);
     const featuredCampaignRef = useRef(null);
@@ -134,14 +135,16 @@ export default function Home() {
                                     <b>{APP_NAME}</b> {APP_MISSION}
                                 </p>
                                 <div className="buttons">
-                                    <Button
-                                        className="featured-content__btn-register"
-                                        size="large"
-                                        type="primary"
-                                        onClick={() => history.push('/sign-up')}
-                                    >
-                                        Trải nghiệm ngay
-                                    </Button>
+                                    {!user && (
+                                        <Button
+                                            className="featured-content__btn-register"
+                                            size="large"
+                                            type="primary"
+                                            onClick={() => history.push('/sign-up')}
+                                        >
+                                            Trải nghiệm ngay
+                                        </Button>
+                                    )}
                                     <Button className="featured-content__btn-more" size="large">Tìm hiểu thêm</Button>
                                 </div>
                             </div>

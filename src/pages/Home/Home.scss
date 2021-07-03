@@ -91,11 +91,11 @@
                 }
 
                 &__btn-register {
+                    margin-right: 15px;
                     @include button-color(default, var(--success-color));
                 }
 
                 &__btn-more {
-                    margin-left: 15px;
                     // @include button-color(outline, var(--primary-color));
                     background: #fff;
                 }
