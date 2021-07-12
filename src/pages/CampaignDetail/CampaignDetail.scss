@@ -53,11 +53,13 @@
 
             .title {
                 margin: 30px 0 15px 0;
+                @include text-overflow(1);
             }
 
             .desc {
                 margin: 0;
                 text-align: justify;
+                @include text-overflow(4);
             }
 
             .featured-info {

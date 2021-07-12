@@ -1,30 +1,21 @@
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Input, PageHeader, Row, Select } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Doughnut, Line } from 'react-chartjs-2';
 import NumberFormat from 'react-number-format';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import CampaignPreview from '../../components/CampaignPreview';
 import Container from '../../components/Container';
-import CreateCampaignModal from '../../components/CreateCampaignModal';
 import { userRole } from '../../constants';
 import { useScrollTop } from '../../hooks';
-import { addCampaign, addNotification, updateUser } from '../../redux';
-import queryString from 'query-string';
-import './PersonalCampaign.scss';
-import { v4 } from 'uuid';
-import { mockUser2 } from '../../mock-data';
-import { randomNumberNotInArray } from '../../utils';
+import './CampaignList.scss';
 
-export default function PersonalCampaign(props) {
+export default function CampaignList(props) {
     useScrollTop();
-    const queryParam = queryString.parse(props.location.search);
     const history = useHistory();
-    const dispatch = useDispatch();
     const user = useSelector(state => state.user.auth);
     const campaignList = useSelector(state => state.campaigns);
-    const [createCampaignVisible, setCreateCampaignVisible] = useState(queryParam.action === 'create-campaign' || false);
 
     const pieChartData = {
         labels: ['Đã kết thúc', 'Đang chờ duyệt', 'Đang gây quỹ', 'Đã tạm dừng'],
@@ -77,42 +68,30 @@ export default function PersonalCampaign(props) {
         });
     }
 
-    if (user && user.role.value !== userRole.CAMPAIGN_OWNER.value) {
+    if (user && user.role.value !== userRole.ADMIN.value) {
         history.push('/');
         return <></>;
     }
 
     return (
-        <div className="personal-campaign">
-            <div className="personal-campaign__header">
+        <div className="app-campaign-list">
+            <div className="app-campaign-list__header">
                 <Container>
                     <PageHeader
                         onBack={() => history.goBack()}
-                        title="Chiến dịch cá nhân"
-                        extra={[
-                            <Button
-                                key="btn-create"
-                                icon={<PlusOutlined />}
-                                size="large"
-                                type="primary"
-                                className="personal-campaign__btn-create"
-                                onClick={() => setCreateCampaignVisible(true)}
-                            >
-                                Tạo chiến dịch
-                            </Button>
-                        ]}
+                        title="Tất cả chiến dịch"
                     />
                 </Container>
             </div>
 
-            <div className="personal-campaign__content personal-campaign__content--statistics">
+            <div className="app-campaign-list__content app-campaign-list__content--statistics">
                 <Container>
                     <Row gutter={15}>
                         <Col span={8}>
-                            <Card className="personal-campaign__card animate__animated animate__fadeInLeft">
-                                <div className="personal-campaign__card__title">
+                            <Card className="app-campaign-list__card animate__animated animate__fadeInLeft">
+                                <div className="app-campaign-list__card__title">
                                     <NumberFormat
-                                        className="personal-campaign__card__number"
+                                        className="app-campaign-list__card__number"
                                         displayType="text"
                                         value={38}
                                         thousandSeparator={'.'}
@@ -124,8 +103,8 @@ export default function PersonalCampaign(props) {
                             </Card>
                         </Col>
                         <Col span={16}>
-                            <Card className="personal-campaign__card animate__animated animate__fadeInRight">
-                                <div className="personal-campaign__card__title personal-campaign__card__title personal-campaign__card__title personal-campaign__card__title--extra">
+                            <Card className="app-campaign-list__card animate__animated animate__fadeInRight">
+                                <div className="app-campaign-list__card__title app-campaign-list__card__title app-campaign-list__card__title app-campaign-list__card__title--extra">
                                     <span>Tần suất nhận quyên góp</span>
                                     <Select defaultValue={1}>
                                         <Select.Option value={1}>7 ngày gần đây</Select.Option>
@@ -149,10 +128,10 @@ export default function PersonalCampaign(props) {
                 </Container>
             </div>
 
-            <div className="personal-campaign__content">
+            <div className="app-campaign-list__content">
                 <Container>
-                    <Card className="personal-campaign__card animate__animated animate__fadeInUp">
-                        <div className="personal-campaign__card__title personal-campaign__card__title personal-campaign__card__title personal-campaign__card__title--extra">
+                    <Card className="app-campaign-list__card animate__animated animate__fadeInUp">
+                        <div className="app-campaign-list__card__title app-campaign-list__card__title app-campaign-list__card__title app-campaign-list__card__title--extra">
                             <span className="list-title">Danh sách chiến dịch</span>
                             <div>
                                 <Input className="app-search-input" size="large" placeholder="Tìm kiếm chiến dịch..." prefix={<SearchOutlined />} />
@@ -165,42 +144,19 @@ export default function PersonalCampaign(props) {
                                 </Select>
                             </div>
                         </div>
-                        <div className="personal-campaign__campaigns">
+                        <div className="app-campaign-list__campaigns">
                             {campaignList.map((c, i) => (
-                                <div key={i} className="animate__animated animate__zoomIn personal-campaign__campaigns__item" style={{ animationDelay: `${0.1 * i}s` }}>
-                                    <CampaignPreview data={c} from="personal-campaigns" />
+                                <div key={i} className="animate__animated animate__zoomIn app-campaign-list__campaigns__item" style={{ animationDelay: `${0.1 * i}s` }}>
+                                    <CampaignPreview data={c} from="app-campaign-lists" />
                                 </div>
                             ))}
                         </div>
-                        <div className="personal-campaign__btn-more-campaign">
+                        <div className="app-campaign-list__btn-more-campaign">
                             <Button type="primary" size="large">Xem thêm chiến dịch</Button>
                         </div>
                     </Card>
                 </Container>
             </div>
-
-            <CreateCampaignModal
-                visible={createCampaignVisible}
-                onClose={() => {
-                    setCreateCampaignVisible(false);
-                    history.replace(props.location.pathname);
-                }}
-                onSubmit={newCampaignData => {
-                    const newId = randomNumberNotInArray(campaignList.map(c => c.id));
-                    setCreateCampaignVisible(false);
-                    dispatch(updateUser({ ...user, numberOfCampaigns: user.numberOfCampaigns + 1 }));
-                    dispatch(addCampaign({ ...newCampaignData, id: newId }));
-                    dispatch(addNotification({
-                        id: v4(),
-                        sender: user,
-                        receiver: mockUser2,
-                        content: `
-                            Vui lòng duyệt chiến dịch <a href="/campaign/${newId}?tab=1">${newCampaignData.title}</a> cho tôi.
-                        `,
-                        createdAt: new Date().toISOString(),
-                    }));
-                }}
-            />
         </div>
     )
 }

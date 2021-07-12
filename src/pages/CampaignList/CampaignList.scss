@@ -1,0 +1,98 @@
+@import "../../styles/mixin.scss";
+
+.app-campaign-list {
+    $headerHeight: 400px;
+    position: relative;
+    padding-bottom: 100px;
+    overflow: hidden;
+
+    &__header {
+        position: absolute;
+        width: 100%;
+        background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%);
+        color: var(--text-color-contrast);
+
+        .ant-page-header {
+            position: relative;
+            top: $headerHeight * 0.2;
+            padding: 0;
+            height: $headerHeight;
+            color: inherit;
+
+            .ant-page-header-back-button {
+                color: inherit;
+            }
+
+            .ant-page-header-heading-title {
+                color: inherit;
+                font-size: 30px;
+            }
+        }
+    }
+
+    &__content {
+        padding-top: 15px;
+
+        &--statistics {
+            padding-top: $headerHeight * 0.45;
+        }
+    }
+
+    &__card {
+        border-radius: 20px;
+        border: 0;
+        box-shadow: rgba(17, 12, 46, 0.1) 0px 48px 100px 0px;
+        animation-duration: 0.75s;
+
+        &__title {
+            margin-bottom: 30px;
+            padding-right: 15px;
+            font-weight: 400;
+            font-size: 24px;
+
+            &--extra {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+
+        &__number {
+            font-weight: 700;
+        }
+
+        .list-title {
+            margin-top: 5px;
+        }
+
+        .filter-select {
+            width: 200px;
+            margin-right: 10px;
+        }
+    }
+
+    &__campaigns {
+        display: flex;
+        flex-wrap: wrap;
+        padding-bottom: 20px;
+
+        &__item {
+            margin-bottom: 20px;
+
+            &:nth-of-type(even) {
+                margin-left: 23px;
+                margin-right: 23px;
+            }
+        }
+    }
+
+    &__btn-create {
+        @include button-color(default, var(--success-color));
+    }
+
+    &__btn-more-campaign {
+        padding: 10px 20px 20px 0;
+        .ant-btn {
+            width: 100%;
+        }
+    }
+}

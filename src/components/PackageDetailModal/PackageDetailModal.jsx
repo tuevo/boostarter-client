@@ -5,7 +5,7 @@ import NumberFormat from 'react-number-format';
 import ReadMoreLessText from '../ReadMoreLessText';
 import './PackageDetailModal.scss';
 
-export default function PackageDetailModal({ data, visible, onClose, onDonate, btnDonateVisible }) {
+export default function PackageDetailModal({ data, visible, onClose, onDonate, donationAllowed, donationDisabled }) {
     return (
         <Modal
             wrapClassName="package-detail-modal"
@@ -39,11 +39,12 @@ export default function PackageDetailModal({ data, visible, onClose, onDonate, b
                 />
             </div>
             <div className="package-detail-modal__btn-donate">
-                {btnDonateVisible && (
+                {donationAllowed && (
                     <Button
                         style={{ width: '100%' }}
                         size="large"
                         type="primary"
+                        disabled={donationDisabled}
                         onClick={() => onDonate()}
                     >
                         Quyên góp

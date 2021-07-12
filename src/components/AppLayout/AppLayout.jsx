@@ -100,6 +100,7 @@ export default function AppLayout({ children, location }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const user = useSelector(state => state.user.auth);
+    const notifications = useSelector(state => state.notifications);
     const [sidebarVisible, setSidebarVisible] = useState(false);
     const [searchFormVisible, setSearchFormVisible] = useState(false);
 
@@ -108,15 +109,15 @@ export default function AppLayout({ children, location }) {
     const sidebarMenu = {
         1: [
             { key: '1', title: 'Chiến dịch cá nhân', icon: <RocketOutlined />, url: '/personal-campaigns' },
-            { key: '2', title: 'Chiến dịch theo dõi', icon: <HeartOutlined />, url: '/' },
+            { key: '2', title: 'Chiến dịch theo dõi', icon: <HeartOutlined />, url: '/following-campaigns' },
         ],
         2: [
             { key: '1', title: 'Chiến dịch đã quyên góp', icon: <FireOutlined />, url: '/' },
-            { key: '2', title: 'Chiến dịch theo dõi', icon: <HeartOutlined />, url: '/' },
+            { key: '2', title: 'Chiến dịch theo dõi', icon: <HeartOutlined />, url: '/following-campaigns' },
         ],
         3: [
-            { key: '1', title: 'Tất cả chiến dịch', icon: <FireOutlined />, url: '/' },
-            { key: '2', title: 'Chiến dịch theo dõi', icon: <HeartOutlined />, url: '/' },
+            { key: '1', title: 'Tất cả chiến dịch', icon: <FireOutlined />, url: '/campaigns' },
+            { key: '2', title: 'Chiến dịch theo dõi', icon: <HeartOutlined />, url: '/following-campaigns' },
         ],
     }
 
@@ -127,7 +128,7 @@ export default function AppLayout({ children, location }) {
     }
 
     useEffect(() => {
-        renderSidebar(user && location.pathname === '/personal-campaigns');
+        renderSidebar(user && ['/personal-campaigns', '/campaigns', '/following-campaigns'].includes(location.pathname));
     }, [user, location.pathname]);
 
     return (
@@ -145,15 +146,17 @@ export default function AppLayout({ children, location }) {
             )}
             <Header>
                 <Menu className="app-header-menu" mode="horizontal" onClick={e => {
-                    dispatch(scrollToElement(e.key));
-                    history.push('/');
+                    if (e.key !== 'category') {
+                        dispatch(scrollToElement(e.key));
+                        history.push('/');
+                    }
                 }}>
                     <Menu.Item className="logo-wrapper" key="home">
                         <div className="logo">
                             <AppLogo />
                         </div>
                     </Menu.Item>
-                    <Menu.Item>
+                    <Menu.Item key="category">
                         <Dropdown overlay={menu}>
                             <div>
                                 Khám phá <DownOutlined />
@@ -227,7 +230,7 @@ export default function AppLayout({ children, location }) {
                     )}
                     {user && (
                         <div className="user-notification">
-                            <NotificationMenu />
+                            <NotificationMenu notifications={notifications.filter((data) => data.receiver.id === user.id)} />
                         </div>
                     )}
                     {user && (
@@ -255,13 +258,13 @@ export default function AppLayout({ children, location }) {
                                 <AppLogo />
                                 <p>
                                     Giấy phép số 02/2018/DA-HDTS-MXH do Bộ Thông tin và Truyền thông cấp ngày 01 tháng 06 năm 2018
-                    <br /><br />
+                                    <br /><br />
                                     <b>Người chịu trách nhiệm nội dung:</b>
                                     <br />
-                    Thượng toạ Thích Đức Thiện - Phó Chủ tịch Hội đồng trị sự Giáo hội Phật giáo Việt Nam (GHPGVN), Tổng Thư ký Hội đồng Trị sự GHPGVN.
-                    <br /><br />
-                    CÔNG TY CỔ PHẦN BOOSTARTER TECHNOLOGY MST: 0109011923
-                  </p>
+                                    Thượng toạ Thích Đức Thiện - Phó Chủ tịch Hội đồng trị sự Giáo hội Phật giáo Việt Nam (GHPGVN), Tổng Thư ký Hội đồng Trị sự GHPGVN.
+                                    <br /><br />
+                                    CÔNG TY CỔ PHẦN BOOSTARTER TECHNOLOGY MST: 0109011923
+                                </p>
                             </div>
                         </Col>
                         <Col span={2} />
@@ -281,7 +284,7 @@ export default function AppLayout({ children, location }) {
                                         <EnvironmentFilled />
                                         <span>
                                             73 Quán Sứ, Trần Hưng Đạo, Hoàn Kiếm, Hà Nội, Việt Nam
-                    </span>
+                                        </span>
                                     </li>
                                 </ul>
                             </div>

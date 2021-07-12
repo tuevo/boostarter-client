@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { appReducer, campaignReducer, donationPackageReducer, feedbackReducer, postedStatusReducer, userReducer } from './reducers'
+import { appReducer, campaignReducer, donationPackageReducer, feedbackReducer, notificationReducer, postedStatusReducer, userReducer } from './reducers'
 
 const rootReducer = {
     app: appReducer,
@@ -8,6 +8,7 @@ const rootReducer = {
     feedbacks: feedbackReducer,
     postedStatuses: postedStatusReducer,
     donationPackages: donationPackageReducer,
+    notifications: notificationReducer
 }
 
 const store = configureStore({

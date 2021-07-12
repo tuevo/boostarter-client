@@ -7,7 +7,7 @@ import { AvatarUpload } from '../AvatarUpload/AvatarUpload';
 import SingleImageUpload from '../SingleImageUpload';
 import TagInput from '../TagInput/TagInput';
 
-export default function CampaignBasicInfoForm({ form, initValues, onFinished, onFinishFailed }) {
+export default function CampaignBasicInfoForm({ form, initValues, onFinished, onFinishFailed, onFieldsChange }) {
     const categoryList = [...mockCategoryList];
 
     return (
@@ -21,6 +21,7 @@ export default function CampaignBasicInfoForm({ form, initValues, onFinished, on
                 tags: values.tags || [],
             })}
             onFinishFailed={onFinishFailed}
+            onFieldsChange={onFieldsChange}
         >
             <Form.Item name="thumbnail">
                 <SingleImageUpload

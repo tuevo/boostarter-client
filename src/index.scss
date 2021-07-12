@@ -1,3 +1,5 @@
+@import "./styles/mixin.scss";
+
 :root {
     --primary-color: #1890ff;
     --success-color: #44b543;
@@ -21,14 +23,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    &::-webkit-scrollbar {
-        width: 10px !important;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: rgba($color: #000000, $alpha: 0.15) !important;
-        border-radius: 48px !important;
-    }
+    @include style-scrollbar();
 }
 
 code {

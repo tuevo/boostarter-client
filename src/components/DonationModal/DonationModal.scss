@@ -1,3 +1,5 @@
+@import "../../styles/mixin.scss";
+
 .donation-modal {
     h3 {
         text-align: center;
@@ -24,8 +26,10 @@
 
     &__packages {
         max-height: 350px;
-        overflow: hidden;
-        overflow-y: scroll;
+        padding-right: 15px;
+        overflow: auto;
+
+        @include style-scrollbar();
 
         &__item {
             margin-top: 15px;

@@ -18,6 +18,7 @@ import CreateDonationPackageModal from '../../components/CreateDonationPackageMo
 import DonationLogItem from '../../components/DonationLogItem';
 import DonationModal from '../../components/DonationModal/DonationModal';
 import Feedback from '../../components/Feedback/Feedback';
+import NotFound from '../../components/NotFound';
 import PackageDetailModal from '../../components/PackageDetailModal/PackageDetailModal';
 import PackagePreview from '../../components/PackagePreview';
 import PostedStatus from '../../components/PostedStatus';
@@ -25,9 +26,9 @@ import PostStatusModal from '../../components/PostStatusModal/PostStatusModal';
 import QRPaymentModal from '../../components/QRPaymentModal';
 import SectionTitle from '../../components/SectionTitle';
 import StoryEditingModal from '../../components/StoryEditingModal';
-import NotFound from '../../components/NotFound';
 import { campaignStatus, defaultUserAvatar, getCampaignStatusIcon, userRole } from '../../constants';
-import { addFeedback, updateCampaign } from '../../redux';
+import { mockUser2 } from '../../mock-data';
+import { addFeedback, addNotification, updateCampaign } from '../../redux';
 import { daysFromNow } from '../../utils/date-time';
 import './CampaignDetail.scss';
 
@@ -75,9 +76,14 @@ export default function CampaignDetail(props) {
     const [storyEditorVisible, setStoryEditorVisible] = useState(false);
 
     const [confirmPendingCampaignForm] = useForm();
+    const [confirmDisapproveCampaignForm] = useForm();
+    const [confirmRemoveCampaignForm] = useForm();
 
     const [currentRaisePeriod, setCurrentRaisePeriod] = useState();
     const [currentRaisePercent, setCurrentRaisePercent] = useState();
+
+    const [donationAllowed, setDonationAllowed] = useState(false);
+    const [donationDisabled, setDonationDisabled] = useState(false);
 
     const handleClickMenu = (key) => {
         setSelectedMenuKey(key);
@@ -124,6 +130,7 @@ export default function CampaignDetail(props) {
             createdAt: new Date().toISOString(),
             rating: 4.5,
             isCampaignOwner: user.id ? user.id === data.owner.id : false,
+            isAdmin: user.role.value === userRole.ADMIN.value,
             comment,
             ...user
         };
@@ -138,12 +145,12 @@ export default function CampaignDetail(props) {
 
     const onClickBtnPendingCampaign = () => {
         Modal.confirm({
-            title: 'Xác nhận',
+            title: 'Vui lòng cho biết lý do',
             icon: <ExclamationCircleOutlined />,
             content: (
                 <>
-                    <p>Bạn có thật sự muốn tạm dừng chiến dịch này?</p>
                     <Form
+                        style={{ marginTop: 20 }}
                         form={confirmPendingCampaignForm}
                         onFinish={values => {
                             setData({
@@ -159,7 +166,7 @@ export default function CampaignDetail(props) {
                         }}
                     >
                         <Form.Item name="reason" rules={[{ required: true }]}>
-                            <Input.TextArea rows={5} placeholder="Vui lòng cho biết lý do" />
+                            <Input.TextArea rows={5} placeholder="Không quá 200 ký tự" />
                         </Form.Item>
                     </Form>
                 </>
@@ -169,6 +176,95 @@ export default function CampaignDetail(props) {
             okText: 'Đồng ý',
             cancelText: 'Hủy bỏ',
             onOk: () => confirmPendingCampaignForm.submit(),
+        })
+    }
+
+    const onClickBtnDisapproveCampaign = () => {
+        Modal.confirm({
+            title: 'Vui lòng cho biết lý do',
+            icon: <ExclamationCircleOutlined />,
+            content: (
+                <>
+                    <Form
+                        style={{ marginTop: 20 }}
+                        form={confirmDisapproveCampaignForm}
+                        onFinish={values => {
+                            setData({
+                                ...data,
+                                status: campaignStatus.DISAPPROVED,
+                            });
+                            dispatch(addNotification({
+                                id: v4(),
+                                sender: user,
+                                receiver: data.owner,
+                                content: `
+                                    Chiến dịch <a href="/campaign/${data.id}?tab=1">${data.title}</a> của bạn đã bị từ chối duyệt! Lý do: ${values.reason}
+                                `,
+                                createdAt: new Date().toISOString(),
+                            }));
+                            message.success('Từ chối chiến dịch thành công!');
+                        }}
+                        onFinishFailed={() => {
+                            message.error('Vui lòng điền đầy đủ thông tin');
+                            onClickBtnDisapproveCampaign();
+                        }}
+                    >
+                        <Form.Item name="reason" rules={[{ required: true }]}>
+                            <Input.TextArea rows={5} placeholder="Không quá 200 ký tự" />
+                        </Form.Item>
+                    </Form>
+                </>
+            ),
+            width: 500,
+            maskClosable: true,
+            okText: 'Đồng ý',
+            cancelText: 'Hủy bỏ',
+            onOk: () => confirmDisapproveCampaignForm.submit(),
+        })
+    }
+
+    const onClickBtnRemoveCampaign = () => {
+        Modal.confirm({
+            title: 'Vui lòng cho biết lý do',
+            icon: <ExclamationCircleOutlined />,
+            content: (
+                <>
+                    <Form
+                        style={{ marginTop: 20 }}
+                        form={confirmRemoveCampaignForm}
+                        onFinish={values => {
+                            setData({
+                                ...data,
+                                status: campaignStatus.REMOVED,
+                            });
+                            dispatch(addNotification({
+                                id: v4(),
+                                sender: user,
+                                receiver: data.owner,
+                                content: `
+                                    Chiến dịch <a href="/campaign/${data.id}?tab=1">${data.title}</a> của bạn đã bị gỡ bỏ! Lý do: ${values.reason}
+                                `,
+                                createdAt: new Date().toISOString(),
+                            }));
+                            message.success('Gỡ bỏ chiến dịch thành công!');
+                            history.push('/not-found');
+                        }}
+                        onFinishFailed={() => {
+                            message.error('Vui lòng điền đầy đủ thông tin');
+                            onClickBtnRemoveCampaign();
+                        }}
+                    >
+                        <Form.Item name="reason" rules={[{ required: true }]}>
+                            <Input.TextArea rows={5} placeholder="Không quá 200 ký tự" />
+                        </Form.Item>
+                    </Form>
+                </>
+            ),
+            width: 500,
+            maskClosable: true,
+            okText: 'Đồng ý',
+            cancelText: 'Hủy bỏ',
+            onOk: () => confirmRemoveCampaignForm.submit(),
         })
     }
 
@@ -217,8 +313,13 @@ export default function CampaignDetail(props) {
             setCurrentRaisePeriod(daysFromNow(data.endDate));
             setCurrentRaisePercent(Math.round(data.currentRaise / data.targetRaise * 100));
             dispatch(updateCampaign(data));
+
+            if (!user || (user && user.role.value === userRole.DONATOR.value)) {
+                setDonationAllowed(true);
+                setDonationDisabled(data.status.value === campaignStatus.PENDING.value);
+            }
         }
-    }, [data, dispatch]);
+    }, [data, user, dispatch]);
 
     if (!data) {
         return <NotFound />;
@@ -238,21 +339,75 @@ export default function CampaignDetail(props) {
                             <div className="campaign-detail__header__right">
                                 <div className="toolbar">
                                     <div className="toolbar__status">
-                                        <Tag color={data.status.color} icon={getCampaignStatusIcon(data.status.value)}>{data.status.name}</Tag>
+                                        {data.status.value !== campaignStatus.PENDING.value ? (
+                                            <Tag color={data.status.color} icon={getCampaignStatusIcon(data.status.value)}>{data.status.name}</Tag>
+                                        ) : (
+                                            <Tooltip title="Nhấn để biết lý do tạm dừng">
+                                                <Tag
+                                                    style={{ cursor: 'pointer' }}
+                                                    color={data.status.color}
+                                                    icon={getCampaignStatusIcon(data.status.value)}
+                                                    onClick={() => {
+                                                        Modal.info({
+                                                            title: 'Lý do tạm dừng chiến dịch này',
+                                                            content: data.pendingReason,
+                                                            maskClosable: true,
+                                                            okText: 'Đã hiểu'
+                                                        })
+                                                    }}
+                                                >
+                                                    {data.status.name}
+                                                </Tag>
+                                            </Tooltip>
+                                        )}
                                     </div>
                                     <div className="toolbar__controls">
                                         {user && user.role.value === userRole.ADMIN.value && (
                                             <>
-                                                <Button
-                                                    className="toolbar__controls__btn-accept"
-                                                    icon={<CheckOutlined />}
-                                                    type="primary"
-                                                    onClick={() => message.success('Duyệt chiến dịch thành công')}
-                                                >
-                                                    Duyệt
-                                                </Button>
-                                                <Button icon={<CloseOutlined />}>Từ chối</Button>
-                                                <Button icon={<DeleteFilled />} danger>Gỡ bỏ</Button>
+                                                {data.status.value === campaignStatus.REVIEW.value && (
+                                                    <>
+                                                        <Button
+                                                            className="toolbar__controls__btn-accept"
+                                                            icon={<CheckOutlined />}
+                                                            type="primary"
+                                                            onClick={() => {
+                                                                setData({
+                                                                    ...data,
+                                                                    status: campaignStatus.OPENED,
+                                                                });
+                                                                dispatch(addNotification({
+                                                                    id: v4(),
+                                                                    sender: user,
+                                                                    receiver: data.owner,
+                                                                    content: `
+                                                                        Chiến dịch <a href="/campaign/${data.id}?tab=1">${data.title}</a> của bạn đã được duyệt.
+                                                                    `,
+                                                                    createdAt: new Date().toISOString(),
+                                                                }));
+                                                                message.success('Duyệt chiến dịch thành công');
+                                                            }}
+                                                        >
+                                                            Duyệt
+                                                        </Button>
+                                                        <Button
+                                                            icon={<CloseOutlined />}
+                                                            onClick={() => onClickBtnDisapproveCampaign()}
+                                                        >
+                                                            Từ chối
+                                                        </Button>
+                                                    </>
+                                                )}
+
+                                                {data.status.value !== campaignStatus.REVIEW.value
+                                                    && data.status.value !== campaignStatus.DISAPPROVED.value && (
+                                                        <Button
+                                                            icon={<DeleteFilled />}
+                                                            danger
+                                                            onClick={() => onClickBtnRemoveCampaign()}
+                                                        >
+                                                            Gỡ bỏ
+                                                        </Button>
+                                                    )}
                                             </>
                                         )}
                                         {user && user.id === data.owner.id && (
@@ -280,6 +435,31 @@ export default function CampaignDetail(props) {
                                                         }}
                                                     >
                                                         Khởi động lại
+                                                    </Button>
+                                                )}
+                                                {data.status.value === campaignStatus.DISAPPROVED.value && (
+                                                    <Button
+                                                        className="toolbar__controls__btn-restart"
+                                                        icon={<CheckOutlined />}
+                                                        type="primary"
+                                                        onClick={() => {
+                                                            setData({
+                                                                ...data,
+                                                                status: campaignStatus.REVIEW,
+                                                            });
+                                                            dispatch(addNotification({
+                                                                id: v4(),
+                                                                sender: user,
+                                                                receiver: mockUser2,
+                                                                content: `
+                                                                    Vui lòng duyệt lại chiến dịch <a href="/campaign/${data.id}?tab=1">${data.title}</a> cho tôi.
+                                                                `,
+                                                                createdAt: new Date().toISOString(),
+                                                            }));
+                                                            message.success('Yêu cầu duyệt lại chiến dịch thành công');
+                                                        }}
+                                                    >
+                                                        Yêu cầu duyệt lại
                                                     </Button>
                                                 )}
                                                 <Button
@@ -386,11 +566,12 @@ export default function CampaignDetail(props) {
                                     </div>
                                     <div className="raise-info__section bottom">
                                         <div className="raise-info__section__buttons">
-                                            {(!user || (user && user.role.value === userRole.DONATOR.value)) && (
+                                            {donationAllowed && (
                                                 <Button
                                                     className="btn-donate"
                                                     type="primary"
                                                     size="large"
+                                                    disabled={donationDisabled}
                                                     onClick={() => {
                                                         if (!user) {
                                                             history.push(signInLocation.current);
@@ -773,7 +954,8 @@ export default function CampaignDetail(props) {
                     setDonationPackageDetailModalVisible(false);
                     setQRPaymentModalVisible(true);
                 }}
-                btnDonateVisible={!user || (user && user.role.value === userRole.DONATOR.value)}
+                donationAllowed={donationAllowed}
+                donationDisabled={donationDisabled}
             />
 
         </div>

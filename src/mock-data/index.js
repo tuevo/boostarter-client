@@ -5,3 +5,4 @@ export * from './package';
 export * from './posted-status';
 export * from './donation-log';
 export * from './user';
+export * from './notification';

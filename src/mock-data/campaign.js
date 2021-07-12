@@ -9,7 +9,7 @@ export const newCampaign = {
     isPrivate: true,
     isFollowed: false,
     currentRaise: 0,
-    status: campaignStatus.OPENED,
+    status: campaignStatus.REVIEW,
     rating: 0,
     numberOfRatings: 0,
     postedStatuses: [],

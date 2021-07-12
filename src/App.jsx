@@ -28,6 +28,7 @@ function App() {
                             {pages.map(p => (
                                 <PrivateRoute key={p.id} exact {...p} />
                             ))}
+                            <Route exact path="/not-found" component={NotFound} />
                             <Route component={NotFound} />
                         </Switch>
                         <BackTop>

@@ -1,4 +1,4 @@
-import { LoadingOutlined, CheckCircleFilled, StopOutlined, CloseCircleFilled } from '@ant-design/icons';
+import { LoadingOutlined, CheckCircleFilled, StopOutlined, CloseCircleFilled, DeleteFilled } from '@ant-design/icons';
 
 export const campaignStatus = {
     REVIEW: {
@@ -20,7 +20,17 @@ export const campaignStatus = {
         name: 'Đã kết thúc',
         value: 4,
         color: 'red',
-    }
+    },
+    DISAPPROVED: {
+        name: 'Bị từ chối',
+        value: 5,
+        color: 'red',
+    },
+    REMOVED: {
+        name: 'Đã bị gỡ bỏ',
+        value: 6,
+        color: 'red',
+    },
 }
 
 export const getCampaignStatusIcon = (value) => {
@@ -36,6 +46,12 @@ export const getCampaignStatusIcon = (value) => {
 
         case campaignStatus.PENDING.value:
             return <StopOutlined />;
+
+        case campaignStatus.DISAPPROVED.value:
+            return <StopOutlined />;
+
+        case campaignStatus.REMOVED.value:
+            return <DeleteFilled />;
 
         default:
             return <></>;

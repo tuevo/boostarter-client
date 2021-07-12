@@ -97,11 +97,19 @@ export default function CreateCampaignModal({ visible, onClose, onSubmit }) {
                     labelAlign="left"
                     labelCol={{ span: 4 }}
                     onFinish={values => {
+                        const startDate = moment(values.startDate).toDate();
+                        const endDate = moment(values.endDate).toDate();
+
+                        if (endDate.getTime() < startDate.getTime()) {
+                            message.error('Ngày kết thúc không hợp lệ');
+                            return;
+                        }
+
                         setData({
                             ...data,
                             ...values,
-                            startDate: moment(values.startDate).toDate().toISOString(),
-                            endDate: moment(values.endDate).toDate().toISOString(),
+                            startDate: startDate.toISOString(),
+                            endDate: endDate.toISOString(),
                         });
                         next();
                     }}
