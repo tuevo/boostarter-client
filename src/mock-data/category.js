@@ -7,14 +7,14 @@ export const mockCategory1 = {
 
 export const mockCategory2 = {
     id: 2,
-    thumbnail: 'https://i.ibb.co/j8YrN02/1-58.jpg',
+    thumbnail: 'https://gracerecoveryatx.com/wp-content/uploads/2019/09/volunteer-opportunities.jpg',
     name: 'Thiện nguyện',
     numberOfCampaigns: 250,
 }
 
 export const mockCategory3 = {
     id: 3,
-    thumbnail: 'https://i.ibb.co/SncyJLC/Creative-la-gi.jpg',
+    thumbnail: 'https://cdn.shortpixel.ai/client/q_lossless,ret_img,w_607,h_450/https://goccuahien.com/wp-content/uploads/2020/08/creative-team-1024x760.jpg',
     name: 'Sáng tạo nội dung',
     numberOfCampaigns: 200,
 }

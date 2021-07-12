@@ -78,7 +78,7 @@ export const mockCampaign2 = {
 export const mockCampaign3 = {
     ...mockCampaign1,
     id: 3,
-    thumbnail: 'https://i.ibb.co/j8YrN02/1-58.jpg',
+    thumbnail: 'https://lh3.googleusercontent.com/proxy/DohTuH1-HYnZN4M5_VKzHN-zJYgTnR1GYYZrVVRVxc3ARuyDIeuCjD3gSQ6uz8woSLPENG97q784mAmAClD8kB9VzEn2U-WnVhGbVY1udAXimEXlIA4tbW2VA5p_9gyHy-ZYZyzUnC5XMX3xkfNiexSPq_5_D6dy-ho2d_xVzT0eyH4dOSdeZu6q-TJhBe14tBfU2dZG8iDxYHa87ote5FY',
     title: 'BỮA CƠM TÌNH THƯƠNG',
     categoryId: 2,
     status: campaignStatus.REVIEW,
@@ -124,7 +124,7 @@ export const mockCampaign7 = {
 export const mockCampaign8 = {
     ...mockCampaign1,
     id: 8,
-    thumbnail: 'https://i.ibb.co/j8YrN02/1-58.jpg',
+    thumbnail: 'https://lh3.googleusercontent.com/proxy/DohTuH1-HYnZN4M5_VKzHN-zJYgTnR1GYYZrVVRVxc3ARuyDIeuCjD3gSQ6uz8woSLPENG97q784mAmAClD8kB9VzEn2U-WnVhGbVY1udAXimEXlIA4tbW2VA5p_9gyHy-ZYZyzUnC5XMX3xkfNiexSPq_5_D6dy-ho2d_xVzT0eyH4dOSdeZu6q-TJhBe14tBfU2dZG8iDxYHa87ote5FY',
     title: 'BỮA CƠM TÌNH THƯƠNG',
     categoryId: 2,
     status: campaignStatus.REVIEW,
