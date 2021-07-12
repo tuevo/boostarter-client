@@ -105,7 +105,7 @@
 
     .featured-services {
         padding: 120px 0;
-        background-color: #f8f8f8;
+        background-color: var(--light-cta-color);
 
         .service-list {
             display: flex;
@@ -235,7 +235,7 @@
 
     .featured-feedbacks {
         padding: 100px 0;
-        background-color: #f8f8f8;
+        background-color: var(--light-cta-color);
 
         .feedbacks {
             display: flex;
