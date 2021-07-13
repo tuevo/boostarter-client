@@ -154,7 +154,7 @@
                     .btn-add-new-timeline {
                         margin-bottom: 30px;
                         width: 100%;
-                        @include button-color(outline, var(--primary-color));
+                        // @include button-color(outline, var(--primary-color));
                     }
 
                     .posted-statuses {

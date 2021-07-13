@@ -195,7 +195,7 @@ export default function CampaignDetail(props) {
                             });
                             dispatch(addNotification({
                                 id: v4(),
-                                sender: user,
+                                sender: { ...user, isCampaignOwner: true },
                                 receiver: data.owner,
                                 content: `
                                     Chiến dịch <a href="/campaign/${data.id}?tab=1">${data.title}</a> của bạn đã bị từ chối duyệt! Lý do: ${values.reason}
@@ -239,7 +239,7 @@ export default function CampaignDetail(props) {
                             });
                             dispatch(addNotification({
                                 id: v4(),
-                                sender: user,
+                                sender: { ...user, isCampaignOwner: true },
                                 receiver: data.owner,
                                 content: `
                                     Chiến dịch <a href="/campaign/${data.id}?tab=1">${data.title}</a> của bạn đã bị gỡ bỏ! Lý do: ${values.reason}
@@ -298,13 +298,13 @@ export default function CampaignDetail(props) {
 
     useEffect(() => {
         if (selectedPackage) {
-            if (user?.id === data.owner.id) {
+            if (user?.id === data.owner.id && data.status.value !== campaignStatus.CLOSED.value) {
                 setUpdateDonationPackageModalVisible(true);
             } else {
                 setDonationPackageDetailModalVisible(true);
             }
         }
-    }, [selectedPackage]);
+    }, [selectedPackage, data, user]);
 
     useEffect(() => {
         if (data) {
@@ -377,7 +377,7 @@ export default function CampaignDetail(props) {
                                                                 });
                                                                 dispatch(addNotification({
                                                                     id: v4(),
-                                                                    sender: user,
+                                                                    sender: { ...user, isCampaignOwner: true },
                                                                     receiver: data.owner,
                                                                     content: `
                                                                         Chiến dịch <a href="/campaign/${data.id}?tab=1">${data.title}</a> của bạn đã được duyệt.
@@ -431,6 +431,15 @@ export default function CampaignDetail(props) {
                                                                 ...data,
                                                                 status: campaignStatus.OPENED,
                                                             });
+                                                            dispatch(addNotification({
+                                                                id: v4(),
+                                                                sender: { ...user, isCampaignOwner: true },
+                                                                receiver: mockUser2,
+                                                                content: `
+                                                                    Chiến dịch <a href="/campaign/${data.id}?tab=1">${data.title}</a> đã được khởi động lại.
+                                                                `,
+                                                                createdAt: new Date().toISOString(),
+                                                            }));
                                                             message.success('Khởi động chiến dịch thành công');
                                                         }}
                                                     >
@@ -449,7 +458,7 @@ export default function CampaignDetail(props) {
                                                             });
                                                             dispatch(addNotification({
                                                                 id: v4(),
-                                                                sender: user,
+                                                                sender: { ...user, isCampaignOwner: true },
                                                                 receiver: mockUser2,
                                                                 content: `
                                                                     Vui lòng duyệt lại chiến dịch <a href="/campaign/${data.id}?tab=1">${data.title}</a> cho tôi.
@@ -466,6 +475,7 @@ export default function CampaignDetail(props) {
                                                     className="toolbar__controls__btn-edit"
                                                     icon={<EditFilled />}
                                                     onClick={() => setEditingCampaignVisible(true)}
+                                                    disabled={data.status.value === campaignStatus.CLOSED.value}
                                                 >
                                                     Chỉnh sửa
                                                 </Button>
@@ -657,6 +667,7 @@ export default function CampaignDetail(props) {
                                                             icon={<EditFilled />}
                                                             size="small"
                                                             onClick={() => setStoryEditorVisible(true)}
+                                                            disabled={data.status.value === campaignStatus.CLOSED.value}
                                                         >
                                                             Chỉnh sửa
                                                         </Button>
@@ -674,6 +685,9 @@ export default function CampaignDetail(props) {
                                                         className="btn-add-new-timeline"
                                                         size="large"
                                                         onClick={() => setPostStatusModalVisible(true)}
+                                                        ghost
+                                                        type="primary"
+                                                        disabled={data.status.value === campaignStatus.CLOSED.value}
                                                     >
                                                         TRẠNG THÁI MỚI
                                                     </Button>
@@ -767,6 +781,7 @@ export default function CampaignDetail(props) {
                                                     icon={<PlusOutlined />}
                                                     shape="circle"
                                                     onClick={() => setCreateDonationPackageModalVisible(true)}
+                                                    disabled={data.status.value === campaignStatus.CLOSED.value}
                                                 />
                                             </Tooltip>
                                         )}
@@ -910,7 +925,7 @@ export default function CampaignDetail(props) {
                     });
                     dispatch(addNotification({
                         id: v4(),
-                        sender: user,
+                        sender: { ...user, isCampaignOwner: true },
                         receiver: mockUser2,
                         content: `
                             Vui lòng duyệt <b>Câu chuyện</b> của chiến dịch <a href="/campaign/${data.id}?tab=1">${data.title}</a> cho tôi.
