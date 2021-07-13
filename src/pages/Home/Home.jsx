@@ -2,6 +2,7 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, Button } from 'antd';
 import Title from 'antd/lib/typography/Title';
+import htmlParse from 'html-react-parser';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import NumberFormat from 'react-number-format';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +13,7 @@ import CampaignPreviewCarousel from '../../components/CampaignPreviewCarousel/Ca
 import Container from '../../components/Container';
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import SingleCampaignPreviewCarousel from '../../components/SingleCampaignPreviewCarousel/SingleCampaignPreviewCarousel';
-import { APP_MISSION, APP_NAME, featuredServices } from '../../constants';
+import { APP_MISSION, featuredServices } from '../../constants';
 import { useScrollTop } from '../../hooks';
 import { mockCampaign1, mockCategoryList, mockFeedbackList } from '../../mock-data';
 import { scrollToElement, setAppLoading } from '../../redux';
@@ -133,7 +134,7 @@ export default function Home() {
                             <div className="featured-content">
                                 <Title className="title" level={2}>{'Tầm nhìn & sứ mệnh'}</Title>
                                 <p className="desc">
-                                    <b>{APP_NAME}</b> {APP_MISSION}
+                                    {htmlParse(APP_MISSION)}
                                 </p>
                                 <div className="buttons">
                                     {!user && (
