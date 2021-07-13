@@ -1,7 +1,6 @@
 import { Col, Form, Input, Row, Select } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import React from 'react';
-import { defaultCampaignThumbnail } from '../../constants';
+import React, { useState } from 'react';
 import { mockCategoryList } from '../../mock-data';
 import { AvatarUpload } from '../AvatarUpload/AvatarUpload';
 import SingleImageUpload from '../SingleImageUpload';
@@ -9,6 +8,7 @@ import TagInput from '../TagInput/TagInput';
 
 export default function CampaignBasicInfoForm({ form, initValues, onFinished, onFinishFailed, onFieldsChange }) {
     const categoryList = [...mockCategoryList];
+    const [thumbnail, setThumbnail] = useState(initValues ? initValues.thumbnail : null);
 
     return (
         <Form
@@ -18,6 +18,7 @@ export default function CampaignBasicInfoForm({ form, initValues, onFinished, on
             labelCol={{ span: 4 }}
             onFinish={values => onFinished({
                 ...values,
+                thumbnail,
                 tags: values.tags || [],
             })}
             onFinishFailed={onFinishFailed}
@@ -26,12 +27,8 @@ export default function CampaignBasicInfoForm({ form, initValues, onFinished, on
             <Form.Item name="thumbnail">
                 <SingleImageUpload
                     uploadText="Tải ảnh lên"
-                    initImageUrl={initValues?.thumbnail}
-                    onImageChange={(img) => {
-                        // TODO: upload image to cloud & get url
-                        console.log(img);
-                        form.setFieldsValue({ thumbnail: initValues ? initValues.thumbnail : defaultCampaignThumbnail });
-                    }}
+                    initImageUrl={thumbnail}
+                    onImageChange={(img) => setThumbnail(img)}
                 />
             </Form.Item>
             <Form.Item

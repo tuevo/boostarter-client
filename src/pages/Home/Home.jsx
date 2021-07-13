@@ -16,6 +16,7 @@ import { APP_MISSION, APP_NAME, featuredServices } from '../../constants';
 import { useScrollTop } from '../../hooks';
 import { mockCampaign1, mockCategoryList, mockFeedbackList } from '../../mock-data';
 import { scrollToElement, setAppLoading } from '../../redux';
+import { isPublicCampaign } from '../../utils';
 import './Home.scss';
 
 export default function Home() {
@@ -33,10 +34,10 @@ export default function Home() {
     const featuredFeedbackRef = useRef(null);
     const strategicPartnerRef = useRef(null);
 
-    const popularCampaignList = useSelector(state => state.campaigns);
+    const popularCampaignList = useSelector(state => state.campaigns).filter(isPublicCampaign);
     const featuredCampaign = popularCampaignList.find((c) => c.id === mockCampaign1.id);
 
-    const successCampaignList = useSelector(state => state.campaigns.slice(1, 4));
+    const successCampaignList = useSelector(state => state.campaigns).filter(isPublicCampaign).slice(1, 4);
     let activeSuccessCampaign = successCampaignList[0];
 
     const onSuccessCampaignCarouselChange = (index) => {
@@ -62,7 +63,7 @@ export default function Home() {
                 break;
             case 'featured-service':
                 if (featuredServiceRef.current) {
-                    window.scrollTo({ top: featuredServiceRef.current.offsetTop - (featuredServiceRef.current.clientHeight / 2) });
+                    window.scrollTo({ top: featuredServiceRef.current.offsetTop - (featuredServiceRef.current.clientHeight / 1.3) });
                 }
                 break;
             case 'featured-campaign':
@@ -96,7 +97,7 @@ export default function Home() {
         }
 
         dispatch(scrollToElement(null));
-    }, [app.elementIdToScroll]);
+    }, [app.elementIdToScroll, dispatch]);
 
     if (app.loading) {
         return <AppLoading />

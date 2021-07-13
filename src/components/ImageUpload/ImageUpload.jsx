@@ -16,7 +16,7 @@ export const getBase64 = (file) => (new Promise((resolve, reject) => {
         resolve(reader.result.toString());
     };
     reader.onerror = (error) => reject(error);
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(new Blob([file]));
 }));
 
 export const getMultiBase64 = (files) => Promise.all(files.map(getBase64));
@@ -27,21 +27,19 @@ const ErrorList = {
     Error: 'error'
 }
 
-export const ImageUpload = (props) => {
-    const {
-        uploadText,
-        name,
-        action,
-        fileList,
-        showUploadList,
-        multiple,
-        accept,
-        onRemove,
-        onDownload,
-        onChange,
-        beforeUpload,
-    } = props;
-
+export const ImageUpload = ({
+    uploadText,
+    name,
+    action,
+    fileList,
+    showUploadList,
+    multiple,
+    accept,
+    onRemove,
+    onDownload,
+    onChange,
+    beforeUpload,
+}) => {
     const [state, setState] = useState({
         previewType: '',
         previewVisible: false,
@@ -127,7 +125,7 @@ export const ImageUpload = (props) => {
 
         return (
             <div>
-                { renderLoading()}
+                {renderLoading()}
                 <div style={{ marginTop: 8 }}>{uploadText}</div>
             </div>
         );

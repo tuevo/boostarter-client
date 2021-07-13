@@ -112,7 +112,7 @@ export default function AppLayout({ children, location }) {
             { key: '2', title: 'Chiến dịch theo dõi', icon: <HeartOutlined />, url: '/following-campaigns' },
         ],
         2: [
-            { key: '1', title: 'Chiến dịch đã quyên góp', icon: <FireOutlined />, url: '/' },
+            { key: '1', title: 'Chiến dịch quyên góp', icon: <FireOutlined />, url: '/donated-campaigns' },
             { key: '2', title: 'Chiến dịch theo dõi', icon: <HeartOutlined />, url: '/following-campaigns' },
         ],
         3: [
@@ -128,7 +128,9 @@ export default function AppLayout({ children, location }) {
     }
 
     useEffect(() => {
-        renderSidebar(user && ['/personal-campaigns', '/campaigns', '/following-campaigns'].includes(location.pathname));
+        renderSidebar(user && [
+            '/personal-campaigns', '/campaigns', '/following-campaigns', '/donated-campaigns'
+        ].includes(location.pathname));
     }, [user, location.pathname]);
 
     return (

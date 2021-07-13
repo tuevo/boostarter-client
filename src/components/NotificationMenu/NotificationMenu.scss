@@ -32,5 +32,13 @@
             font-size: 11px;
             padding: 1.5px 10px !important;
         }
+
+        .ant-list-item-meta-description {
+            color: #000;
+
+            a {
+                font-weight: bold;
+            }
+        }
     }
 }

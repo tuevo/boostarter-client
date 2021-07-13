@@ -60,6 +60,10 @@ export default function CreateCampaignModal({ visible, onClose, onSubmit }) {
                 <CampaignBasicInfoForm
                     form={basicInfoForm}
                     onFinished={values => {
+                        if (!values.thumbnail) {
+                            message.error('Vui lòng tải bìa lên');
+                            return;
+                        }
                         setData({
                             ...data,
                             ...values,
@@ -296,11 +300,6 @@ export default function CreateCampaignModal({ visible, onClose, onSubmit }) {
                             <Button type="primary" onClick={() => {
                                 switch (current) {
                                     case 0:
-                                        if (!basicInfoForm.getFieldValue('thumbnail')) {
-                                            message.error('Vui lòng tải bìa lên');
-                                            return;
-                                        }
-
                                         basicInfoForm.submit();
                                         break;
 

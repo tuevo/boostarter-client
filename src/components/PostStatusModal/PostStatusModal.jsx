@@ -6,6 +6,7 @@ import './PostStatusModal.scss';
 
 export default function PostStatusModal({ visible, onClose, onSubmit }) {
     const [content, setContent] = useState('');
+    const [fileList, setFileList] = useState([]);
 
     return (
         <Modal
@@ -26,13 +27,15 @@ export default function PostStatusModal({ visible, onClose, onSubmit }) {
             <div className="post-status-modal__media-upload">
                 <ImageUpload
                     uploadText="Tải ảnh lên"
+                    multiple
+                    onChange={(e) => setFileList(e.fileList)}
                 />
             </div>
             <Button
                 style={{ width: '100%' }}
                 type="primary"
                 size="large"
-                onClick={() => onSubmit()}
+                onClick={() => onSubmit(content, fileList)}
             >
                 Đăng trạng thái
             </Button>

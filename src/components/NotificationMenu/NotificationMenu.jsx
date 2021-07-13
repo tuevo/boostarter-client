@@ -28,9 +28,14 @@ export default function NotificationMenu({ notifications }) {
                                                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                                             <div>
                                                                 <span style={{ marginRight: 5 }}><b>{data.sender.fullName}</b></span>
-                                                                <Tag color="purple">{userRole.ADMIN.name}</Tag>
+                                                                {data.sender.role.value === userRole.ADMIN.value && (
+                                                                    <Tag color="purple">{userRole.ADMIN.name}</Tag>
+                                                                )}
+                                                                {data.sender.isCampaignOwner && (
+                                                                    <Tag color="processing">Chủ chiến dịch</Tag>
+                                                                )}
                                                             </div>
-                                                            <span>{format(new Date(data.createdAt), 'vi')}</span>
+                                                            <span style={{ color: 'rgba(0,0,0,0.45)' }}>{format(new Date(data.createdAt), 'vi')}</span>
                                                         </div>
                                                     }
                                                     description={<p style={{ whiteSpace: 'normal' }}>{htmlParse(data.content)}</p>}

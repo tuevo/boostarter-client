@@ -78,7 +78,7 @@ export const mockCampaign2 = {
 export const mockCampaign3 = {
     ...mockCampaign1,
     id: 3,
-    thumbnail: 'https://lh3.googleusercontent.com/proxy/DohTuH1-HYnZN4M5_VKzHN-zJYgTnR1GYYZrVVRVxc3ARuyDIeuCjD3gSQ6uz8woSLPENG97q784mAmAClD8kB9VzEn2U-WnVhGbVY1udAXimEXlIA4tbW2VA5p_9gyHy-ZYZyzUnC5XMX3xkfNiexSPq_5_D6dy-ho2d_xVzT0eyH4dOSdeZu6q-TJhBe14tBfU2dZG8iDxYHa87ote5FY',
+    thumbnail: 'https://baolaichau.vn/uploaded/post/2021/07/07/IMG_20210706_165428_529_4_1625628567296.jpg',
     title: 'BỮA CƠM TÌNH THƯƠNG',
     categoryId: 2,
     status: campaignStatus.REVIEW,
@@ -92,6 +92,7 @@ export const mockCampaign4 = {
     title: 'ỐNG HÚT SẠCH',
     categoryId: 1,
     status: campaignStatus.PENDING,
+    pendingReason: 'Trong điều kiện ngày nay, nhất là đối với nền kinh tế Việt Nam hội nhập, phát triển cùng với sự biến động của nền kinh tế thế giới tác động mạnh đến Việt Nam. Các hoạt động sản xuất kinh doanh cũng gặp nhiều khó khăn. Đa số các doanh nghiệp mới đăng ký thành lập công ty có vốn đầu tư nhỏ, gặp sự biến động ngoài dự kiến ban đầu, nên phải tạm ngừng kinh doanh.'
 }
 
 export const mockCampaign5 = {
@@ -110,6 +111,7 @@ export const mockCampaign6 = {
     title: 'ỐNG HÚT SẠCH',
     categoryId: 1,
     status: campaignStatus.PENDING,
+    pendingReason: 'Trong điều kiện ngày nay, nhất là đối với nền kinh tế Việt Nam hội nhập, phát triển cùng với sự biến động của nền kinh tế thế giới tác động mạnh đến Việt Nam. Các hoạt động sản xuất kinh doanh cũng gặp nhiều khó khăn. Đa số các doanh nghiệp mới đăng ký thành lập công ty có vốn đầu tư nhỏ, gặp sự biến động ngoài dự kiến ban đầu, nên phải tạm ngừng kinh doanh.'
 }
 
 export const mockCampaign7 = {
@@ -124,7 +126,7 @@ export const mockCampaign7 = {
 export const mockCampaign8 = {
     ...mockCampaign1,
     id: 8,
-    thumbnail: 'https://lh3.googleusercontent.com/proxy/DohTuH1-HYnZN4M5_VKzHN-zJYgTnR1GYYZrVVRVxc3ARuyDIeuCjD3gSQ6uz8woSLPENG97q784mAmAClD8kB9VzEn2U-WnVhGbVY1udAXimEXlIA4tbW2VA5p_9gyHy-ZYZyzUnC5XMX3xkfNiexSPq_5_D6dy-ho2d_xVzT0eyH4dOSdeZu6q-TJhBe14tBfU2dZG8iDxYHa87ote5FY',
+    thumbnail: 'https://baolaichau.vn/uploaded/post/2021/07/07/IMG_20210706_165428_529_4_1625628567296.jpg',
     title: 'BỮA CƠM TÌNH THƯƠNG',
     categoryId: 2,
     status: campaignStatus.REVIEW,

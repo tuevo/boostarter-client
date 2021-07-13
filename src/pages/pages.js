@@ -1,5 +1,6 @@
 import { v4 } from 'uuid';
 import CampaignList from './CampaignList/CampaignList';
+import DonatedCampaigns from './DonatedCampaigns/DonatedCampaigns';
 import FollowingCampaigns from './FollowingCampaigns/FollowingCampaigns';
 import PersonalCampaign from './PersonalCampaign';
 
@@ -16,6 +17,13 @@ export const pages = [
         component: CampaignList,
         title: 'Tất cả chiến dịch',
         path: '/campaigns',
+        exact: true,
+    },
+    {
+        id: v4(),
+        component: DonatedCampaigns,
+        title: 'Chiến dịch quyên góp',
+        path: '/donated-campaigns',
         exact: true,
     },
     {

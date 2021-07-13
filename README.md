@@ -16,7 +16,18 @@ npm install
 npm start
 ```
 
-## <b>Accounts</b>
+## <b>Reset client-side database</b>
+- Step 1: Open browser -> press F12 -> select tab `Console`
+- Step 2: Enter following lines to tab `Console`:
+```js
+localStorage.removeItem('__boostarterClient__authUser');
+localStorage.removeItem('__boostarterClient__users');
+localStorage.removeItem('__boostarterClient__campaigns');
+localStorage.removeItem('__boostarterClient__notifications');
+localStorage.removeItem('__boostarterClient__postedStatuses';
+```
+
+## <b>Available accounts</b>
 ### 1. Campaign Owner
 + email: owner@gmail.com
 + password: 123456

@@ -28,7 +28,8 @@ import SectionTitle from '../../components/SectionTitle';
 import StoryEditingModal from '../../components/StoryEditingModal';
 import { campaignStatus, defaultUserAvatar, getCampaignStatusIcon, userRole } from '../../constants';
 import { mockUser2 } from '../../mock-data';
-import { addFeedback, addNotification, updateCampaign } from '../../redux';
+import { addFeedback, addNotification, addPostedStatus, updateCampaign } from '../../redux';
+import { isPublicCampaign } from '../../utils';
 import { daysFromNow } from '../../utils/date-time';
 import './CampaignDetail.scss';
 
@@ -50,7 +51,7 @@ export default function CampaignDetail(props) {
     const campaignList = useSelector(state => state.campaigns);
     const postedStatusList = useSelector(state => state.postedStatuses);
     const feedbackList = useSelector(state => state.feedbacks);
-    const relatedCampaignList = campaignList.filter(c => c.id !== +id);
+    const relatedCampaignList = campaignList.filter(c => c.id !== +id).filter(isPublicCampaign);
 
     const [data, setData] = useState();
     const [selectedMenuKey, setSelectedMenuKey] = useState(queryParams['tab'] || '1');
@@ -92,7 +93,6 @@ export default function CampaignDetail(props) {
 
     const handleEditingCampaignFormFinished = (values) => {
         setSubmitEditingCampaignFormLoading(true);
-
         setTimeout(() => {
             setData({
                 ...data,
@@ -104,10 +104,10 @@ export default function CampaignDetail(props) {
                     introduction: values.standerIntroduction,
                 }
             });
-            setSubmitEditingCampaignFormLoading(false);
             setEditingCampaignVisible(false);
             message.success('Cập nhật thông tin chiến dịch thành công!');
         }, 1000);
+        setSubmitEditingCampaignFormLoading(false);
     }
 
     const handleEditingCampaignFormFinishFailed = () => {
@@ -885,7 +885,16 @@ export default function CampaignDetail(props) {
             <PostStatusModal
                 visible={postStatusModalVisible}
                 onClose={() => setPostStatusModalVisible(false)}
-                onSubmit={() => setPostStatusModalVisible(false)}
+                onSubmit={(content, fileList) => {
+                    dispatch(addPostedStatus({
+                        id: v4(),
+                        createdAt: new Date().toISOString(),
+                        location: 'TP.Hồ Chí Minh, Việt Nam',
+                        content,
+                        mediaFiles: fileList,
+                    }));
+                    setPostStatusModalVisible(false);
+                }}
             />
 
             <StoryEditingModal
@@ -893,8 +902,21 @@ export default function CampaignDetail(props) {
                 initContent={data.story}
                 onClose={() => setStoryEditorVisible(false)}
                 onSubmit={(story) => {
-                    setData({ ...data, story });
                     setStoryEditorVisible(false);
+                    setData({
+                        ...data,
+                        status: campaignStatus.REVIEW,
+                        story
+                    });
+                    dispatch(addNotification({
+                        id: v4(),
+                        sender: user,
+                        receiver: mockUser2,
+                        content: `
+                            Vui lòng duyệt <b>Câu chuyện</b> của chiến dịch <a href="/campaign/${data.id}?tab=1">${data.title}</a> cho tôi.
+                        `,
+                        createdAt: new Date().toISOString(),
+                    }));
                     message.success('Câu chuyện cập nhật sẽ được chuyển đến Quản trị viên để kiểm duyệt');
                 }}
             />
